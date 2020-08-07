@@ -3,10 +3,79 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Name="GetPassword"
         xmlns:local="clr-namespace:Restaurant"
+        xmlns:vm="clr-namespace:Restaurant.ViewModels"
         mc:Ignorable="d"
         Title="Master Ico" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <StackPanel Orientation="Vertical" 
+                    Background="#ede9a8" 
+                    Margin="2" 
+                    VerticalAlignment="Stretch" 
+                    HorizontalAlignment="Stretch" >
+            <Border CornerRadius="25" 
+                    Margin="20,70,20,10" 
+                    Background="White" 
+                    Width="300"
+                    Height="200">
+                <StackPanel Orientation="Vertical">
+                    <Grid Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" 
+                               Grid.Column="0" 
+                               Margin="0,30" 
+                               Content="Username : " 
+                               VerticalContentAlignment="Center"
+                               HorizontalContentAlignment="Right"/>
+                        <TextBox Grid.Row="0" 
+                                 Grid.Column="1" 
+                                 Margin="0,30" 
+                                 Width="150" 
+                                 VerticalContentAlignment="Center"
+                                 HorizontalContentAlignment="Left"/>
+                        <Label Grid.Row="1" 
+                               Grid.Column="0" 
+                               Margin="0,5" 
+                               Content="Password : " 
+                               VerticalContentAlignment="Center" 
+                               HorizontalContentAlignment="Right"/>
+                        <PasswordBox x:Name="UserPassword"
+                                     Grid.Row="1" 
+                                     Grid.Column="1" 
+                                     Margin="0,5" 
+                                     Width="150" 
+                                     VerticalContentAlignment="Center" 
+                                     HorizontalContentAlignment="Left"/>
+                        <StackPanel Orientation="Horizontal" 
+                                    Grid.Column="1" 
+                                    Grid.Row="2" 
+                                    Grid.ColumnSpan="2" 
+                                    HorizontalAlignment="Center">
+                            <Button Content="LOGIN" 
+                                    Margin="2,20" 
+                                    Width="100" 
+                                    Height="30" 
+                                    Background="#edecdd"
+                                    Foreground="Black" 
+                                    BorderBrush="White"
+                                    Command="{Binding LoginCommand}"
+                                    CommandParameter="{Binding ElementName=GetPassword}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
     </Grid>
 </Window>

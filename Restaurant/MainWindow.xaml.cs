@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Restaurant.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,11 +20,19 @@ namespace Restaurant
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IHavePassword
     {
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public SecureString Password
+        {
+            get
+            {
+                return UserPassword.SecurePassword;
+            }
         }
     }
 }

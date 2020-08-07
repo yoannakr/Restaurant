@@ -5,7 +5,7 @@ namespace Restaurant.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        #region Decorations
+        #region Declarations
 
         private IView view;
 
