@@ -15,16 +15,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Restaurant
+namespace Restaurant.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginView : UserControl, IHavePassword, IView
     {
-        public MainWindow()
+        public LoginView()
         {
             InitializeComponent();
+        }
+
+        SecureString IHavePassword.Password
+        {
+            get
+            {
+                return UserPassword.SecurePassword;
+            }
         }
     }
 }
