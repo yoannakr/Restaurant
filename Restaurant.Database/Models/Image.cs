@@ -7,7 +7,7 @@ namespace Restaurant.Database.Models
         public int Id { get; set; }
 
         [Required]
-        public string Source { get; set; }
+        public byte[] Content { get; set; }
 
         public Item Item { get; set; }
     }
