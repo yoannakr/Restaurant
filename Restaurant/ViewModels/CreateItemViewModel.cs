@@ -11,9 +11,10 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private ICommand browseCommand;
-        private ICommand createItemCommand;
+        private DelegateCommand<object> createItemCommand;
         private readonly IItemService itemService;
         private string imageSource;
+        private byte[] imageContent;
 
         #endregion
 
@@ -42,7 +43,15 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public byte[] ImageContent { get; set; }
+        public byte[] ImageContent 
+        {
+            get => imageContent;
+            set
+            {
+                imageContent = value;
+                CreateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
 
         public ICommand BrowseCommand
         {
@@ -55,12 +64,12 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public ICommand CreateItemCommand
+        public DelegateCommand<object> CreateItemCommand
         {
             get
             {
                 if (createItemCommand == null)
-                    createItemCommand = new DelegateCommand<object>(CreateItem);
+                    createItemCommand = new DelegateCommand<object>(CreateItem,CanExecute);
 
                 return createItemCommand;
             }
@@ -87,6 +96,19 @@ namespace Restaurant.ViewModels
         private void CreateItem(object obj)
         {
             itemService.CreateItem(Name, Price, ImageContent);
+        }
+
+        private bool CanExecute(object arg)
+        {
+            return IsValid();
+        }
+
+        private bool IsValid()
+        {
+            if (Name == null || Price == 0 || ImageContent == null)
+                return false;
+
+            return true;
         }
 
         #endregion
