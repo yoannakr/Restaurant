@@ -47,7 +47,7 @@ namespace Restaurant.ViewModels
                 return addItemToSelected;
             }
         }
-
+ 
         #endregion
 
         #region Methods
