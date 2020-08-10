@@ -9,8 +9,10 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private ICommand newUserCommand;
+        private ICommand newItemCommand;
         private BaseViewModel baseViewModel;
         private CreateUserViewModel createUserViewModel;
+        private CreateItemViewModel createItemViewModel;
 
         #endregion
 
@@ -24,6 +26,16 @@ namespace Restaurant.ViewModels
                     newUserCommand = new DelegateCommand<object>(CreateUser);
 
                 return newUserCommand;
+            }
+        }
+
+        public ICommand NewItemCommand 
+        { get
+            {
+                if (newItemCommand == null)
+                    newItemCommand = new DelegateCommand<object>(CreateItem);
+
+                return newItemCommand;
             }
         }
 
@@ -60,6 +72,29 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public CreateItemViewModel CreateItemViewModel 
+        {
+            get
+            {
+                if (createItemViewModel == null)
+                {
+                    createItemViewModel = new CreateItemViewModel();
+                    CreateItemView createItemView = new CreateItemView();
+
+                    createItemViewModel.View = createItemView;
+
+                    createItemView.DataContext = createItemViewModel;
+                }
+
+                return createItemViewModel;
+            }
+            set
+            {
+                createItemViewModel = value;
+                OnPropertyChanged("CreateItemViewModel");
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -67,6 +102,11 @@ namespace Restaurant.ViewModels
         private void CreateUser(object obj)
         {
             BaseViewModel = CreateUserViewModel;
+        }
+
+        private void CreateItem(object obj)
+        {
+            BaseViewModel = CreateItemViewModel;
         }
 
         #endregion

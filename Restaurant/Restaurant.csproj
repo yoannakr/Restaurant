@@ -177,6 +177,7 @@
     <Compile Include="ViewModels\AdminPanelViewModel.cs" />
     <Compile Include="ViewModels\AllItemViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CreateItemViewModel.cs" />
     <Compile Include="ViewModels\CreateUserViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -189,6 +190,9 @@
     </Compile>
     <Compile Include="Views\AllItemView.xaml.cs">
       <DependentUpon>AllItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateItemView.xaml.cs">
+      <DependentUpon>CreateItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateUserView.xaml.cs">
       <DependentUpon>CreateUserView.xaml</DependentUpon>
@@ -223,6 +227,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AllItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
