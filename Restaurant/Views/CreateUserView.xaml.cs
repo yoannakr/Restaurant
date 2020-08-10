@@ -18,22 +18,13 @@ using System.Windows.Shapes;
 namespace Restaurant.Views
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for CreateUserView.xaml
     /// </summary>
-    public partial class LoginView : UserControl, IHavePassword, IView
+    public partial class CreateUserView : UserControl, IView
     {
-        public LoginView()
+        public CreateUserView()
         {
             InitializeComponent();
-        }
-
-
-        SecureString IHavePassword.Password
-        {
-            get
-            {
-                return UserPassword.SecurePassword;
-            }
         }
     }
 }

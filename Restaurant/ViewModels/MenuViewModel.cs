@@ -65,15 +65,14 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                if (adminPanelViewModel == null)
-                {
+                
                     adminPanelViewModel = new AdminPanelViewModel();
                     AdminPanelView adminPanelView = new AdminPanelView();
 
                     adminPanelViewModel.View = adminPanelView;
 
                     adminPanelView.DataContext = adminPanelViewModel;
-                }
+
 
                 return adminPanelViewModel;
             }

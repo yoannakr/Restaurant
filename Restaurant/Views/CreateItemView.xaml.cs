@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,22 +17,13 @@ using System.Windows.Shapes;
 namespace Restaurant.Views
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for CreateItemView.xaml
     /// </summary>
-    public partial class LoginView : UserControl, IHavePassword, IView
+    public partial class CreateItemView : UserControl, IView
     {
-        public LoginView()
+        public CreateItemView()
         {
             InitializeComponent();
-        }
-
-
-        SecureString IHavePassword.Password
-        {
-            get
-            {
-                return UserPassword.SecurePassword;
-            }
         }
     }
 }
