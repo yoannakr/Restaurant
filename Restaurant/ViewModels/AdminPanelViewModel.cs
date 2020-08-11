@@ -1,6 +1,5 @@
 ﻿using Prism.Commands;
 using Restaurant.Views;
-using System.Windows.Input;
 
 namespace Restaurant.ViewModels
 {
@@ -65,11 +64,6 @@ namespace Restaurant.ViewModels
 
                 return createUserViewModel;
             }
-            set
-            {
-                createUserViewModel = value;
-                OnPropertyChanged("CreateUserViewModel");
-            }
         }
 
         public CreateItemViewModel CreateItemViewModel 
@@ -87,11 +81,6 @@ namespace Restaurant.ViewModels
                 }
 
                 return createItemViewModel;
-            }
-            set
-            {
-                createItemViewModel = value;
-                OnPropertyChanged("CreateItemViewModel");
             }
         }
 

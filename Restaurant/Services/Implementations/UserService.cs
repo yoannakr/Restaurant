@@ -1,5 +1,4 @@
-﻿using Restaurant.Database.Models;
-using Restaurant.Database.Services;
+﻿using Restaurant.Database.Services;
 using Restaurant.Database.Services.Implementations;
 
 namespace Restaurant.Services.Implementations

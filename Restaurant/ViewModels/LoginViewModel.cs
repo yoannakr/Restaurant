@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Windows;
 using Prism.Commands;
 using System.Security;
 using Restaurant.Views;
-using System.Windows.Input;
 using Restaurant.Interfaces;
 using System.Runtime.InteropServices;
 
@@ -58,11 +56,6 @@ namespace Restaurant.ViewModels
 
                 return menuViewModel;
             }
-            set
-            {
-                menuViewModel = value;
-                OnPropertyChanged("MenuViewModel");
-            }
         }
 
         #endregion
@@ -76,7 +69,7 @@ namespace Restaurant.ViewModels
             if (passwordContainer != null)
             {
                 SecureString secureString = passwordContainer.Password;
-                MessageBox.Show($"{ConvertToUnsecureString(secureString)}");
+                //MessageBox.Show($"{ConvertToUnsecureString(secureString)}");
             }
 
             BaseViewModel = MenuViewModel;

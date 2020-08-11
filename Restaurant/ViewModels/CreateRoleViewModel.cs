@@ -64,11 +64,6 @@ namespace Restaurant.ViewModels
 
                 return createUserViewModel;
             }
-            set
-            {
-                createUserViewModel = value;
-                OnPropertyChanged("CreateUserViewModel");
-            }
         }
 
         public string Name { get; set; }
