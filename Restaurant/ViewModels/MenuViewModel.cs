@@ -9,8 +9,8 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private ICommand salesCommand;
-        private ICommand adminPanelCommand;
+        private DelegateCommand<object> salesCommand;
+        private DelegateCommand<object> adminPanelCommand;
         private BaseViewModel baseViewModel;
         private SalesViewModel salesViewModel;
         private AdminPanelViewModel adminPanelViewModel;
@@ -83,7 +83,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public ICommand SalesCommand
+        public DelegateCommand<object> SalesCommand
         {
             get
             {
@@ -94,7 +94,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public ICommand AdminPanelCommand
+        public DelegateCommand<object> AdminPanelCommand
         {
             get
             {

@@ -10,7 +10,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private ICommand addUserCommand;
+        private DelegateCommand<object> addUserCommand;
         private IUserService userService;
 
         #endregion
@@ -26,7 +26,7 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public ICommand AddUserCommand 
+        public DelegateCommand<object> AddUserCommand 
         {
             get
             {

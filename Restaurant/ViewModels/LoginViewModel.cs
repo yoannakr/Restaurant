@@ -13,7 +13,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private ICommand loginCommand;
+        private DelegateCommand<object> loginCommand;
         private BaseViewModel baseViewModel;
         private MenuViewModel menuViewModel;
 
@@ -21,7 +21,7 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public ICommand LoginCommand
+        public DelegateCommand<object> LoginCommand
         {
             get
             {

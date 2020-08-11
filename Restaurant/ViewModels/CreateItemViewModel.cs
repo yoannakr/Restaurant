@@ -10,9 +10,11 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private ICommand browseCommand;
+        private DelegateCommand<object> browseCommand;
         private DelegateCommand<object> createItemCommand;
         private readonly IItemService itemService;
+        private string name;
+        private decimal price;
         private string imageSource;
         private byte[] imageContent;
 
@@ -29,11 +31,27 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                CreateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
 
-        public decimal Price { get; set; }
+        public decimal Price
+        {
+            get => price;
+            set
+            {
+                price = value;
+                CreateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
 
-        public string ImageSource 
+        public string ImageSource
         {
             get => imageSource;
             set
@@ -43,7 +61,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public byte[] ImageContent 
+        public byte[] ImageContent
         {
             get => imageContent;
             set
@@ -53,7 +71,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public ICommand BrowseCommand
+        public DelegateCommand<object> BrowseCommand
         {
             get
             {
@@ -69,7 +87,7 @@ namespace Restaurant.ViewModels
             get
             {
                 if (createItemCommand == null)
-                    createItemCommand = new DelegateCommand<object>(CreateItem,CanExecute);
+                    createItemCommand = new DelegateCommand<object>(CreateItem, CanCreateItem);
 
                 return createItemCommand;
             }
@@ -98,7 +116,7 @@ namespace Restaurant.ViewModels
             itemService.CreateItem(Name, Price, ImageContent);
         }
 
-        private bool CanExecute(object arg)
+        private bool CanCreateItem(object arg)
         {
             return IsValid();
         }
