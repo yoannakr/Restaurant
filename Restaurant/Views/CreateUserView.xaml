@@ -3,9 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Restaurant.Views"
+             xmlns:vm="clr-namespace:Restaurant.ViewModels"
+             xmlns:v="clr-namespace:Restaurant.Views"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vm:CreateRoleViewModel}">
+            <v:CreateRoleView/>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid
         Background="AliceBlue">
         <Grid Margin="30" 
@@ -68,11 +74,30 @@
                          VerticalAlignment="Top"
                          Width="222"
                          Text="{Binding ConfirmPassword}"/>
-            <TextBox Height="23" 
-                     HorizontalAlignment="Left" 
-                     Margin="180,170,0,0" 
-                     VerticalAlignment="Top"
-                     Width="222" />
+            <ComboBox Height="23" 
+                      HorizontalAlignment="Left" 
+                      Margin="180,170,0,0" 
+                      VerticalAlignment="Top"
+                      Width="140"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ItemsSource="{Binding Roles}"
+                      SelectedItem="{Binding Role}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                                Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button
+                Height="23" 
+                HorizontalAlignment="Left" 
+                Margin="330,170,0,0" 
+                VerticalAlignment="Top"
+                Width="70"
+                Content="Нова роля"
+                Command="{Binding NewRoleCommand}"/>
             <Button Height="25" 
                     HorizontalAlignment="Left"
                     Margin="190,209,0,0"
@@ -81,5 +106,7 @@
                     Content="Добави "
                     Command="{Binding AddUserCommand}"/>
         </Grid>
+        <ContentPresenter
+            Content="{Binding BaseViewModel}"/>
     </Grid>
 </UserControl>

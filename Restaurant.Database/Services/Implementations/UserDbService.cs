@@ -23,10 +23,8 @@ namespace Restaurant.Database.Services.Implementations
 
         #region Methods
 
-        public void CreateUser(string name, string username, string password, Role role)
+        public void CreateUser(string name, string username, string password, int roleId)
         {
-            context.Roles.Add(role);
-
             User user = new User()
             {
                 Name = name,
@@ -37,7 +35,7 @@ namespace Restaurant.Database.Services.Implementations
             UserRole userRole = new UserRole()
             {
                 User = user,
-                Role = role
+                RoleId = roleId
             };
 
             user.Roles.Add(userRole);

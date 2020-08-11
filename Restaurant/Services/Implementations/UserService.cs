@@ -23,9 +23,9 @@ namespace Restaurant.Services.Implementations
 
         #region Methods
 
-        public void CreateUser(string name, string username, string password, Role role)
+        public void CreateUser(string name, string username, string password, int roleId)
         {
-            userDb.CreateUser(name, username, password, role);
+            userDb.CreateUser(name, username, password, roleId);
         }
 
         #endregion

@@ -172,12 +172,15 @@
     <Compile Include="Interfaces\IHavePassword.cs" />
     <Compile Include="Services\IItemService.cs" />
     <Compile Include="Services\Implementations\ItemService.cs" />
+    <Compile Include="Services\Implementations\RoleService.cs" />
     <Compile Include="Services\Implementations\UserService.cs" />
+    <Compile Include="Services\IRoleService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="ViewModels\AdminPanelViewModel.cs" />
     <Compile Include="ViewModels\AllItemViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CreateItemViewModel.cs" />
+    <Compile Include="ViewModels\CreateRoleViewModel.cs" />
     <Compile Include="ViewModels\CreateUserViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -193,6 +196,9 @@
     </Compile>
     <Compile Include="Views\CreateItemView.xaml.cs">
       <DependentUpon>CreateItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateRoleView.xaml.cs">
+      <DependentUpon>CreateRoleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateUserView.xaml.cs">
       <DependentUpon>CreateUserView.xaml</DependentUpon>
@@ -231,6 +237,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreateItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateRoleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
