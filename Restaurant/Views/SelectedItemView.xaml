@@ -5,9 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaurant.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="200" d:DesignWidth="400">
     <Grid>
-        <Button
-            Content="Selected"/>
+        <ListView
+            Margin="10"
+            x:Name="FromViewModel"
+            ItemsSource="{Binding Items}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Стока" 
+                                    Width="120" 
+                                    DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Количество" 
+                                    Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox
+                                        Text="{Binding ElementName=FromViewModel,Path=DataContext.Count,UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Цена" 
+                                    Width="100" 
+                                    DisplayMemberBinding="{Binding ElementName=FromViewModel,Path=DataContext.Total}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>
