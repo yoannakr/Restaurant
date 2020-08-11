@@ -14,10 +14,16 @@ namespace Restaurant.ViewModels
 
         private DelegateCommand<object> addUserCommand;
         private DelegateCommand<object> newRoleCommand;
-        private IUserService userService;
-        private IRoleService roleService;
+        private readonly IUserService userService;
+        private readonly IRoleService roleService;
         private BaseViewModel baseViewModel;
         private CreateRoleViewModel createRoleViewModel;
+        private AdminPanelViewModel adminPanelViewModel;
+        private string name;
+        private string username;
+        private Role role;
+        private string password;
+        private string confirmPassword;
 
         #endregion
 
@@ -33,12 +39,12 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public DelegateCommand<object> AddUserCommand 
+        public DelegateCommand<object> AddUserCommand
         {
             get
             {
                 if (addUserCommand == null)
-                    addUserCommand = new DelegateCommand<object>(CreateUser);
+                    addUserCommand = new DelegateCommand<object>(CreateUser, CanCreateUser);
 
                 return addUserCommand;
             }
@@ -65,7 +71,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public CreateRoleViewModel CreateRoleViewModel 
+        public CreateRoleViewModel CreateRoleViewModel
         {
             get
             {
@@ -81,21 +87,75 @@ namespace Restaurant.ViewModels
 
                 return createRoleViewModel;
             }
-            set
+        }
+
+        public AdminPanelViewModel AdminPanelViewModel
+        {
+            get
             {
-                createRoleViewModel = value;
-                OnPropertyChanged("CreateRoleViewModel");
+                if (adminPanelViewModel == null)
+                {
+                    adminPanelViewModel = new AdminPanelViewModel();
+                    AdminPanelView adminPanelView = new AdminPanelView();
+
+                    adminPanelViewModel.View = adminPanelView;
+
+                    adminPanelView.DataContext = adminPanelViewModel;
+                }
+
+                return adminPanelViewModel;
             }
         }
 
-        public string Name { get; set; }
+        public string Name 
+        {
+            get => name;
+            set
+            {
+                name = value;
+                AddUserCommand.RaiseCanExecuteChanged();
+            }
+        }
 
-        public string Username { get; set; }
+        public string Username 
+        {
+            get => username;
+            set
+            {
+                username = value;
+                AddUserCommand.RaiseCanExecuteChanged();
+            }
+        }    
 
-        public string Password { get; set; }
-        public Role Role { get; set; }
+        public Role Role
+        {
+            get => role;
+            set
+            {
+                role = value;
+                AddUserCommand.RaiseCanExecuteChanged();
+            }
+        }
 
-        public string ConfirmPassword { get; set; }
+        public string Password
+        {
+            get => password;
+            set
+            {
+                password = value;
+                AddUserCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public string ConfirmPassword 
+        {
+            get => confirmPassword;
+            set
+            {
+                confirmPassword = value;
+                AddUserCommand.RaiseCanExecuteChanged();
+            }
+        }
 
         public List<Role> Roles
         {
@@ -112,11 +172,29 @@ namespace Restaurant.ViewModels
         private void CreateUser(object obj)
         {
             userService.CreateUser(Name, Username, Password, Role.Id);
+            BaseViewModel = AdminPanelViewModel;
         }
+
+        private bool CanCreateUser(object arg)
+        {
+            return IsValid();
+        }
+
 
         private void CreateRole(object obj)
         {
             BaseViewModel = CreateRoleViewModel;
+        }
+
+        private bool IsValid()
+        {
+            if (Name == null || Username == null || Role == null)
+                return false;
+
+            if (Password != ConfirmPassword)
+                return false;
+
+            return true;
         }
 
         #endregion

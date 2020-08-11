@@ -2,5 +2,8 @@
 {
     public class SelectedItemViewModel : BaseViewModel
     {
+        #region Declarations
+
+        #endregion
     }
 }

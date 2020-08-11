@@ -1,7 +1,5 @@
-﻿using System;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Restaurant.Services;
-using System.Windows.Input;
 using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
@@ -102,7 +100,7 @@ namespace Restaurant.ViewModels
             Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
             openFileDlg.Filter = "Image files (*.png) | *.png";
 
-            Nullable<bool> result = openFileDlg.ShowDialog();
+            bool? result = openFileDlg.ShowDialog();
 
             if (result == true)
             {
@@ -123,7 +121,7 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
-            if (Name == null || Price == 0 || ImageContent == null)
+            if (Name == null || Price <=0 || ImageContent == null)
                 return false;
 
             return true;

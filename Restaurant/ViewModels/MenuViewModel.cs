@@ -1,7 +1,5 @@
-﻿using System;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Restaurant.Views;
-using System.Windows.Input;
 
 namespace Restaurant.ViewModels
 {
@@ -54,11 +52,6 @@ namespace Restaurant.ViewModels
 
                 return salesViewModel;
             }
-            set
-            {
-                salesViewModel = value;
-                OnPropertyChanged("SalesViewModel");
-            }
         }
 
         public AdminPanelViewModel AdminPanelViewModel
@@ -75,11 +68,6 @@ namespace Restaurant.ViewModels
 
 
                 return adminPanelViewModel;
-            }
-            set
-            {
-                adminPanelViewModel = value;
-                OnPropertyChanged("AdminPanelViewModel");
             }
         }
 

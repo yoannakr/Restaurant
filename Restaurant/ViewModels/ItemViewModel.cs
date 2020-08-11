@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using Prism.Commands;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -25,16 +24,7 @@ namespace Restaurant.ViewModels
 
         public ImageSource ImageSource
         {
-            get
-            {
-                BitmapImage biImg = new BitmapImage();
-                MemoryStream ms = new MemoryStream(Image);
-                biImg.BeginInit();
-                biImg.StreamSource = ms;
-                biImg.EndInit();
-
-                return biImg;
-            }
+            get => ConvertFromByteArrayToImageSource();
         }
 
         public DelegateCommand<object> AddItemToSelected
@@ -55,6 +45,17 @@ namespace Restaurant.ViewModels
         private void AddItem(object obj)
         {
             MessageBox.Show($"{Name}");
+        }
+
+        private ImageSource ConvertFromByteArrayToImageSource()
+        {
+            BitmapImage biImg = new BitmapImage();
+            MemoryStream ms = new MemoryStream(Image);
+            biImg.BeginInit();
+            biImg.StreamSource = ms;
+            biImg.EndInit();
+
+            return biImg;
         }
 
         #endregion

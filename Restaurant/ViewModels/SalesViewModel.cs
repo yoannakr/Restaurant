@@ -29,11 +29,6 @@ namespace Restaurant.ViewModels
 
                 return allItemViewModel;
             }
-            set
-            {
-                allItemViewModel = value;
-                OnPropertyChanged("AllItemViewModel");
-            }
         }
 
         public SelectedItemViewModel SelectedItemViewModel
@@ -51,11 +46,6 @@ namespace Restaurant.ViewModels
                 }
 
                 return selectedItemViewModel;
-            }
-            set
-            {
-                selectedItemViewModel = value;
-                OnPropertyChanged("SelectedItemViewModel");
             }
         }
 

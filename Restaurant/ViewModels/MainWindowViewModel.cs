@@ -48,12 +48,8 @@ namespace Restaurant.ViewModels
 
                 return loginViewModel;
             }
-            set
-            {
-                loginViewModel = value;
-                OnPropertyChanged("LoginViewModel");
-            }
         }
+
         #endregion
     }
 }

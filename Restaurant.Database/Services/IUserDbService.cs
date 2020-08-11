@@ -1,6 +1,4 @@
-﻿using Restaurant.Database.Models;
-
-namespace Restaurant.Database.Services
+﻿namespace Restaurant.Database.Services
 {
     public interface IUserDbService
     {

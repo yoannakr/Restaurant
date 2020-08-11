@@ -9,7 +9,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private IItemService itemService;
+        private readonly IItemService itemService;
         private List<ItemViewModel> itemViewModels;
 
         #endregion
