@@ -2,9 +2,9 @@
 using Prism.Commands;
 using Restaurant.Views;
 using Restaurant.Services;
+using System.Collections.Generic;
 using Restaurant.Database.Models;
 using Restaurant.Services.Implementations;
-using System.Collections.Generic;
 
 namespace Restaurant.ViewModels
 {
