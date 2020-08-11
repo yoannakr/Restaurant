@@ -5,7 +5,6 @@ using Restaurant.Services;
 using System.Collections.Generic;
 using Restaurant.Database.Models;
 using Restaurant.Services.Implementations;
-using System;
 
 namespace Restaurant.ViewModels
 {
