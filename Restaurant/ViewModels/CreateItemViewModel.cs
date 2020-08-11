@@ -10,10 +10,13 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private ICommand browseCommand;
-        private ICommand createItemCommand;
+        private DelegateCommand<object> browseCommand;
+        private DelegateCommand<object> createItemCommand;
         private readonly IItemService itemService;
+        private string name;
+        private decimal price;
         private string imageSource;
+        private byte[] imageContent;
 
         #endregion
 
@@ -28,11 +31,27 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                CreateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
 
-        public decimal Price { get; set; }
+        public decimal Price
+        {
+            get => price;
+            set
+            {
+                price = value;
+                CreateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
 
-        public string ImageSource 
+        public string ImageSource
         {
             get => imageSource;
             set
@@ -42,9 +61,17 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public byte[] ImageContent { get; set; }
+        public byte[] ImageContent
+        {
+            get => imageContent;
+            set
+            {
+                imageContent = value;
+                CreateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
 
-        public ICommand BrowseCommand
+        public DelegateCommand<object> BrowseCommand
         {
             get
             {
@@ -55,12 +82,12 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public ICommand CreateItemCommand
+        public DelegateCommand<object> CreateItemCommand
         {
             get
             {
                 if (createItemCommand == null)
-                    createItemCommand = new DelegateCommand<object>(CreateItem);
+                    createItemCommand = new DelegateCommand<object>(CreateItem, CanCreateItem);
 
                 return createItemCommand;
             }
@@ -87,6 +114,19 @@ namespace Restaurant.ViewModels
         private void CreateItem(object obj)
         {
             itemService.CreateItem(Name, Price, ImageContent);
+        }
+
+        private bool CanCreateItem(object arg)
+        {
+            return IsValid();
+        }
+
+        private bool IsValid()
+        {
+            if (Name == null || Price == 0 || ImageContent == null)
+                return false;
+
+            return true;
         }
 
         #endregion

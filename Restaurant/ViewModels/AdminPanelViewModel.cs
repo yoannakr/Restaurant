@@ -8,8 +8,8 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private ICommand newUserCommand;
-        private ICommand newItemCommand;
+        private DelegateCommand<object> newUserCommand;
+        private DelegateCommand<object> newItemCommand;
         private BaseViewModel baseViewModel;
         private CreateUserViewModel createUserViewModel;
         private CreateItemViewModel createItemViewModel;
@@ -18,7 +18,7 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public ICommand NewUserCommand 
+        public DelegateCommand<object> NewUserCommand 
         {
             get
             {
@@ -29,7 +29,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public ICommand NewItemCommand 
+        public DelegateCommand<object> NewItemCommand 
         { get
             {
                 if (newItemCommand == null)

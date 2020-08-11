@@ -11,7 +11,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private ICommand addItemToSelected;
+        private DelegateCommand<object> addItemToSelected;
 
         #endregion
 
@@ -37,7 +37,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public ICommand AddItemToSelected
+        public DelegateCommand<object> AddItemToSelected
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Restaurant.ViewModels
                 return addItemToSelected;
             }
         }
-
+ 
         #endregion
 
         #region Methods
