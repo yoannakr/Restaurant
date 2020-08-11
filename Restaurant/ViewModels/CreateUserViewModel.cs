@@ -1,8 +1,10 @@
-﻿using Prism.Commands;
+﻿using System.Linq;
+using Prism.Commands;
+using Restaurant.Views;
 using Restaurant.Services;
-using System.Windows.Input;
 using Restaurant.Database.Models;
 using Restaurant.Services.Implementations;
+using System.Collections.Generic;
 
 namespace Restaurant.ViewModels
 {
@@ -11,7 +13,11 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private DelegateCommand<object> addUserCommand;
+        private DelegateCommand<object> newRoleCommand;
         private IUserService userService;
+        private IRoleService roleService;
+        private BaseViewModel baseViewModel;
+        private CreateRoleViewModel createRoleViewModel;
 
         #endregion
 
@@ -20,6 +26,7 @@ namespace Restaurant.ViewModels
         public CreateUserViewModel()
         {
             userService = new UserService();
+            roleService = new RoleService();
         }
 
         #endregion
@@ -37,22 +44,64 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public DelegateCommand<object> NewRoleCommand
+        {
+            get
+            {
+                if (newRoleCommand == null)
+                    newRoleCommand = new DelegateCommand<object>(CreateRole);
+
+                return newRoleCommand;
+            }
+        }
+
+        public BaseViewModel BaseViewModel
+        {
+            get => baseViewModel;
+            set
+            {
+                baseViewModel = value;
+                OnPropertyChanged("BaseViewModel");
+            }
+        }
+
+        public CreateRoleViewModel CreateRoleViewModel 
+        {
+            get
+            {
+                if (createRoleViewModel == null)
+                {
+                    createRoleViewModel = new CreateRoleViewModel();
+                    CreateRoleView createRoleView = new CreateRoleView();
+
+                    createRoleViewModel.View = createRoleView;
+
+                    createRoleView.DataContext = createRoleViewModel;
+                }
+
+                return createRoleViewModel;
+            }
+            set
+            {
+                createRoleViewModel = value;
+                OnPropertyChanged("CreateRoleViewModel");
+            }
+        }
+
         public string Name { get; set; }
 
         public string Username { get; set; }
 
         public string Password { get; set; }
+        public Role Role { get; set; }
 
         public string ConfirmPassword { get; set; }
 
-        public Role Role 
+        public List<Role> Roles
         {
             get
             {
-                return new Role()
-                {
-                    Name = "Admin"
-                };
+                return roleService.GetAllRoles().ToList();
             }
         }
 
@@ -62,7 +111,12 @@ namespace Restaurant.ViewModels
 
         private void CreateUser(object obj)
         {
-            userService.CreateUser(Name, Username, Password, Role);
+            userService.CreateUser(Name, Username, Password, Role.Id);
+        }
+
+        private void CreateRole(object obj)
+        {
+            BaseViewModel = CreateRoleViewModel;
         }
 
         #endregion
