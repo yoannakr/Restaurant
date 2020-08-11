@@ -5,11 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaurant.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="200" d:DesignWidth="400">
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding ItemViewModels}"
-                      VerticalAlignment="Top">
+            <ItemsControl VerticalAlignment="Top"
+                          x:Name="FromViewModel"
+                          ItemsSource="{Binding Items}">
+                <!-- x:Name is like variable, this is binding from DataContext -->
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal"/>
@@ -22,7 +24,8 @@
                         Height="100"
                         Width="100"
                         Background="#f0edc7"
-                        Command="{Binding AddItemToSelected}">
+                        Command="{Binding ElementName=FromViewModel, Path=DataContext.AddItemToSelected}"
+                        CommandParameter="{Binding Name}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
@@ -43,6 +46,7 @@
                                            Grid.Column="1" 
                                            TextWrapping="Wrap"
                                            Text="{Binding Name}"/>
+                                <!-- this is binding from ItemsSource -->
                                 <TextBlock Grid.Row="1" 
                                            Grid.Column="1" 
                                            TextWrapping="Wrap"

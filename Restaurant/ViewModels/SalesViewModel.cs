@@ -19,7 +19,7 @@ namespace Restaurant.ViewModels
             {
                 if (allItemViewModel == null)
                 {
-                    allItemViewModel = new AllItemViewModel();
+                    allItemViewModel = new AllItemViewModel(this);
                     AllItemView allItemView = new AllItemView();
 
                     allItemViewModel.View = allItemView;

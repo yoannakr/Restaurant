@@ -1,4 +1,4 @@
-﻿using Restaurant.ViewModels;
+﻿using Restaurant.Services.Models.Item;
 using System.Collections.Generic;
 
 namespace Restaurant.Services
@@ -7,6 +7,6 @@ namespace Restaurant.Services
     {
         void CreateItem(string name, decimal price, byte[] imageContent);
 
-        IEnumerable<ItemViewModel> GetAllItems();
+        IEnumerable<ItemWithImageSourceServiceModel> GetAllItems();
     }
 }

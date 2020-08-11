@@ -1,7 +1,10 @@
-﻿using System.Linq;
-using Restaurant.ViewModels;
+﻿using System.IO;
+using System.Linq;
+using System.Windows.Media;
 using System.Collections.Generic;
+using System.Windows.Media.Imaging;
 using Restaurant.Database.Services;
+using Restaurant.Services.Models.Item;
 using Restaurant.Database.Services.Implementations;
 
 namespace Restaurant.Services.Implementations
@@ -25,19 +28,30 @@ namespace Restaurant.Services.Implementations
 
         #region Methods
 
-        public IEnumerable<ItemViewModel> GetAllItems()
+        public IEnumerable<ItemWithImageSourceServiceModel> GetAllItems()
         {
-            return itemDb.GetAllItems().Select(i => new ItemViewModel
+            return itemDb.GetAllItems().Select(i => new ItemWithImageSourceServiceModel
             {
                 Name = i.Name,
                 Price = i.Price,
-                Image = i.Image.Content
+                ImageSource = ConvertFromByteArrayToImageSource(i.Image.Content)
             }).ToList();
         }
 
         public void CreateItem(string name, decimal price, byte[] imageContent)
         {
             itemDb.CreateItem(name, price, imageContent);
+        }
+
+        private static ImageSource ConvertFromByteArrayToImageSource(byte[] imageContent)
+        {
+            BitmapImage biImg = new BitmapImage();
+            MemoryStream ms = new MemoryStream(imageContent);
+            biImg.BeginInit();
+            biImg.StreamSource = ms;
+            biImg.EndInit();
+
+            return biImg;
         }
 
         #endregion
