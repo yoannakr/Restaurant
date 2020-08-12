@@ -20,7 +20,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button
-                        Margin="5"
+                        Margin="2"
                         Height="120"
                         Width="120"
                         Background="#f0edc7"

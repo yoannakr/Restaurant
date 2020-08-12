@@ -76,7 +76,18 @@ namespace Restaurant.ViewModels
                 Total = itemDto.Price
             };
 
-            rowItemViewModel.Extras.Add(rowItemViewModel);
+            RowItemViewModel extra = new RowItemViewModel()
+            {
+                Item = new Item()
+                {
+                    Name = itemDto.Name,
+                    Price = itemDto.Price
+                },
+                Count = 1,
+                Total = itemDto.Price
+            };
+
+            rowItemViewModel.Extras.Add(extra);
 
             this.salesViewModel.SelectedItemViewModel.Items.Add(rowItemViewModel);
         }

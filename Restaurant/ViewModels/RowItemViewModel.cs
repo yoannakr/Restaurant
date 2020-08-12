@@ -1,4 +1,5 @@
-﻿using Restaurant.Database.Models;
+﻿using Prism.Commands;
+using Restaurant.Database.Models;
 using System.Collections.ObjectModel;
 
 namespace Restaurant.ViewModels
@@ -7,6 +8,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
+        private DelegateCommand<object> deleteExtraCommand;
         private decimal total;
         private int count;
         private ObservableCollection<RowItemViewModel> extras;
@@ -47,6 +49,29 @@ namespace Restaurant.ViewModels
                 OnPropertyChanged("Total");
             }
         }
+
+        public DelegateCommand<object> DeleteExtraCommand
+        {
+            get
+            {
+                if (deleteExtraCommand == null)
+                    deleteExtraCommand = new DelegateCommand<object>(DeleteExtra);
+
+                return deleteExtraCommand;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void DeleteExtra(object obj)
+        {
+            RowItemViewModel item = obj as RowItemViewModel;
+
+            Extras.Remove(item);
+        }
+
 
         #endregion
     }

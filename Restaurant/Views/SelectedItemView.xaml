@@ -7,47 +7,70 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="400">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="30"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <TextBlock
+        <Border
+            BorderBrush="Gray"
+            BorderThickness="0.5,0.5,0.5,0"
+            Height="30"
+            Width="360"
+            VerticalAlignment="Top"
+            Background="White">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0"/>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock
             Grid.Column="1"
             Grid.Row="0"
             TextAlignment="Center"
             VerticalAlignment="Center"
             Text="Стока"/>
-        <TextBlock
+                <TextBlock
             Grid.Column="2"
             Grid.Row="0"
             TextAlignment="Center"
             VerticalAlignment="Center"
             Text="Количество"/>
-        <TextBlock
+                <TextBlock
             Grid.Column="3"
             Grid.Row="0"
             TextAlignment="Center"
             VerticalAlignment="Center"
             Text="Цена"/>
-        <ListBox
+            </Grid>
+        </Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition />
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="40"/>
+        </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ListBox
             Grid.ColumnSpan="5"
             Grid.Row="1"
             Height="250"
-            Width="350"
+            Width="360"
             VerticalAlignment="Top"
+            x:Name="FromViewModel"
             ItemsSource="{Binding Items}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="35"/>
                             <ColumnDefinition Width="90"/>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="80"/>
@@ -67,12 +90,13 @@
                             Height="20"
                             HorizontalAlignment="Left">
                             <Image
-                                Source="C:\Users\yoanna.krasteva\source\repos\Restaurant2\Restaurant\Images\plus.png"/>
+                                Source="C:\Users\User\Desktop\plus.png"/>
                         </Button>
                         <TextBlock
                             Grid.Column="1"
                             Grid.Row="0"
                             TextWrapping="Wrap"
+                            VerticalAlignment="Center"
                             Text="{Binding Item.Name}"/>
                         <TextBox
                             Grid.Column="2"
@@ -86,6 +110,7 @@
                             Grid.Column="3"
                             Grid.Row="0"
                             TextAlignment="Center"
+                            VerticalAlignment="Center"
                             Width="60"
                             Text="{Binding Total}"/>
                         <Button
@@ -93,12 +118,15 @@
                             Grid.Row="0"
                             Content="X"
                             BorderBrush="Transparent"
-                            Background="Transparent"/>
+                            Background="Transparent"
+                            Command="{Binding ElementName=FromViewModel, Path=DataContext.DeleteItemCommand}"
+                            CommandParameter="{Binding}"/>
                         <ListBox
                             Grid.ColumnSpan="5"
                             Grid.Row="1"
                             Width="330"
                             Margin="40,0,0,0"
+                            Background="Transparent"
                             BorderThickness="0"
                             Visibility="Visible"
                             ItemsSource="{Binding Extras}">
@@ -107,13 +135,14 @@
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="90"/>
-                                            <ColumnDefinition Width="100"/>
-                                            <ColumnDefinition Width="70"/>
-                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="90"/>
+                                            <ColumnDefinition Width="30"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock
                                             Grid.Column="0"
                                             TextWrapping="Wrap"
+                                            VerticalAlignment="Center"
                                             Text="{Binding Item.Name}"/>
                                         <TextBox
                                             Grid.Column="1"
@@ -126,12 +155,16 @@
                                             Grid.Column="2"
                                             TextAlignment="Center"
                                             Width="60"
+                                            VerticalAlignment="Center"
+                                            Margin="6,0,0,0"
                                             Text="{Binding Total}"/>
                                         <Button
                                             Grid.Column="3"
                                             Content="X"
                                             BorderBrush="Transparent"
-                                            Background="Transparent"/>
+                                            Background="Transparent"
+                                            Command="{Binding DeleteExtraCommand}"
+                                            CommandParameter="{Binding}"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -140,5 +173,58 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Border
+            Grid.ColumnSpan="5"
+            Grid.Row="1"
+            VerticalAlignment="Bottom"
+            Margin="17,0,16.5,66"
+            Background="White"
+            BorderBrush="Gray"
+            Height="30"
+            BorderThickness="0.5,0.5,0.5,0.5">
+            <StackPanel
+                Margin="5,0,0,0"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBlock
+                Margin="5,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="12pt"
+                Text="Тотал"/>
+                <TextBlock
+                Margin="205,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="12pt"
+                Text="11.70"/>
+            </StackPanel>
+        </Border>
+        <TextBlock
+            Grid.ColumnSpan="5"
+            Grid.Row="1"
+            VerticalAlignment="Bottom"
+            Margin="18,0,16.5,30"
+            FontSize="12pt"
+            Text="Платени"/>
+        <TextBox
+            Grid.ColumnSpan="3"
+            Grid.Row="1"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Margin="90,0,16.5,30"
+            FontSize="12pt"
+            MaxWidth="80"
+            MaxLength="10"/>
+        <Button
+            Grid.ColumnSpan="5"
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Height="30"
+            Width="70"
+            Margin="225,0,16.5,30"
+            Background="White"
+            FontSize="12pt"
+            Content="Прикл."/>
+    </Grid>
     </Grid>
 </UserControl>

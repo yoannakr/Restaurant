@@ -1,4 +1,5 @@
-﻿using Restaurant.Services.Models.Item;
+﻿using Prism.Commands;
+using System;
 using System.Collections.ObjectModel;
 
 namespace Restaurant.ViewModels
@@ -7,6 +8,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
+        private DelegateCommand<object> deleteItemCommand;
         private ObservableCollection<RowItemViewModel> items;
 
         #endregion
@@ -23,6 +25,29 @@ namespace Restaurant.ViewModels
                 return items;
             }
         }
+
+        public DelegateCommand<object> DeleteItemCommand
+        {
+            get
+            {
+                if (deleteItemCommand == null)
+                    deleteItemCommand = new DelegateCommand<object>(DeleteItem);
+
+                return deleteItemCommand;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void DeleteItem(object obj)
+        {
+            RowItemViewModel item = obj as RowItemViewModel;
+
+            Items.Remove(item);
+        }
+
 
         #endregion
     }
