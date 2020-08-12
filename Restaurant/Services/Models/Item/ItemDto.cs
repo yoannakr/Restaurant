@@ -2,7 +2,7 @@
 
 namespace Restaurant.Services.Models.Item
 {
-    public class ItemWithImageSourceServiceModel
+    public class ItemDto
     {
         public string Name { get; set; }
 

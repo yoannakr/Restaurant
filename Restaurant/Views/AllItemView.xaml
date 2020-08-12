@@ -20,12 +20,13 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button
-                        Margin="10"
-                        Height="100"
-                        Width="100"
+                        Margin="5"
+                        Height="120"
+                        Width="120"
                         Background="#f0edc7"
+                        BorderThickness="0"
                         Command="{Binding ElementName=FromViewModel, Path=DataContext.AddItemToSelected}"
-                        CommandParameter="{Binding Name}">
+                        CommandParameter="{Binding}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />

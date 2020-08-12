@@ -15,7 +15,7 @@ namespace Restaurant.ViewModels
 
         private DelegateCommand<object> addItemToSelected;
         private readonly IItemService itemService;
-        private List<ItemWithImageSourceServiceModel> items;
+        private List<ItemDto> items;
         private SalesViewModel salesViewModel;
 
         #endregion
@@ -43,12 +43,12 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public List<ItemWithImageSourceServiceModel> Items
+        public List<ItemDto> Items
         {
             get
             {
                 if (items == null)
-                    items = new List<ItemWithImageSourceServiceModel>();
+                    items = new List<ItemDto>();
 
                 items = itemService.GetAllItems().ToList();
 
@@ -63,10 +63,22 @@ namespace Restaurant.ViewModels
 
         private void AddItem(object obj)
         {
-            // make id,search by id
-            string name = obj as string;
+            ItemDto itemDto = obj as ItemDto;
 
-            //this.salesViewModel.SelectedItemViewModel.Items.Add(item);
+            RowItemViewModel rowItemViewModel = new RowItemViewModel()
+            {
+                Item = new Item()
+                {
+                    Name = itemDto.Name,
+                    Price = itemDto.Price
+                },
+                Count = 1,
+                Total = itemDto.Price
+            };
+
+            rowItemViewModel.Extras.Add(rowItemViewModel);
+
+            this.salesViewModel.SelectedItemViewModel.Items.Add(rowItemViewModel);
         }
 
         #endregion
