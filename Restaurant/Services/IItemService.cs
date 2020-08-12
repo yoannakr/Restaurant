@@ -7,6 +7,6 @@ namespace Restaurant.Services
     {
         void CreateItem(string name, decimal price, byte[] imageContent);
 
-        IEnumerable<ItemWithImageSourceServiceModel> GetAllItems();
+        IEnumerable<ItemDto> GetAllItems();
     }
 }

@@ -1,5 +1,5 @@
-﻿using Restaurant.Database.Models;
-using System.Collections.Generic;
+﻿using Restaurant.Services.Models.Item;
+using System.Collections.ObjectModel;
 
 namespace Restaurant.ViewModels
 {
@@ -7,26 +7,22 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private List<Item> items;
+        private ObservableCollection<RowItemViewModel> items;
 
         #endregion
 
         #region Properties
 
-        public List<Item> Items
+        public ObservableCollection<RowItemViewModel> Items
         {
             get
             {
                 if (items == null)
-                    items = new List<Item>();
+                    items = new ObservableCollection<RowItemViewModel>();
 
                 return items;
             }
         }
-
-        public int Count { get; set; } = 1;
-
-        public decimal Total { get; set; }
 
         #endregion
     }

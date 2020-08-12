@@ -28,9 +28,9 @@ namespace Restaurant.Services.Implementations
 
         #region Methods
 
-        public IEnumerable<ItemWithImageSourceServiceModel> GetAllItems()
+        public IEnumerable<ItemDto> GetAllItems()
         {
-            return itemDb.GetAllItems().Select(i => new ItemWithImageSourceServiceModel
+            return itemDb.GetAllItems().Select(i => new ItemDto
             {
                 Name = i.Name,
                 Price = i.Price,
