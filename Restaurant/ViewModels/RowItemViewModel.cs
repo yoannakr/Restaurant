@@ -12,6 +12,16 @@ namespace Restaurant.ViewModels
         private decimal total;
         private int count;
         private ObservableCollection<RowItemViewModel> extras;
+        private SelectedItemViewModel selectedItemViewModel;
+
+        #endregion
+
+        #region Constructors
+
+        public RowItemViewModel(SelectedItemViewModel selectedItemViewModel)
+        {
+            this.selectedItemViewModel = selectedItemViewModel;
+        }
 
         #endregion
 
@@ -28,6 +38,8 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public RowItemViewModel RowItemViewModelex { get; set; }
+
         public Item Item { get; set; }
 
         public int Count
@@ -36,7 +48,10 @@ namespace Restaurant.ViewModels
             set
             {
                 count = value;
+                selectedItemViewModel.Total -= Total;
                 Total = count * Item.Price;
+                selectedItemViewModel.Total += Total;
+                OnPropertyChanged("Count");
             }
         }
 
@@ -69,7 +84,9 @@ namespace Restaurant.ViewModels
         {
             RowItemViewModel item = obj as RowItemViewModel;
 
-            Extras.Remove(item);
+            RowItemViewModelex.Extras.Remove(item);
+
+            selectedItemViewModel.Total -= item.Total;
         }
 
 

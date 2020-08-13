@@ -64,8 +64,11 @@
             Height="250"
             Width="360"
             VerticalAlignment="Top"
+            BorderThickness="0.5"
             x:Name="FromViewModel"
-            ItemsSource="{Binding Items}">
+            ItemsSource="{Binding Items}"
+            SelectedItem="{Binding SelectedItem}"
+            SelectionMode="Single">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -90,7 +93,7 @@
                             Height="20"
                             HorizontalAlignment="Left">
                             <Image
-                                Source="C:\Users\User\Desktop\plus.png"/>
+                                Source="C:\Users\yoanna.krasteva\source\repos\Restaurant\Restaurant\Images\plus.png"/>
                         </Button>
                         <TextBlock
                             Grid.Column="1"
@@ -195,7 +198,7 @@
                 Margin="205,0,0,0"
                 VerticalAlignment="Center"
                 FontSize="12pt"
-                Text="11.70"/>
+                Text="{Binding Total}"/>
             </StackPanel>
         </Border>
         <TextBlock

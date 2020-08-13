@@ -32,6 +32,7 @@ namespace Restaurant.Services.Implementations
         {
             return itemDb.GetAllItems().Select(i => new ItemDto
             {
+                Id = i.Id,
                 Name = i.Name,
                 Price = i.Price,
                 ImageSource = ConvertFromByteArrayToImageSource(i.Image.Content)

@@ -40,9 +40,9 @@ namespace Restaurant.ViewModels
                     selectedItemViewModel = new SelectedItemViewModel();
                     SelectedItemView selectedItemView = new SelectedItemView();
 
-                    allItemViewModel.View = selectedItemView;
+                    selectedItemViewModel.View = selectedItemView;
 
-                    selectedItemView.DataContext = allItemViewModel;
+                    selectedItemView.DataContext = selectedItemViewModel;
                 }
 
                 return selectedItemViewModel;

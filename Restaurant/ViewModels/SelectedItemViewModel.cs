@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
-using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
 
 namespace Restaurant.ViewModels
 {
@@ -10,6 +11,7 @@ namespace Restaurant.ViewModels
 
         private DelegateCommand<object> deleteItemCommand;
         private ObservableCollection<RowItemViewModel> items;
+        private decimal total;
 
         #endregion
 
@@ -37,6 +39,18 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public RowItemViewModel SelectedItem { get; set; }
+
+        public decimal Total 
+        {
+            get => total;
+            set
+            {
+                total = value;
+                OnPropertyChanged("Total");
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -46,6 +60,8 @@ namespace Restaurant.ViewModels
             RowItemViewModel item = obj as RowItemViewModel;
 
             Items.Remove(item);
+
+            Total -= item.Total;
         }
 
 

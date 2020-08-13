@@ -17,6 +17,7 @@ namespace Restaurant.ViewModels
         private readonly IItemService itemService;
         private List<ItemDto> items;
         private SalesViewModel salesViewModel;
+        private SelectedItemViewModel selectedItemViewModel;
 
         #endregion
 
@@ -26,6 +27,7 @@ namespace Restaurant.ViewModels
         {
             itemService = new ItemService();
             this.salesViewModel = salesViewModel;
+            this.selectedItemViewModel = salesViewModel.SelectedItemViewModel;
         }
 
         #endregion
@@ -65,31 +67,48 @@ namespace Restaurant.ViewModels
         {
             ItemDto itemDto = obj as ItemDto;
 
-            RowItemViewModel rowItemViewModel = new RowItemViewModel()
+            RowItemViewModel selectedItem = selectedItemViewModel.SelectedItem;
+
+            if (selectedItem != null)
             {
-                Item = new Item()
+                if(selectedItem.Item.Id == itemDto.Id)
                 {
-                    Name = itemDto.Name,
-                    Price = itemDto.Price
-                },
-                Count = 1,
-                Total = itemDto.Price
-            };
+                    selectedItem.Count += 1;
 
-            RowItemViewModel extra = new RowItemViewModel()
+                    return;
+                }
+
+                RowItemViewModel extra = new RowItemViewModel(selectedItemViewModel)
+                {
+                    Item = new Item()
+                    {
+                        Name = itemDto.Name,
+                        Price = itemDto.Price
+                    },
+                    Count = 1,
+                    Total = itemDto.Price,
+                    RowItemViewModelex = selectedItemViewModel.SelectedItem
+                };
+
+                selectedItemViewModel.SelectedItem.Extras.Add(extra);
+            }
+            else
             {
-                Item = new Item()
+                RowItemViewModel rowItemViewModel = new RowItemViewModel(selectedItemViewModel)
                 {
-                    Name = itemDto.Name,
-                    Price = itemDto.Price
-                },
-                Count = 1,
-                Total = itemDto.Price
-            };
+                    Item = new Item()
+                    {
+                        Id = itemDto.Id,
+                        Name = itemDto.Name,
+                        Price = itemDto.Price
+                    },
+                    Count = 1,
+                    Total = itemDto.Price
+                };
 
-            rowItemViewModel.Extras.Add(extra);
+                selectedItemViewModel.Items.Add(rowItemViewModel);
+            }
 
-            this.salesViewModel.SelectedItemViewModel.Items.Add(rowItemViewModel);
         }
 
         #endregion

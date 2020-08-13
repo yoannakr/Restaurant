@@ -65,7 +65,6 @@ namespace Restaurant.ViewModels
 
                 adminPanelView.DataContext = adminPanelViewModel;
 
-
                 return adminPanelViewModel;
             }
         }
