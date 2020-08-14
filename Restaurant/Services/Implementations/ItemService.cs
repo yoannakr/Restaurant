@@ -17,7 +17,7 @@ namespace Restaurant.Services.Implementations
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public ItemService()
         {

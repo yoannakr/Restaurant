@@ -1,6 +1,6 @@
-﻿using Restaurant.Database.Data;
+﻿using System.Linq;
+using Restaurant.Database.Data;
 using Restaurant.Database.Models;
-using System.Collections.Generic;
 
 namespace Restaurant.Database.Services.Implementations
 {
@@ -12,7 +12,7 @@ namespace Restaurant.Database.Services.Implementations
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public UserDbService()
         {
@@ -43,6 +43,11 @@ namespace Restaurant.Database.Services.Implementations
             context.Users.Add(user);
 
             context.SaveChanges();
+        }
+
+        public IQueryable<User> GetAllUsers()
+        {
+            return context.Users;
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Prism.Commands;
+using System.Windows;
 using Restaurant.Views;
 using Restaurant.Services;
 using System.Collections.Generic;
@@ -19,15 +20,15 @@ namespace Restaurant.ViewModels
         private BaseViewModel baseViewModel;
         private CreateRoleViewModel createRoleViewModel;
         private AdminPanelViewModel adminPanelViewModel;
+        private Role role;
         private string name;
         private string username;
-        private Role role;
         private string password;
         private string confirmPassword;
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public CreateUserViewModel()
         {
@@ -157,6 +158,8 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public User User { get; set; }
+
         public List<Role> Roles
         {
             get
@@ -171,6 +174,16 @@ namespace Restaurant.ViewModels
 
         private void CreateUser(object obj)
         {
+            User = userService.GetAllUsers()
+                              .Where(u => u.Username == Username)
+                              .FirstOrDefault();
+
+            if (User != null)
+            {
+                MessageBox.Show("User with that username already exist.");
+                return;
+            }
+
             userService.CreateUser(Name, Username, Password, Role.Id);
             BaseViewModel = AdminPanelViewModel;
         }

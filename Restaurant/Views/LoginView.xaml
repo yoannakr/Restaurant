@@ -47,7 +47,8 @@
                                  Margin="0,26" 
                                  Width="150" 
                                  VerticalContentAlignment="Center"
-                                 HorizontalContentAlignment="Left"/>
+                                 HorizontalContentAlignment="Left"
+                                 Text="{Binding Username}"/>
                         <TextBlock Grid.Row="1" 
                                Grid.Column="0" 
                                Margin="0,5" 

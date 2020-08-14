@@ -12,7 +12,7 @@ namespace Restaurant.Database.Services.Implementations
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public ItemDbService()
         {

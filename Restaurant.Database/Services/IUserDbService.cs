@@ -1,7 +1,12 @@
-﻿namespace Restaurant.Database.Services
+﻿using System.Linq;
+using Restaurant.Database.Models;
+
+namespace Restaurant.Database.Services
 {
     public interface IUserDbService
     {
         void CreateUser(string name, string username, string password, int roleId);
+
+        IQueryable<User> GetAllUsers();
     }
 }

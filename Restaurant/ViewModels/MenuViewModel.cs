@@ -1,6 +1,5 @@
 ﻿using Prism.Commands;
 using Restaurant.Views;
-using System;
 
 namespace Restaurant.ViewModels
 {
@@ -19,7 +18,7 @@ namespace Restaurant.ViewModels
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public MenuViewModel()
         {

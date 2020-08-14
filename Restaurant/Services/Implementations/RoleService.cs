@@ -14,7 +14,7 @@ namespace Restaurant.Services.Implementations
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public RoleService()
         {
@@ -34,11 +34,7 @@ namespace Restaurant.Services.Implementations
 
         public IEnumerable<Role> GetAllRoles()
         {
-            return roleDb.GetAllRoles().Select(i => new Role
-            {
-                Id = i.Id,
-                Name = i.Name
-            }).ToList();
+            return roleDb.GetAllRoles();
         }
 
         #endregion

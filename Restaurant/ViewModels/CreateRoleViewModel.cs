@@ -1,8 +1,8 @@
-﻿using Prism.Commands;
+﻿using System;
+using Prism.Commands;
 using Restaurant.Views;
 using Restaurant.Services;
 using Restaurant.Services.Implementations;
-using System;
 
 namespace Restaurant.ViewModels
 {
@@ -11,14 +11,14 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private DelegateCommand<object> addRoleCommand;
-        private IRoleService roleService;
+        private readonly IRoleService roleService;
         private BaseViewModel baseViewModel;
         private CreateUserViewModel createUserViewModel;
         private string name;
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public CreateRoleViewModel()
         {

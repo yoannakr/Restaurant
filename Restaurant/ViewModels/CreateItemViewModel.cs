@@ -18,7 +18,7 @@ namespace Restaurant.ViewModels
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public CreateItemViewModel()
         {

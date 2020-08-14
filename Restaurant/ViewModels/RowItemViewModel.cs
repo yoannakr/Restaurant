@@ -11,10 +11,10 @@ namespace Restaurant.ViewModels
         private DelegateCommand<object> deleteExtraCommand;
         private DelegateCommand<object> showOrHideListCommand;
         private ObservableCollection<RowItemViewModel> extras;
-        private decimal total;
-        private int count;
         private bool showListBtnVisibility;
         private bool listVisibility;
+        private decimal total;
+        private int count;
 
         #endregion
 
@@ -85,7 +85,6 @@ namespace Restaurant.ViewModels
             set
             {
                 showListBtnVisibility = value;
-
                 OnPropertyChanged("ShowListBtnVisibility");
             }
         }
@@ -96,7 +95,6 @@ namespace Restaurant.ViewModels
             set
             {
                 listVisibility = value;
-
                 OnPropertyChanged("ListVisibility");
             }
         }

@@ -29,10 +29,6 @@ namespace Restaurant.ViewModels
 
                 return items;
             }
-            private set
-            {
-                items = value;
-            }
         }
 
         public RowItemViewModel SelectedItem { get; set; }

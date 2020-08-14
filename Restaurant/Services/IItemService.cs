@@ -1,5 +1,5 @@
-﻿using Restaurant.Services.Models.Item;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Restaurant.Services.Models.Item;
 
 namespace Restaurant.Services
 {
