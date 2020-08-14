@@ -14,8 +14,12 @@
         <DataTemplate DataType="{x:Type vm:AdminPanelViewModel}">
             <v:AdminPanelView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+            <v:LoginView/>
+        </DataTemplate>
     </UserControl.Resources>
-    <Grid
+    <Grid>
+        <Grid
         Background="AliceBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -59,13 +63,13 @@
                 Content="Админ"
                 Command="{Binding AdminPanelCommand}"/>
         </Border>
-        <Border
+            <Border
             Grid.Column="2"
             Grid.Row="0"
             Margin="280,10,10,8"
             CornerRadius="20"
             Background="#ede9a8">
-            <Button
+                <Button
                 Background="Transparent"
                 BorderBrush="Transparent"
                 FontSize="12pt"
@@ -74,10 +78,13 @@
                 FontStyle="Oblique"
                 Content="Излез"
                 Command="{Binding ExitCommand}"/>
-        </Border>
-        <ContentPresenter
+            </Border>
+            <ContentPresenter
             Grid.ColumnSpan="3"
             Grid.Row="1"
             Content="{Binding BaseViewModel}"/>
+        </Grid>
+        <ContentPresenter
+            Content="{Binding ExitViewModel}"/>
     </Grid>
 </UserControl>

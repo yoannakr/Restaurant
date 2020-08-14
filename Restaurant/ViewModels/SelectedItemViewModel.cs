@@ -1,7 +1,8 @@
-﻿using Prism.Commands;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Linq;
+using System.Text;
+using Prism.Commands;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace Restaurant.ViewModels
 {
@@ -10,8 +11,10 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private DelegateCommand<object> deleteItemCommand;
+        private DelegateCommand<object> finishPaymentCommand;
         private ObservableCollection<RowItemViewModel> items;
         private decimal total;
+        private decimal payed;
 
         #endregion
 
@@ -26,6 +29,39 @@ namespace Restaurant.ViewModels
 
                 return items;
             }
+            private set
+            {
+                items = value;
+            }
+        }
+
+        public RowItemViewModel SelectedItem { get; set; }
+
+        public decimal Total
+        {
+            get => total;
+            set
+            {
+                total = value;
+
+                FinishPaymentCommand.RaiseCanExecuteChanged();
+                OnPropertyChanged("Total");
+            }
+        }
+
+        public decimal Payed 
+        {
+            get => payed;
+            set
+            {
+                if (value < 0)
+                {
+                    value = 0;
+                }
+                payed = value;
+                FinishPaymentCommand.RaiseCanExecuteChanged();
+                OnPropertyChanged("Payed");
+            }
         }
 
         public DelegateCommand<object> DeleteItemCommand
@@ -39,15 +75,14 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public RowItemViewModel SelectedItem { get; set; }
-
-        public decimal Total 
+        public DelegateCommand<object> FinishPaymentCommand
         {
-            get => total;
-            set
+            get
             {
-                total = value;
-                OnPropertyChanged("Total");
+                if (finishPaymentCommand == null)
+                    finishPaymentCommand = new DelegateCommand<object>(FinishPayment,CanFinishPayment);
+
+                return finishPaymentCommand;
             }
         }
 
@@ -59,11 +94,45 @@ namespace Restaurant.ViewModels
         {
             RowItemViewModel item = obj as RowItemViewModel;
 
+            decimal extraTotals = item.Extras.Select(e => e.Total).Sum();
+
             Items.Remove(item);
 
             Total -= item.Total;
+            Total -= extraTotals;
         }
 
+        private void FinishPayment(object obj)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"Payed : {Payed}");
+            stringBuilder.AppendLine($"Total : {Total}");
+            stringBuilder.AppendLine($"Change : {Payed-Total}");
+            stringBuilder.AppendLine("Do you want to finish?");
+
+            if (MessageBox.Show(stringBuilder.ToString(),
+                    "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                Items.Clear();
+                Total = 0;
+                Payed = 0;
+            }
+
+        }
+
+        private bool CanFinishPayment(object arg)
+        {
+            return IsValid();
+        }
+
+        private bool IsValid()
+        {
+            if (Payed <= 0 || Total == 0)
+                return false;
+
+            return true;
+        }
 
         #endregion
     }

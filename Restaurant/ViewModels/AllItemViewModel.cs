@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using Prism.Commands;
 using Restaurant.Services;
+using Restaurant.Database.Models;
 using System.Collections.Generic;
 using Restaurant.Services.Models.Item;
 using Restaurant.Services.Implementations;
-using System.Windows;
-using Restaurant.Database.Models;
 
 namespace Restaurant.ViewModels
 {
@@ -16,8 +15,6 @@ namespace Restaurant.ViewModels
         private DelegateCommand<object> addItemToSelected;
         private readonly IItemService itemService;
         private List<ItemDto> items;
-        private SalesViewModel salesViewModel;
-        private SelectedItemViewModel selectedItemViewModel;
 
         #endregion
 
@@ -26,8 +23,7 @@ namespace Restaurant.ViewModels
         public AllItemViewModel(SalesViewModel salesViewModel)
         {
             itemService = new ItemService();
-            this.salesViewModel = salesViewModel;
-            this.selectedItemViewModel = salesViewModel.SelectedItemViewModel;
+            SelectedItemViewModel = salesViewModel.SelectedItemViewModel;
         }
 
         #endregion
@@ -59,6 +55,8 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public SelectedItemViewModel SelectedItemViewModel { get; set; }
+
         #endregion
 
         #region Methods
@@ -67,7 +65,7 @@ namespace Restaurant.ViewModels
         {
             ItemDto itemDto = obj as ItemDto;
 
-            RowItemViewModel selectedItem = selectedItemViewModel.SelectedItem;
+            RowItemViewModel selectedItem = SelectedItemViewModel.SelectedItem;
 
             if (selectedItem != null)
             {
@@ -78,23 +76,39 @@ namespace Restaurant.ViewModels
                     return;
                 }
 
-                RowItemViewModel extra = new RowItemViewModel(selectedItemViewModel)
+                RowItemViewModel sameExtra = SelectedItemViewModel
+                                             .SelectedItem
+                                             .Extras
+                                             .Where(e => e.Item.Id == itemDto.Id)
+                                             .FirstOrDefault();
+
+                if (sameExtra != null)
+                {
+                    sameExtra.Count += 1;
+
+                    return;
+                }
+
+                RowItemViewModel extra = new RowItemViewModel(SelectedItemViewModel)
                 {
                     Item = new Item()
                     {
+                        Id = itemDto.Id,
                         Name = itemDto.Name,
                         Price = itemDto.Price
                     },
                     Count = 1,
                     Total = itemDto.Price,
-                    RowItemViewModelex = selectedItemViewModel.SelectedItem
+                    RowItemViewModelex = SelectedItemViewModel.SelectedItem
                 };
 
-                selectedItemViewModel.SelectedItem.Extras.Add(extra);
+                SelectedItemViewModel.SelectedItem.Extras.Add(extra);
+
+                selectedItem.ShowListBtnVisibility = true;
             }
             else
-            {
-                RowItemViewModel rowItemViewModel = new RowItemViewModel(selectedItemViewModel)
+            { 
+                RowItemViewModel item = new RowItemViewModel(SelectedItemViewModel)
                 {
                     Item = new Item()
                     {
@@ -106,7 +120,8 @@ namespace Restaurant.ViewModels
                     Total = itemDto.Price
                 };
 
-                selectedItemViewModel.Items.Add(rowItemViewModel);
+                SelectedItemViewModel.Items.Add(item);
+
             }
 
         }

@@ -2,6 +2,7 @@
 using Restaurant.Views;
 using Restaurant.Services;
 using Restaurant.Services.Implementations;
+using System;
 
 namespace Restaurant.ViewModels
 {
@@ -13,6 +14,7 @@ namespace Restaurant.ViewModels
         private IRoleService roleService;
         private BaseViewModel baseViewModel;
         private CreateUserViewModel createUserViewModel;
+        private string name;
 
         #endregion
 
@@ -32,7 +34,7 @@ namespace Restaurant.ViewModels
             get
             {
                 if (addRoleCommand == null)
-                    addRoleCommand = new DelegateCommand<object>(CreateRole);
+                    addRoleCommand = new DelegateCommand<object>(CreateRole,CanCreateRole);
 
                 return addRoleCommand;
             }
@@ -66,7 +68,15 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                AddRoleCommand.RaiseCanExecuteChanged();
+            }
+        }
 
         #endregion
 
@@ -76,6 +86,19 @@ namespace Restaurant.ViewModels
         {
             roleService.CreateRole(Name);
             BaseViewModel = CreateUserViewModel;
+        }
+
+        private bool CanCreateRole(object arg)
+        {
+            return IsValid();
+        }
+
+        private bool IsValid()
+        {
+            if (String.IsNullOrEmpty(Name))
+                return false;
+
+            return true;
         }
 
         #endregion

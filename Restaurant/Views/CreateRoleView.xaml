@@ -39,7 +39,7 @@
                          Margin="180,110,0,0"
                          VerticalAlignment="Top"
                          Width="222" 
-                         Text="{Binding Name}"/>
+                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Height="25" 
                     HorizontalAlignment="Left"
                     Margin="190,209,0,0"

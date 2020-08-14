@@ -9,10 +9,12 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private DelegateCommand<object> deleteExtraCommand;
+        private DelegateCommand<object> showOrHideListCommand;
+        private ObservableCollection<RowItemViewModel> extras;
         private decimal total;
         private int count;
-        private ObservableCollection<RowItemViewModel> extras;
-        private SelectedItemViewModel selectedItemViewModel;
+        private bool showListBtnVisibility;
+        private bool listVisibility;
 
         #endregion
 
@@ -20,7 +22,7 @@ namespace Restaurant.ViewModels
 
         public RowItemViewModel(SelectedItemViewModel selectedItemViewModel)
         {
-            this.selectedItemViewModel = selectedItemViewModel;
+            SelectedItemViewModel = selectedItemViewModel;
         }
 
         #endregion
@@ -38,6 +40,8 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public SelectedItemViewModel SelectedItemViewModel { get; set; }
+
         public RowItemViewModel RowItemViewModelex { get; set; }
 
         public Item Item { get; set; }
@@ -47,10 +51,14 @@ namespace Restaurant.ViewModels
             get => count;
             set
             {
+                if(value <= 0)
+                {
+                    value = 1;
+                }
                 count = value;
-                selectedItemViewModel.Total -= Total;
+                SelectedItemViewModel.Total -= Total;
                 Total = count * Item.Price;
-                selectedItemViewModel.Total += Total;
+                SelectedItemViewModel.Total += Total;
                 OnPropertyChanged("Count");
             }
         }
@@ -65,6 +73,34 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public bool ShowListBtnVisibility 
+        {
+            get
+            {
+                if (Extras.Count != 0)
+                    showListBtnVisibility = true;
+
+                return showListBtnVisibility;
+            }
+            set
+            {
+                showListBtnVisibility = value;
+
+                OnPropertyChanged("ShowListBtnVisibility");
+            }
+        }
+
+        public bool ListVisibility 
+        {
+            get => listVisibility;
+            set
+            {
+                listVisibility = value;
+
+                OnPropertyChanged("ListVisibility");
+            }
+        }
+
         public DelegateCommand<object> DeleteExtraCommand
         {
             get
@@ -76,6 +112,17 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public DelegateCommand<object> ShowOrHideListCommand
+        {
+            get
+            {
+                if (showOrHideListCommand == null)
+                    showOrHideListCommand = new DelegateCommand<object>(ShowOrHideList);
+
+                return showOrHideListCommand;
+            }
+        }    
+
         #endregion
 
         #region Methods
@@ -86,9 +133,16 @@ namespace Restaurant.ViewModels
 
             RowItemViewModelex.Extras.Remove(item);
 
-            selectedItemViewModel.Total -= item.Total;
+            SelectedItemViewModel.Total -= item.Total;
+
+            if (RowItemViewModelex.Extras.Count == 0)
+                RowItemViewModelex.ShowListBtnVisibility = false;
         }
 
+        private void ShowOrHideList(object obj)
+        {
+            ListVisibility = !ListVisibility;
+        }
 
         #endregion
     }

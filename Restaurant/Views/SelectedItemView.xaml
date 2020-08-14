@@ -6,6 +6,10 @@
              xmlns:local="clr-namespace:Restaurant.Views"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="400">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="ShowListBtnVisibilityConverter" />
+        <BooleanToVisibilityConverter x:Key="ListVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Border
             BorderBrush="Gray"
@@ -91,7 +95,9 @@
                             Cursor="Hand"
                             Width="20"
                             Height="20"
-                            HorizontalAlignment="Left">
+                            HorizontalAlignment="Left"
+                            Visibility="{Binding ShowListBtnVisibility, Converter={StaticResource ShowListBtnVisibilityConverter}}"
+                            Command="{Binding ShowOrHideListCommand}">
                             <Image
                                 Source="C:\Users\yoanna.krasteva\source\repos\Restaurant\Restaurant\Images\plus.png"/>
                         </Button>
@@ -131,7 +137,7 @@
                             Margin="40,0,0,0"
                             Background="Transparent"
                             BorderThickness="0"
-                            Visibility="Visible"
+                            Visibility="{Binding ListVisibility, Converter={StaticResource ListVisibilityConverter}}"
                             ItemsSource="{Binding Extras}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -216,7 +222,8 @@
             Margin="90,0,16.5,30"
             FontSize="12pt"
             MaxWidth="80"
-            MaxLength="10"/>
+            MaxLength="10"
+            Text="{Binding Payed}"/>
         <Button
             Grid.ColumnSpan="5"
             Grid.Row="1"
@@ -227,7 +234,8 @@
             Margin="225,0,16.5,30"
             Background="White"
             FontSize="12pt"
-            Content="Прикл."/>
+            Content="Прикл."
+            Command="{Binding FinishPaymentCommand}"/>
     </Grid>
     </Grid>
 </UserControl>

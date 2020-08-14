@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Restaurant.Views;
+using System;
 
 namespace Restaurant.ViewModels
 {
@@ -9,9 +10,12 @@ namespace Restaurant.ViewModels
 
         private DelegateCommand<object> salesCommand;
         private DelegateCommand<object> adminPanelCommand;
+        private DelegateCommand<object> exitCommand;
         private BaseViewModel baseViewModel;
+        private BaseViewModel exitViewModel;
         private SalesViewModel salesViewModel;
         private AdminPanelViewModel adminPanelViewModel;
+        private LoginViewModel loginViewModel;
 
         #endregion
 
@@ -33,6 +37,16 @@ namespace Restaurant.ViewModels
             {
                 baseViewModel = value;
                 OnPropertyChanged("BaseViewModel");
+            }
+        }
+
+        public BaseViewModel ExitViewModel
+        {
+            get => exitViewModel;
+            set
+            {
+                exitViewModel = value;
+                OnPropertyChanged("ExitViewModel");
             }
         }
 
@@ -69,6 +83,24 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public LoginViewModel LoginViewModel
+        {
+            get
+            {
+                if (loginViewModel == null)
+                {
+                    loginViewModel = new LoginViewModel();
+                    LoginView loginView = new LoginView();
+
+                    loginViewModel.View = loginView;
+
+                    loginView.DataContext = loginViewModel;
+                }
+
+                return loginViewModel;
+            }
+        }
+
         public DelegateCommand<object> SalesCommand
         {
             get
@@ -91,6 +123,17 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public DelegateCommand<object> ExitCommand
+        {
+            get
+            {
+                if (exitCommand == null)
+                    exitCommand = new DelegateCommand<object>(Exit);
+
+                return exitCommand;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -103,6 +146,11 @@ namespace Restaurant.ViewModels
         private void AdminPanelViewOpen(object obj)
         {
             BaseViewModel = AdminPanelViewModel;
+        }
+
+        private void Exit(object obj)
+        {
+            ExitViewModel = LoginViewModel;
         }
 
         #endregion
