@@ -99,7 +99,7 @@
                             Visibility="{Binding ShowListBtnVisibility, Converter={StaticResource ShowListBtnVisibilityConverter}}"
                             Command="{Binding ShowOrHideListCommand}">
                             <Image
-                                Source="C:\Users\yoanna.krasteva\source\repos\Restaurant\Restaurant\Images\plus.png"/>
+                                Source="{Binding IconSource}"/>
                         </Button>
                         <TextBlock
                             Grid.Column="1"

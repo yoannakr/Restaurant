@@ -1,4 +1,5 @@
 ﻿using Prism.Commands;
+using Restaurant.Views;
 using Restaurant.Services;
 using Restaurant.Services.Implementations;
 
@@ -11,6 +12,8 @@ namespace Restaurant.ViewModels
         private DelegateCommand<object> browseCommand;
         private DelegateCommand<object> createItemCommand;
         private readonly IItemService itemService;
+        private AdminPanelViewModel adminPanelViewModel;
+        private BaseViewModel baseViewModel;
         private string name;
         private decimal price;
         private string imageSource;
@@ -69,6 +72,34 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public BaseViewModel BaseViewModel
+        {
+            get => baseViewModel;
+            set
+            {
+                baseViewModel = value;
+                OnPropertyChanged("BaseViewModel");
+            }
+        }
+
+        public AdminPanelViewModel AdminPanelViewModel
+        {
+            get
+            {
+                if (adminPanelViewModel == null)
+                {
+                    adminPanelViewModel = new AdminPanelViewModel();
+                    AdminPanelView adminPanelView = new AdminPanelView();
+
+                    adminPanelViewModel.View = adminPanelView;
+
+                    adminPanelView.DataContext = adminPanelViewModel;
+                }
+
+                return adminPanelViewModel;
+            }
+        }
+
         public DelegateCommand<object> BrowseCommand
         {
             get
@@ -112,6 +143,8 @@ namespace Restaurant.ViewModels
         private void CreateItem(object obj)
         {
             itemService.CreateItem(Name, Price, ImageContent);
+
+            BaseViewModel = AdminPanelViewModel;
         }
 
         private bool CanCreateItem(object arg)

@@ -71,5 +71,7 @@
                     Command="{Binding CreateItemCommand}"/>
             </Grid>
         </Grid>
+        <ContentPresenter
+            Content="{Binding BaseViewModel}"/>
     </Grid>
 </UserControl>

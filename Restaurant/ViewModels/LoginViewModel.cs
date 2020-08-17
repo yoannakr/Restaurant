@@ -1,17 +1,17 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Prism.Commands;
-using System.Security;
 using Restaurant.Views;
 using Restaurant.Services;
 using Restaurant.Interfaces;
+using System.Windows.Controls;
 using Restaurant.Database.Models;
-using System.Runtime.InteropServices;
 using Restaurant.Services.Implementations;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Restaurant.ViewModels
 {
-    public class LoginViewModel : BaseViewModel
+    public class LoginViewModel : BaseViewModel, IHashPassword
     {
         #region Declarations
 
@@ -84,14 +84,9 @@ namespace Restaurant.ViewModels
 
         private void Login(object obj)
         {
-            IHavePassword passwordContainer = obj as IHavePassword;
+            PasswordBox passwordBox = obj as PasswordBox;
 
-            if (passwordContainer != null)
-            {
-                SecureString secureString = passwordContainer.Password;
-                //MessageBox.Show($"{ConvertToUnsecureString(secureString)}");
-                Password = ConvertToUnsecureString(secureString);
-            }
+            Password = ComputePasswordHashing(passwordBox.Password);
 
             User = userService.GetAllUsers()
                                .Where(u => u.Username == Username && u.Password == Password)
@@ -103,22 +98,20 @@ namespace Restaurant.ViewModels
             BaseViewModel = MenuViewModel;
         }
 
-        private string ConvertToUnsecureString(SecureString securePassword)
+        public string ComputePasswordHashing(string rowPassword)
         {
-            if (securePassword == null)
+            using (SHA256 sha256Hash = SHA256.Create())
             {
-                return string.Empty;
-            }
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rowPassword));
 
-            IntPtr unmanagedString = IntPtr.Zero;
-            try
-            {
-                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
-                return Marshal.PtrToStringUni(unmanagedString);
-            }
-            finally
-            {
-                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString());
+                }
+                return builder.ToString();
             }
         }
 

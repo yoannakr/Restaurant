@@ -102,10 +102,10 @@ namespace Restaurant.ViewModels
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine($"Payed : {Payed}");
-            stringBuilder.AppendLine($"Total : {Total}");
-            stringBuilder.AppendLine($"Change : {Payed-Total}");
-            stringBuilder.AppendLine("Do you want to finish?");
+            stringBuilder.AppendLine($"Платени : {Payed}");
+            stringBuilder.AppendLine($"Обща сума : {Total}");
+            stringBuilder.AppendLine($"Ресто : {Payed-Total}");
+            stringBuilder.AppendLine("Искате ли да приключите сметката?");
 
             if (MessageBox.Show(stringBuilder.ToString(),
                     "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -124,7 +124,7 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
-            if (Payed <= 0 || Total == 0)
+            if (Payed <= 0 || Total == 0 || Payed < Total)
                 return false;
 
             return true;

@@ -62,7 +62,7 @@
                      VerticalAlignment="Top"
                      Width="222"
                      Text="{Binding Username}"/>
-            <TextBox Height="23"
+            <TextBox     Height="23"
                          HorizontalAlignment="Left"
                          Margin="180,110,0,0"
                          VerticalAlignment="Top"

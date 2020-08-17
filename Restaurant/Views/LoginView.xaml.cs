@@ -20,20 +20,11 @@ namespace Restaurant.Views
     /// <summary>
     /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class LoginView : UserControl, IHavePassword, IView
+    public partial class LoginView : UserControl, IView
     {
         public LoginView()
         {
             InitializeComponent();
-        }
-
-
-        SecureString IHavePassword.Password
-        {
-            get
-            {
-                return UserPassword.SecurePassword;
-            }
         }
     }
 }
