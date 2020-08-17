@@ -38,6 +38,7 @@
                      Margin="180,50,0,0" 
                      VerticalAlignment="Top" 
                      Width="222"
+                     MaxLength="50"
                      Text="{Binding Name}"/>
                 <TextBox Height="23"
                      HorizontalAlignment="Left"
