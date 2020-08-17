@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Restaurant.Database.Data;
 using Restaurant.Database.Models;
 
@@ -47,7 +48,9 @@ namespace Restaurant.Database.Services.Implementations
 
         public IQueryable<User> GetAllUsers()
         {
-            return context.Users;
+            return context.Users
+                          .Include(user => user.Roles)
+                          .ThenInclude(user => user.Role);
         }
 
         #endregion

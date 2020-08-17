@@ -17,26 +17,27 @@
         <DataTemplate DataType="{x:Type vm:LoginViewModel}">
             <v:LoginView/>
         </DataTemplate>
+        <BooleanToVisibilityConverter x:Key="AdminBtnVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid
         Background="AliceBlue">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Border
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border
             Grid.Column="0"
             Grid.Row="0"
             Margin="20,10"
             CornerRadius="20"
             Background="#ede9a8">
-            <Button
+                <Button
                 Background="Transparent"
                 BorderBrush="Transparent"
                 FontSize="12pt"
@@ -45,15 +46,15 @@
                 FontStyle="Oblique"
                 Content="Продажби"
                 Command="{Binding SalesCommand}"/>
-        </Border>
-        <Border
+            </Border>
+            <Border
             Grid.Column="1"
             Grid.Row="0"
             Margin="20,10"
             CornerRadius="20"
-            Visibility="Visible"
+            Visibility="{Binding AdminBtnVisibility, Converter={StaticResource AdminBtnVisibilityConverter}}"
             Background="#ede9a8">
-            <Button
+                <Button
                 Background="Transparent"
                 BorderBrush="Transparent"
                 FontSize="12pt"
@@ -62,7 +63,7 @@
                 FontStyle="Oblique"
                 Content="Админ"
                 Command="{Binding AdminPanelCommand}"/>
-        </Border>
+            </Border>
             <Border
             Grid.Column="2"
             Grid.Row="0"

@@ -60,7 +60,7 @@ namespace Restaurant.ViewModels
             {
                 if (menuViewModel == null)
                 {
-                    menuViewModel = new MenuViewModel();
+                    menuViewModel = new MenuViewModel(User);
                     MenuView menuView = new MenuView();
 
                     menuViewModel.View = menuView;

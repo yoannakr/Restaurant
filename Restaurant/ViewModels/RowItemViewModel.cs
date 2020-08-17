@@ -11,8 +11,8 @@ namespace Restaurant.ViewModels
         private DelegateCommand<object> deleteExtraCommand;
         private DelegateCommand<object> showOrHideListCommand;
         private ObservableCollection<RowItemViewModel> extras;
-        private const string ArrowUp = @"C:\Users\yoanna.krasteva\source\repos\Restaurant\Restaurant\Images\arrow_up.png";
-        private const string ArrowDown = @"C:\Users\yoanna.krasteva\source\repos\Restaurant\Restaurant\Images\arrow_down.png";
+        private const string ArrowUp = @"C:\Users\User\Source\Repos\Restaurant\Restaurant\Images\arrow_up.png";
+        private const string ArrowDown = @"C:\Users\User\Source\Repos\Restaurant\Restaurant\Images\arrow_down.png";
         private bool showListBtnVisibility;
         private bool listVisibility;
         private string iconSource;
@@ -56,7 +56,7 @@ namespace Restaurant.ViewModels
             get => count;
             set
             {
-                if(value <= 0)
+                if (value <= 0)
                 {
                     value = 1;
                 }
@@ -78,7 +78,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public string IconSource 
+        public string IconSource
         {
             get
             {
@@ -97,7 +97,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public bool ShowListBtnVisibility 
+        public bool ShowListBtnVisibility
         {
             get
             {
@@ -113,7 +113,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public bool ListVisibility 
+        public bool ListVisibility
         {
             get => listVisibility;
             set
@@ -143,7 +143,7 @@ namespace Restaurant.ViewModels
 
                 return showOrHideListCommand;
             }
-        }    
+        }
 
         #endregion
 

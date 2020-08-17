@@ -1,5 +1,7 @@
 ﻿using Prism.Commands;
 using Restaurant.Views;
+using Restaurant.Database.Models;
+using System.Linq;
 
 namespace Restaurant.ViewModels
 {
@@ -15,14 +17,17 @@ namespace Restaurant.ViewModels
         private SalesViewModel salesViewModel;
         private AdminPanelViewModel adminPanelViewModel;
         private LoginViewModel loginViewModel;
+        private User user;
+        private bool adminBtnVisibility;
 
         #endregion
 
         #region Constructors
 
-        public MenuViewModel()
+        public MenuViewModel(User user)
         {
             BaseViewModel = SalesViewModel;
+            User = user;
         }
 
         #endregion
@@ -97,6 +102,34 @@ namespace Restaurant.ViewModels
                 }
 
                 return loginViewModel;
+            }
+        }
+
+        public User User
+        {
+            get => user;
+            set
+            {
+                user = value;
+
+                UserRole role = user.Roles
+                                     .Where(u => u.Role.Name == "Admin")
+                                     .FirstOrDefault();
+
+                if (role != null)
+                    AdminBtnVisibility = true;
+                else
+                    AdminBtnVisibility = false;
+            }
+        }
+
+        public bool AdminBtnVisibility
+        {
+            get => adminBtnVisibility;
+            set
+            {
+                adminBtnVisibility = value;
+                OnPropertyChanged("AdminBtnVisibility");
             }
         }
 
