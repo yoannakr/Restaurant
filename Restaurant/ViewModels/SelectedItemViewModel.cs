@@ -2,6 +2,7 @@
 using System.Text;
 using Prism.Commands;
 using System.Windows;
+using Restaurant.Database.Models;
 using System.Collections.ObjectModel;
 
 namespace Restaurant.ViewModels
@@ -102,8 +103,18 @@ namespace Restaurant.ViewModels
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine($"Платени : {Payed}");
+            foreach (RowItemViewModel item in Items)
+            {
+                stringBuilder.AppendLine($"{item.Item.Name}   {item.Count}x{item.Item.Price}      {item.Total}");
+                foreach (RowItemViewModel extra in item.Extras)
+                {
+                    stringBuilder.AppendLine($" {extra.Item.Name}   {extra.Count}x{extra.Item.Price}      {extra.Total}");
+                }
+            }
+
+            stringBuilder.AppendLine("~~~~~~~~~~~~");
             stringBuilder.AppendLine($"Обща сума : {Total}");
+            stringBuilder.AppendLine($"Платени : {Payed}");
             stringBuilder.AppendLine($"Ресто : {Payed-Total}");
             stringBuilder.AppendLine("Искате ли да приключите сметката?");
 

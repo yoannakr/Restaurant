@@ -11,8 +11,8 @@ namespace Restaurant.ViewModels
         private DelegateCommand<object> deleteExtraCommand;
         private DelegateCommand<object> showOrHideListCommand;
         private ObservableCollection<RowItemViewModel> extras;
-        private const string ArrowUp = @"C:\Users\User\Source\Repos\Restaurant\Restaurant\Images\arrow_up.png";
-        private const string ArrowDown = @"C:\Users\User\Source\Repos\Restaurant\Restaurant\Images\arrow_down.png";
+        private const string ArrowUpPath = "../Images/arrow_up.png";
+        private const string ArrowDownPath = "../Images/arrow_down.png";
         private bool showListBtnVisibility;
         private bool listVisibility;
         private string iconSource;
@@ -84,7 +84,7 @@ namespace Restaurant.ViewModels
             {
                 if (iconSource == null)
                 {
-                    iconSource = ArrowDown;
+                    iconSource = ArrowDownPath;
                     IsDown = true;
                 }
 
@@ -165,11 +165,11 @@ namespace Restaurant.ViewModels
         {
             if (IsDown)
             {
-                IconSource = ArrowUp;
+                IconSource = ArrowUpPath;
             }
             else
             {
-                IconSource = ArrowDown;
+                IconSource = ArrowDownPath;
             }
 
             IsDown = !IsDown;

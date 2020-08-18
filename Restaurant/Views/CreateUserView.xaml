@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:Restaurant.ViewModels"
              xmlns:v="clr-namespace:Restaurant.Views"
+             xmlns:bh="clr-namespace:Restaurant.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="800">
     <UserControl.Resources>
@@ -64,18 +65,20 @@
                      Width="222"
                      MaxLength="20"
                      Text="{Binding Username}"/>
-            <TextBox     Height="23"
+            <PasswordBox 
+                         bh:PasswordHelper.Password="{Binding Path=Password, Mode=TwoWay}"
+                         Height="23"
                          HorizontalAlignment="Left"
                          Margin="180,110,0,0"
                          VerticalAlignment="Top"
-                         Width="222" 
-                         Text="{Binding Password}"/>
-            <TextBox Height="23"
+                         Width="222" />
+            <PasswordBox 
+                         bh:PasswordHelper.Password="{Binding Path=ConfirmPassword, Mode=TwoWay}"
+                         Height="23"
                          HorizontalAlignment="Left"
                          Margin="180,140,0,0" 
                          VerticalAlignment="Top"
-                         Width="222"
-                         Text="{Binding ConfirmPassword}"/>
+                         Width="222"/>
             <ComboBox Height="23" 
                       HorizontalAlignment="Left" 
                       Margin="180,170,0,0" 

@@ -190,6 +190,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\PasswordHelper.cs" />
     <Compile Include="Interfaces\IHashPassword.cs" />
     <Compile Include="Services\IItemService.cs" />
     <Compile Include="Services\Implementations\ItemService.cs" />
@@ -321,8 +322,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\arrow_down.png" />
-    <Resource Include="Images\arrow_up.png" />
+    <Resource Include="Images\arrow_down.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\arrow_up.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\cocacola.png" />
     <Resource Include="Images\plus.png" />
   </ItemGroup>
