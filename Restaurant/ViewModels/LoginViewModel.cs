@@ -1,13 +1,12 @@
-﻿using System.Linq;
+﻿using System.Text;
+using System.Linq;
 using Prism.Commands;
 using Restaurant.Views;
 using Restaurant.Services;
 using Restaurant.Interfaces;
-using System.Windows.Controls;
 using Restaurant.Database.Models;
-using Restaurant.Services.Implementations;
 using System.Security.Cryptography;
-using System.Text;
+using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
 {
@@ -19,6 +18,7 @@ namespace Restaurant.ViewModels
         private readonly IUserService userService;
         private BaseViewModel baseViewModel;
         private MenuViewModel menuViewModel;
+        private string password;
 
         #endregion
 
@@ -74,7 +74,14 @@ namespace Restaurant.ViewModels
 
         public string Username { get; set; }
 
-        public string Password { get; set; }
+        public string Password 
+        {
+            get => password;
+            set
+            {
+                password = ComputePasswordHashing(value);
+            }
+        }
 
         public User User { get; set; }
 
@@ -84,10 +91,6 @@ namespace Restaurant.ViewModels
 
         private void Login(object obj)
         {
-            PasswordBox passwordBox = obj as PasswordBox;
-
-            Password = ComputePasswordHashing(passwordBox.Password);
-
             User = userService.GetAllUsers()
                                .Where(u => u.Username == Username && u.Password == Password)
                                .FirstOrDefault();

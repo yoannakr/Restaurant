@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:Restaurant.ViewModels"
-             xmlns:v="clr-namespace:Restaurant.Views"
+             xmlns:v="clr-namespace:Restaurant.Views" 
+             xmlns:bh="clr-namespace:Restaurant.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -53,7 +54,8 @@
                                Margin="0,5" 
                                Text="Парола : " 
                                HorizontalAlignment="Right"/>
-                        <PasswordBox x:Name="UserPassword"
+                        <PasswordBox bh:PasswordHelper.Attach="True"
+                                     bh:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
                                      Grid.Row="1" 
                                      Grid.Column="1" 
                                      Margin="0" 
@@ -72,8 +74,7 @@
                                     Background="#edecdd"
                                     Foreground="Black" 
                                     BorderBrush="White"
-                                    Command="{Binding LoginCommand}"
-                                    CommandParameter="{Binding ElementName=UserPassword}"/>
+                                    Command="{Binding LoginCommand}"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>

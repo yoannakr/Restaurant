@@ -9,8 +9,12 @@ namespace Restaurant.Behaviors
 
         public static readonly DependencyProperty PasswordProperty =
            DependencyProperty.RegisterAttached("Password",
-           typeof(string), typeof(PasswordHelper),
-           new PropertyMetadata(string.Empty, OnPasswordPropertyChanged));
+           typeof(string), typeof(PasswordHelper));
+
+        public static readonly DependencyProperty AttachProperty =
+           DependencyProperty.RegisterAttached("Attach",
+           typeof(bool), typeof(PasswordHelper),
+           new PropertyMetadata(false, Attach));
 
         #endregion
 
@@ -26,18 +30,37 @@ namespace Restaurant.Behaviors
             dp.SetValue(PasswordProperty, value);
         }
 
-        private static void OnPasswordPropertyChanged(DependencyObject sender,
+        public static bool GetAttach(DependencyObject dp)
+        {
+            return (bool)dp.GetValue(AttachProperty);
+        }
+
+        public static void SetAttach(DependencyObject dp, bool value)
+        {
+            dp.SetValue(AttachProperty, value);
+        }
+
+        private static void Attach(DependencyObject dp,
             DependencyPropertyChangedEventArgs e)
         {
-            PasswordBox passwordBox = sender as PasswordBox;
+            if (!(dp is PasswordBox passwordBox))
+                return;
 
-            passwordBox.PasswordChanged += PasswordChanged;
+            if ((bool)e.OldValue)
+            {
+                passwordBox.PasswordChanged -= PasswordChanged;
+            }
+
+            if ((bool)e.NewValue)
+            {
+                passwordBox.PasswordChanged += PasswordChanged;
+            }
         }
 
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {
-            PasswordBox passwordBox = sender as PasswordBox;
-            SetPassword(passwordBox, passwordBox.Password);
+            if (sender is PasswordBox passwordBox)
+                SetPassword(passwordBox, passwordBox.Password);
         }
 
         #endregion

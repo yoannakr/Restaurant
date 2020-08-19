@@ -21,7 +21,7 @@
                     <DataTemplate>
                         <Button
                         Margin="2"
-                        Height="120"
+                        Height="155"
                         Width="120"
                         Background="#f0edc7"
                         BorderThickness="0"

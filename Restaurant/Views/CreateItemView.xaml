@@ -10,11 +10,18 @@
         <Grid
         Background="AliceBlue">
             <Grid Margin="30" 
-              Background="White" 
+              Background="Transparent" 
               Height="300"
               Width="450"
               VerticalAlignment="Center"
               HorizontalAlignment="Center">
+             <Border 
+              Background="White" 
+              Height="300"
+              Width="450"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              CornerRadius="20"/>
                 <TextBlock Height="23" 
                        HorizontalAlignment="Left" 
                        Margin="40,50,0,0"

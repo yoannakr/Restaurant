@@ -16,11 +16,18 @@
     <Grid
         Background="AliceBlue">
         <Grid Margin="30" 
-              Background="White" 
+              Background="Transparent" 
               Height="300"
               Width="450"
               VerticalAlignment="Center"
               HorizontalAlignment="Center">
+            <Border 
+              Background="White" 
+              Height="300"
+              Width="450"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              CornerRadius="20"/>
             <TextBlock Height="23" 
                        HorizontalAlignment="Left" 
                        Margin="40,50,0,0"
@@ -65,14 +72,14 @@
                      Width="222"
                      MaxLength="20"
                      Text="{Binding Username}"/>
-            <PasswordBox 
+            <PasswordBox bh:PasswordHelper.Attach="True"
                          bh:PasswordHelper.Password="{Binding Path=Password, Mode=TwoWay}"
                          Height="23"
                          HorizontalAlignment="Left"
                          Margin="180,110,0,0"
                          VerticalAlignment="Top"
                          Width="222" />
-            <PasswordBox 
+            <PasswordBox bh:PasswordHelper.Attach="True"
                          bh:PasswordHelper.Password="{Binding Path=ConfirmPassword, Mode=TwoWay}"
                          Height="23"
                          HorizontalAlignment="Left"
@@ -100,12 +107,13 @@
                 HorizontalAlignment="Left" 
                 Margin="330,170,0,0" 
                 VerticalAlignment="Top"
+                BorderBrush="Transparent"
                 Width="70"
                 Content="Нова роля"
                 Command="{Binding NewRoleCommand}"/>
             <Button Height="25" 
                     HorizontalAlignment="Left"
-                    Margin="190,209,0,0"
+                    Margin="330,250,0,0"
                     VerticalAlignment="Top"
                     Width="70" 
                     Content="Добави "

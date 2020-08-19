@@ -20,25 +20,48 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button
+        <Border
             Grid.Column="0"
             Height="50"
             Width="200"
-            Background="#ede9a8"
+            CornerRadius="20"
+            Background="#ede9a8">
+            <Button
+            Grid.Column="0"
+            Height="50"
+            Width="200"
+            Background="Transparent"
+            BorderBrush="Transparent"
             FontSize="12pt"
+            Foreground="#91918d"
+            FontWeight="Bold"
+            FontStyle="Oblique"
             Content="Нов потребител"
             Command="{Binding NewUserCommand}"/>
-        <Button
+        </Border>
+        <Border
             Grid.Column="1"
             Height="50"
             Width="200"
-            Background="#ede9a8"
+            CornerRadius="20"
+            Background="#ede9a8">
+            <Button
+            Grid.Column="1"
+            Height="50"
+            Width="200"
+            Background="Transparent"
+            BorderBrush="Transparent"
             FontSize="12pt"
+            Foreground="#91918d"
+            FontWeight="Bold"
+            FontStyle="Oblique"
             Content="Добави стока"
             Command="{Binding NewItemCommand}"/>
+        </Border>
         <ContentPresenter
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             Content="{Binding BaseViewModel}"/>
     </Grid>
 </UserControl>
