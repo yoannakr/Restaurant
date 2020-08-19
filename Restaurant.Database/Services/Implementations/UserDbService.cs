@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.Database.Data;
 using Restaurant.Database.Models;
@@ -24,7 +25,7 @@ namespace Restaurant.Database.Services.Implementations
 
         #region Methods
 
-        public void CreateUser(string name, string username, string password, int roleId)
+        public void CreateUser(string name, string username, string password, List<Role> roles)
         {
             User user = new User()
             {
@@ -33,13 +34,16 @@ namespace Restaurant.Database.Services.Implementations
                 Password = password
             };
 
-            UserRole userRole = new UserRole()
+            ICollection<UserRole> userRoles = roles.Select(r => new UserRole()
             {
                 User = user,
-                RoleId = roleId
-            };
+                RoleId = r.Id
+            }).ToList();
 
-            user.Roles.Add(userRole);
+            foreach (UserRole userRole in userRoles)
+            {
+                user.Roles.Add(userRole);
+            }
 
             context.Users.Add(user);
 

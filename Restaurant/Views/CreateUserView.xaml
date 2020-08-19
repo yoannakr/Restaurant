@@ -86,26 +86,39 @@
                          Margin="180,140,0,0" 
                          VerticalAlignment="Top"
                          Width="222"/>
-            <ComboBox Height="23" 
-                      HorizontalAlignment="Left" 
-                      Margin="180,170,0,0" 
+            <ScrollViewer
+                      Margin="80,200,130,0" 
                       VerticalAlignment="Top"
-                      Width="140"
-                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                      ScrollViewer.VerticalScrollBarVisibility="Auto"
-                      ItemsSource="{Binding Roles}"
-                      SelectedItem="{Binding Role}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock
-                                Text="{Binding Name}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+                      MaxHeight="150"
+                      VerticalScrollBarVisibility="Auto"
+                      x:Name="FromViewModel">
+                <ItemsControl 
+                      HorizontalAlignment="Left" 
+                      VerticalAlignment="Top"
+                      Width="240"
+                      ItemsSource="{Binding Roles}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ToggleButton
+                            Background="White"
+                            Margin="2"
+                            Content="{Binding Name}"
+                            IsChecked="{Binding ElementName=FromViewModel, Path=DataContext.IsChecked}"
+                            Command="{Binding ElementName=FromViewModel, Path=DataContext.AddRoleCommand}"
+                            CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
             <Button
                 Height="23" 
                 HorizontalAlignment="Left" 
-                Margin="330,170,0,0" 
+                Margin="180,170,0,0" 
                 VerticalAlignment="Top"
                 BorderBrush="Transparent"
                 Width="70"

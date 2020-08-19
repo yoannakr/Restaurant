@@ -15,6 +15,7 @@ namespace Restaurant.ViewModels
 
         private DelegateCommand<object> addUserCommand;
         private DelegateCommand<object> newRoleCommand;
+        private DelegateCommand<object> addRoleCommand;
         private readonly IUserService userService;
         private readonly IRoleService roleService;
         private BaseViewModel baseViewModel;
@@ -25,6 +26,7 @@ namespace Restaurant.ViewModels
         private string username;
         private string password;
         private string confirmPassword;
+        private List<Role> userRoles;
 
         #endregion
 
@@ -59,6 +61,17 @@ namespace Restaurant.ViewModels
                     newRoleCommand = new DelegateCommand<object>(CreateRole);
 
                 return newRoleCommand;
+            }
+        }
+
+        public DelegateCommand<object> AddRoleCommand
+        {
+            get
+            {
+                if (addRoleCommand == null)
+                    addRoleCommand = new DelegateCommand<object>(AddRole);
+
+                return addRoleCommand;
             }
         }
 
@@ -108,7 +121,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public string Name 
+        public string Name
         {
             get => name;
             set
@@ -118,7 +131,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public string Username 
+        public string Username
         {
             get => username;
             set
@@ -126,7 +139,7 @@ namespace Restaurant.ViewModels
                 username = value;
                 AddUserCommand.RaiseCanExecuteChanged();
             }
-        }    
+        }
 
         public Role Role
         {
@@ -148,7 +161,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public string ConfirmPassword 
+        public string ConfirmPassword
         {
             get => confirmPassword;
             set
@@ -168,6 +181,19 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public bool IsChecked { get; set; }
+
+        public List<Role> UserRoles
+        {
+            get
+            {
+                if (userRoles == null)
+                    userRoles = new List<Role>();
+
+                return userRoles;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -184,7 +210,7 @@ namespace Restaurant.ViewModels
                 return;
             }
 
-            userService.CreateUser(Name, Username, Password, Role.Id);
+            userService.CreateUser(Name, Username, Password, UserRoles);
             BaseViewModel = AdminPanelViewModel;
         }
 
@@ -201,13 +227,23 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
-            if (Name == null || Username == null || Role == null)
+            if (Name == null || Username == null || UserRoles.Count == 0)
                 return false;
 
             if (Password != ConfirmPassword)
                 return false;
 
             return true;
+        }
+
+        private void AddRole(object obj)
+        {
+            Role role = obj as Role;
+
+            if (IsChecked)
+                UserRoles.Add(role);
+            else
+                UserRoles.Remove(role);
         }
 
         #endregion
