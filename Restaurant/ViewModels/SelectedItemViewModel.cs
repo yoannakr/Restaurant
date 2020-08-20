@@ -46,7 +46,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public decimal Payed 
+        public decimal Payed
         {
             get => payed;
             set
@@ -77,7 +77,7 @@ namespace Restaurant.ViewModels
             get
             {
                 if (finishPaymentCommand == null)
-                    finishPaymentCommand = new DelegateCommand<object>(FinishPayment,CanFinishPayment);
+                    finishPaymentCommand = new DelegateCommand<object>(FinishPayment, CanFinishPayment);
 
                 return finishPaymentCommand;
             }
@@ -115,7 +115,7 @@ namespace Restaurant.ViewModels
             stringBuilder.AppendLine("~~~~~~~~~~~~");
             stringBuilder.AppendLine($"Обща сума : {Total}");
             stringBuilder.AppendLine($"Платени : {Payed}");
-            stringBuilder.AppendLine($"Ресто : {Payed-Total}");
+            stringBuilder.AppendLine($"Ресто : {Payed - Total}");
             stringBuilder.AppendLine("Искате ли да приключите сметката?");
 
             if (MessageBox.Show(stringBuilder.ToString(),

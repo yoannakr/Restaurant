@@ -8,11 +8,10 @@
              d:DesignHeight="400" d:DesignWidth="400">
     <Grid>
         <ScrollViewer 
-            Margin="10"
+            Margin="5"
             VerticalScrollBarVisibility="Auto">
             <ItemsControl 
                 x:Name="FromViewModel"
-                VerticalAlignment="Top"
                 ItemsSource="{Binding Items}">
                 <!-- x:Name is like variable, this is binding from DataContext -->
                 <ItemsControl.ItemsPanel>
@@ -48,6 +47,7 @@
                                 
                                 <TextBlock 
                                     Grid.Row="0" Grid.Column="1" 
+                                    Width="50"
                                     Text="{Binding Name}"
                                     TextWrapping="Wrap"/>
                                 <!-- this is binding from ItemsSource -->
