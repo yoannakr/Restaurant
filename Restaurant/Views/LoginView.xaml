@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:Restaurant.ViewModels"
              xmlns:v="clr-namespace:Restaurant.Views" 
-             xmlns:bh="clr-namespace:Restaurant.Behaviors"
+             xmlns:bh="clr-namespace:Restaurant.Common.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -13,74 +13,76 @@
             <v:MenuView/>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid>
-        <StackPanel Orientation="Vertical" 
-                    Background="#ede9a8" 
-                    Margin="2" 
-                    VerticalAlignment="Stretch" 
-                    HorizontalAlignment="Stretch" >
-            <Border CornerRadius="25" 
-                    Margin="20,70,20,10" 
-                    Background="White" 
-                    Width="300"
-                    Height="200">
-                <StackPanel Orientation="Vertical">
-                    <Grid Margin="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="110"/>
-                            <ColumnDefinition Width="200"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" 
-                               Grid.Column="0" 
-                               Margin="2,30,180.4,30.2" 
-                               FontSize="10pt"
-                               Text="Потребителско име : " 
-                               TextWrapping="Wrap"
-                               VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-                        <TextBox Grid.Row="0" 
-                                 Grid.Column="1" 
-                                 Margin="0,26" 
-                                 Width="150" 
-                                 VerticalContentAlignment="Center"
-                                 HorizontalContentAlignment="Left"
-                                 Text="{Binding Username}"/>
-                        <TextBlock Grid.Row="1" 
-                               Grid.Column="0" 
-                               Margin="0,5" 
-                               Text="Парола : " 
-                               HorizontalAlignment="Right"/>
-                        <PasswordBox bh:PasswordHelper.Attach="True"
-                                     bh:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
-                                     Grid.Row="1" 
-                                     Grid.Column="1" 
-                                     Margin="0" 
-                                     Width="150" 
-                                     VerticalContentAlignment="Center" 
-                                     HorizontalContentAlignment="Left"/>
-                        <StackPanel Orientation="Horizontal" 
-                                    Grid.Column="1" 
-                                    Grid.Row="2" 
-                                    Grid.ColumnSpan="2" 
-                                    HorizontalAlignment="Center">
-                            <Button Content="Влез" 
-                                    Margin="2,20" 
-                                    Width="100" 
-                                    Height="30" 
-                                    Background="#edecdd"
-                                    Foreground="Black" 
-                                    BorderBrush="White"
-                                    Command="{Binding LoginCommand}"/>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </Border>
-        </StackPanel>
+    <Grid
+        Background="#ede9a8">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border 
+            Grid.Row="1" Grid.Column="1"
+            MinWidth="300" MinHeight="200"
+            CornerRadius="25" 
+            Background="White">
+            <Grid 
+                Margin="10,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock 
+                    Grid.Row="0" Grid.Column="0" 
+                    Margin="10,40,10,0"
+                    Text="Потребителско име : " 
+                    TextWrapping="Wrap"
+                    FontSize="10pt"/>
+                <TextBox 
+                    Grid.Row="0" Grid.Column="1"
+                    MinHeight="20" Width="120"
+                    Margin="0,40,0,0"
+                    Text="{Binding Username}"/>
+
+                <TextBlock 
+                    Grid.Row="1" Grid.Column="0" 
+                    HorizontalAlignment="Right"
+                    Margin="10,20,10,0"
+                    Text="Парола : "/>
+                <PasswordBox 
+                    Grid.Row="1" Grid.Column="1"
+                    MinHeight="20" Width="120"
+                    Margin="0,20,0,0"
+                    bh:PasswordHelper.Attach="True"
+                    bh:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"/>
+
+                <Button 
+                    Grid.Row="2" Grid.Column="2"
+                    Margin="20" 
+                    Width="100" Height="25"
+                    Content="Влез" 
+                    Command="{Binding LoginCommand}"
+                    Cursor="Hand"
+                    Background="#edecdd"
+                    BorderThickness="0.5"/>
+                
+            </Grid>
+        </Border>
         <ContentPresenter
+            Grid.RowSpan="3" Grid.ColumnSpan="3"
             Content="{Binding BaseViewModel}"/>
     </Grid>
 </UserControl>

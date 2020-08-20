@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:Restaurant.ViewModels"
         xmlns:v="clr-namespace:Restaurant.Views"
         mc:Ignorable="d"
-        Title="Майстор Ицо" MinHeight="450" MinWidth="800" MaxHeight="450" MaxWidth="800">
+        Title="Майстор Ицо" MinHeight="450" MinWidth="800">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>

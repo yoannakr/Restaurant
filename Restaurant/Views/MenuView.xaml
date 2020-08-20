@@ -20,70 +20,67 @@
         <BooleanToVisibilityConverter x:Key="AdminBtnVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
-        <Grid
-        Background="AliceBlue">
+        <Grid 
+            Background="AliceBlue">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border
-            Grid.Column="0"
-            Grid.Row="0"
-            Margin="20,10"
-            CornerRadius="20"
-            Background="#ede9a8">
-                <Button
-                Background="Transparent"
-                BorderBrush="Transparent"
-                FontSize="12pt"
-                Foreground="#91918d"
-                FontWeight="Bold"
-                FontStyle="Oblique"
+
+            <Button 
+                Grid.Row="0" Grid.Column="0"
+                Margin="10"
+                MinHeight="30" MinWidth="150"
                 Content="Продажби"
-                Command="{Binding SalesCommand}"/>
-            </Border>
-            <Border
-            Grid.Column="1"
-            Grid.Row="0"
-            Margin="20,10"
-            CornerRadius="20"
-            Visibility="{Binding AdminBtnVisibility, Converter={StaticResource AdminBtnVisibilityConverter}}"
-            Background="#ede9a8">
-                <Button
-                Background="Transparent"
-                BorderBrush="Transparent"
+                Command="{Binding SalesCommand}"
+                Cursor="Hand"
+                Background="#ede9a8"
+                BorderBrush="Black"
+                BorderThickness="0.5"
                 FontSize="12pt"
                 Foreground="#91918d"
                 FontWeight="Bold"
-                FontStyle="Oblique"
+                FontStyle="Oblique"/>
+            <Button
+                Grid.Row="0" Grid.Column="1"
+                Margin="30,10,10,10"
+                MinHeight="30" MinWidth="150"
                 Content="Админ"
-                Command="{Binding AdminPanelCommand}"/>
-            </Border>
-            <Border
-            Grid.Column="2"
-            Grid.Row="0"
-            Margin="280,10,10,8"
-            CornerRadius="20"
-            Background="#ede9a8">
-                <Button
-                Background="Transparent"
-                BorderBrush="Transparent"
+                Visibility="{Binding AdminBtnVisibility, Converter={StaticResource AdminBtnVisibilityConverter}}"
+                Command="{Binding AdminPanelCommand}"
+                Cursor="Hand"
+                Background="#ede9a8"
+                BorderBrush="Black"
+                BorderThickness="0.5"
                 FontSize="12pt"
                 Foreground="#91918d"
                 FontWeight="Bold"
-                FontStyle="Oblique"
+                FontStyle="Oblique"/>
+            <Button
+                Grid.Row="0" Grid.Column="2"
+                HorizontalAlignment="Right"
+                Margin="0,10,20,10"
+                MinHeight="30" MinWidth="100"
                 Content="Излез"
-                Command="{Binding ExitCommand}"/>
-            </Border>
-            <ContentPresenter
-            Grid.ColumnSpan="3"
-            Grid.Row="1"
-            Content="{Binding BaseViewModel}"/>
+                Command="{Binding ExitCommand}"
+                Cursor="Hand"
+                Background="#ede9a8"
+                BorderBrush="Black"
+                BorderThickness="0.5"
+                FontSize="12pt"
+                Foreground="#91918d"
+                FontWeight="Bold"
+                FontStyle="Oblique"/>
+            
+            <ContentPresenter 
+                Grid.Row="1" Grid.ColumnSpan="3"
+                Content="{Binding BaseViewModel}"/>
         </Grid>
         <ContentPresenter
             Content="{Binding ExitViewModel}"/>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:Restaurant.ViewModels"
              xmlns:v="clr-namespace:Restaurant.Views"
-             xmlns:bh="clr-namespace:Restaurant.Behaviors"
+             xmlns:bh="clr-namespace:Restaurant.Common.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="800">
     <UserControl.Resources>
@@ -64,14 +64,14 @@
                      VerticalAlignment="Top" 
                      Width="222"
                      MaxLength="30"
-                     Text="{Binding Name}"/>
+                     Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
             <TextBox Height="23"
                      HorizontalAlignment="Left"
                      Margin="180,80,0,0"
                      VerticalAlignment="Top"
                      Width="222"
                      MaxLength="20"
-                     Text="{Binding Username}"/>
+                     Text="{Binding Username,UpdateSourceTrigger=PropertyChanged}"/>
             <PasswordBox bh:PasswordHelper.Attach="True"
                          bh:PasswordHelper.Password="{Binding Path=Password, Mode=TwoWay}"
                          Height="23"
@@ -87,7 +87,7 @@
                          VerticalAlignment="Top"
                          Width="222"/>
             <ScrollViewer
-                      Margin="80,200,130,0" 
+                      Margin="105,170,130,0" 
                       VerticalAlignment="Top"
                       MaxHeight="150"
                       VerticalScrollBarVisibility="Auto"
@@ -95,7 +95,7 @@
                 <ItemsControl 
                       HorizontalAlignment="Left" 
                       VerticalAlignment="Top"
-                      Width="240"
+                      Width="200"
                       ItemsSource="{Binding Roles}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -107,6 +107,8 @@
                             <ToggleButton
                             Background="White"
                             Margin="2"
+                            MinWidth="50"
+                            Cursor="Hand"
                             Content="{Binding Name}"
                             IsChecked="{Binding ElementName=FromViewModel, Path=DataContext.IsChecked}"
                             Command="{Binding ElementName=FromViewModel, Path=DataContext.AddRoleCommand}"
@@ -118,7 +120,7 @@
             <Button
                 Height="23" 
                 HorizontalAlignment="Left" 
-                Margin="180,170,0,0" 
+                Margin="330,170,0,0" 
                 VerticalAlignment="Top"
                 BorderBrush="Transparent"
                 Width="70"

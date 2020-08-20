@@ -190,7 +190,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Behaviors\PasswordHelper.cs" />
+    <Compile Include="Common\Behaviors\PasswordHelper.cs" />
     <Compile Include="Interfaces\IHashPassword.cs" />
     <Compile Include="Services\IItemService.cs" />
     <Compile Include="Services\Implementations\ItemService.cs" />
@@ -330,6 +330,11 @@
     </Resource>
     <Resource Include="Images\cocacola.png" />
     <Resource Include="Images\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\table_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

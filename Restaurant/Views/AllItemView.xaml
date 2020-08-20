@@ -5,53 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaurant.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="400">
+             d:DesignHeight="400" d:DesignWidth="400">
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl VerticalAlignment="Top"
-                          x:Name="FromViewModel"
-                          ItemsSource="{Binding Items}">
+        <ScrollViewer 
+            Margin="10"
+            VerticalScrollBarVisibility="Auto">
+            <ItemsControl 
+                x:Name="FromViewModel"
+                VerticalAlignment="Top"
+                ItemsSource="{Binding Items}">
                 <!-- x:Name is like variable, this is binding from DataContext -->
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal"/>
+                        <WrapPanel/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button
-                        Margin="2"
-                        Height="155"
-                        Width="120"
-                        Background="#f0edc7"
-                        BorderThickness="0"
-                        Command="{Binding ElementName=FromViewModel, Path=DataContext.AddItemToSelected}"
-                        CommandParameter="{Binding}">
+                        <Button 
+                            Margin="2"
+                            Height="155" Width="120"
+                            Command="{Binding ElementName=FromViewModel, Path=DataContext.AddItemToSelected}"
+                            CommandParameter="{Binding}"
+                            Background="#f0edc7"
+                            BorderThickness="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
+                                
                                 <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Image Grid.Column="0" 
-                                       Grid.RowSpan="2"
-                                       Width="48" 
-                                       Height="48" 
-                                       Stretch="Uniform"
-                                       HorizontalAlignment="Center"
-                                       Source="{Binding ImageSource}"/>
-                                <TextBlock Grid.Row="0" 
-                                           Grid.Column="1" 
-                                           TextWrapping="Wrap"
-                                           Text="{Binding Name}"/>
+                                
+                                <Image 
+                                    Grid.RowSpan="2" Grid.Column="0"
+                                    Width="48" Height="48" 
+                                    Source="{Binding ImageSource}"
+                                    Stretch="Uniform"/>
+                                
+                                <TextBlock 
+                                    Grid.Row="0" Grid.Column="1" 
+                                    Text="{Binding Name}"
+                                    TextWrapping="Wrap"/>
                                 <!-- this is binding from ItemsSource -->
-                                <TextBlock Grid.Row="1" 
-                                           Grid.Column="1" 
-                                           TextWrapping="Wrap"
-                                           Text="{Binding Price}"/>
+                                
+                                <TextBlock 
+                                    Grid.Row="1" Grid.Column="1" 
+                                    Text="{Binding Price}"
+                                    TextWrapping="Wrap"/>
                             </Grid>
                         </Button>
                     </DataTemplate>

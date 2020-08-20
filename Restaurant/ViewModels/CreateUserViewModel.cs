@@ -21,7 +21,6 @@ namespace Restaurant.ViewModels
         private BaseViewModel baseViewModel;
         private CreateRoleViewModel createRoleViewModel;
         private AdminPanelViewModel adminPanelViewModel;
-        private Role role;
         private string name;
         private string username;
         private string password;
@@ -141,16 +140,6 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public Role Role
-        {
-            get => role;
-            set
-            {
-                role = value;
-                AddUserCommand.RaiseCanExecuteChanged();
-            }
-        }
-
         public string Password
         {
             get => password;
@@ -227,7 +216,7 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
-            if (Name == null || Username == null || UserRoles.Count == 0)
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Username) || UserRoles.Count == 0)
                 return false;
 
             if (Password != ConfirmPassword)
@@ -244,6 +233,8 @@ namespace Restaurant.ViewModels
                 UserRoles.Add(role);
             else
                 UserRoles.Remove(role);
+
+            AddUserCommand.RaiseCanExecuteChanged();
         }
 
         #endregion

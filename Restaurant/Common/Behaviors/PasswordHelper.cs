@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Restaurant.Behaviors
+namespace Restaurant.Common.Behaviors
 {
     public static class PasswordHelper
     {

@@ -17,12 +17,14 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition MinWidth="400"/>
+            <ColumnDefinition MinWidth="400"/>
         </Grid.ColumnDefinitions>
+        
         <ContentPresenter
             Grid.Column="0"
             Content="{Binding AllItemViewModel}"/>
+        
         <ContentPresenter
             Grid.Column="1"
             Content="{Binding SelectedItemViewModel}"/>
