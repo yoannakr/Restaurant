@@ -23,10 +23,10 @@
 
         <Border
             Grid.Row="0" Grid.Column="0"
-            Margin="0,0,20,0"
+            Margin="0,0,20,20"
             Background="White"
             BorderBrush="Black"
-            BorderThickness="0.5">
+            BorderThickness="0.6">
             <Grid
                 x:Name="firstGrid">
                 <Grid.RowDefinitions>
@@ -90,6 +90,7 @@
                                     Grid.Row="0" Grid.Column="0"
                                     Height="20" Width="20"
                                     HorizontalAlignment="Left"
+                                    Margin="5"
                                     Visibility="{Binding ShowListBtnVisibility, Converter={StaticResource ShowListBtnVisibilityConverter}}"
                                     Command="{Binding ShowOrHideListCommand}"
                                     Cursor="Hand"
@@ -127,14 +128,114 @@
                                     HorizontalContentAlignment="Center"
                                     BorderBrush="Transparent"
                                     Background="Transparent"/>
+
+                                <ItemsControl
+                                    Grid.Row="1" Grid.ColumnSpan="5"
+                                    Visibility="{Binding ListVisibility, Converter={StaticResource ListVisibilityConverter}}"
+                                    ItemsSource="{Binding Extras}"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    Background="Transparent"
+                                    BorderThickness="0">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid
+                                                Margin="0,5,0,0"
+                                                Width="{Binding ElementName=firstGrid, Path=ActualWidth}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="30"/>
+                                                    <ColumnDefinition MinWidth="100"/>
+                                                    <ColumnDefinition MinWidth="100"/>
+                                                    <ColumnDefinition MinWidth="100"/>
+                                                    <ColumnDefinition Width="50"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding Item.Name}"
+                                                    TextWrapping="Wrap"
+                                                    TextAlignment="Center"/>
+                                                
+                                                <TextBox
+                                                    Grid.Column="2"
+                                                    VerticalAlignment="Center"
+                                                    Width="50"
+                                                    Text="{Binding Count,UpdateSourceTrigger=PropertyChanged}"
+                                                    MaxLength="4"
+                                                    TextAlignment="Center"/>
+                                                
+                                                <TextBlock
+                                                    Grid.Column="3"
+                                                    VerticalAlignment="Center"
+                                                    Width="50"
+                                                    Text="{Binding Total}"
+                                                    TextAlignment="Center"/>
+                                                
+                                                <Button
+                                                    Grid.Column="4"
+                                                    HorizontalAlignment="Left"
+                                                    Width="20"
+                                                    Command="{Binding DeleteExtraCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    Content="X"
+                                                    BorderBrush="Transparent"
+                                                    Background="Transparent"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+
+                <TextBlock
+                    Grid.Row="2" Grid.ColumnSpan="2"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    Text="Тотал"
+                    FontSize="12pt"/>
+                <TextBlock
+                    Grid.Row="2" Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Text="{Binding Total}"
+                    FontSize="12pt"
+                    TextAlignment="Center"/>
             </Grid>
         </Border>
-        <TextBlock
+        <Grid
             Grid.Row="1" Grid.Column="0"
-            Text="aa"/>
+            Margin="5,10,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Text="Платени"
+                FontSize="12pt"/>
+            
+            <TextBox
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                MaxWidth="80" MaxHeight="30"
+                Margin="20,0,0,0"
+                Text="{Binding Payed}"
+                MaxLength="10"
+                FontSize="12pt"/>
+            
+            <Button
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                Height="30" Width="70"
+                Margin="0,0,15,0"
+                Command="{Binding FinishPaymentCommand}"
+                Content="Прикл."
+                FontSize="12pt"
+                Background="White"/>
+        </Grid>
     </Grid>
 </UserControl>
