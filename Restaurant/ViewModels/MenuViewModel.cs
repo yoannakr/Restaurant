@@ -9,8 +9,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private DelegateCommand<object> salesCommand;
-        private DelegateCommand<object> adminPanelCommand;
+        private DelegateCommand<object> menuCommand;
         private DelegateCommand<object> exitCommand;
         private BaseViewModel baseViewModel;
         private BaseViewModel exitViewModel;
@@ -133,25 +132,14 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public DelegateCommand<object> SalesCommand
+        public DelegateCommand<object> MenuCommand
         {
             get
             {
-                if (salesCommand == null)
-                    salesCommand = new DelegateCommand<object>(SalesViewOpen);
+                if (menuCommand == null)
+                    menuCommand = new DelegateCommand<object>(ChangeView);
 
-                return salesCommand;
-            }
-        }
-
-        public DelegateCommand<object> AdminPanelCommand
-        {
-            get
-            {
-                if (adminPanelCommand == null)
-                    adminPanelCommand = new DelegateCommand<object>(AdminPanelViewOpen);
-
-                return adminPanelCommand;
+                return menuCommand;
             }
         }
 
@@ -170,14 +158,10 @@ namespace Restaurant.ViewModels
 
         #region Methods
 
-        private void SalesViewOpen(object obj)
+        private void ChangeView(object obj)
         {
-            BaseViewModel = SalesViewModel;
-        }
-
-        private void AdminPanelViewOpen(object obj)
-        {
-            BaseViewModel = AdminPanelViewModel;
+            if (obj is BaseViewModel baseViewModel)
+                BaseViewModel = baseViewModel;
         }
 
         private void Exit(object obj)

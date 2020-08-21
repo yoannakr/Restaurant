@@ -11,6 +11,7 @@ namespace Restaurant.ViewModels
 
         private DelegateCommand<object> browseCommand;
         private DelegateCommand<object> createItemCommand;
+        private DelegateCommand<object> returnCommand;
         private readonly IItemService itemService;
         private AdminPanelViewModel adminPanelViewModel;
         private BaseViewModel baseViewModel;
@@ -122,6 +123,17 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public DelegateCommand<object> ReturnCommand
+        {
+            get
+            {
+                if (returnCommand == null)
+                    returnCommand = new DelegateCommand<object>(Return);
+
+                return returnCommand;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -158,6 +170,11 @@ namespace Restaurant.ViewModels
                 return false;
 
             return true;
+        }
+
+        private void Return(object obj)
+        {
+            BaseViewModel = AdminPanelViewModel;
         }
 
         #endregion

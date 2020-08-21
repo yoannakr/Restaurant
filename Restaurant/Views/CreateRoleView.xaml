@@ -58,10 +58,16 @@
 
                 <Button 
                     Grid.Row="1" Grid.Column="1"
-                    HorizontalAlignment="Right"
+                    HorizontalAlignment="Center"
                     Command="{Binding AddRoleCommand}"
                     Height="25" Width="70" 
                     Content="Добави "/>
+                <Button 
+                    Grid.Row="1" Grid.Column="1"
+                    HorizontalAlignment="Right" 
+                    Content="Назад"
+                    Command="{Binding ReturnCommand}"
+                    Height="25" Width="70"/>
             </Grid>
         </Border>
         <ContentPresenter

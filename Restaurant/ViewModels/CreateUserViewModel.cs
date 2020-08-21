@@ -16,6 +16,7 @@ namespace Restaurant.ViewModels
         private DelegateCommand<object> addUserCommand;
         private DelegateCommand<object> newRoleCommand;
         private DelegateCommand<object> addRoleCommand;
+        private DelegateCommand<object> returnCommand;
         private readonly IUserService userService;
         private readonly IRoleService roleService;
         private BaseViewModel baseViewModel;
@@ -71,6 +72,17 @@ namespace Restaurant.ViewModels
                     addRoleCommand = new DelegateCommand<object>(AddRole);
 
                 return addRoleCommand;
+            }
+        }
+
+        public DelegateCommand<object> ReturnCommand
+        {
+            get
+            {
+                if (returnCommand == null)
+                    returnCommand = new DelegateCommand<object>(Return);
+
+                return returnCommand;
             }
         }
 
@@ -235,6 +247,11 @@ namespace Restaurant.ViewModels
                 UserRoles.Remove(role);
 
             AddUserCommand.RaiseCanExecuteChanged();
+        }
+
+        private void Return(object obj)
+        {
+            BaseViewModel = AdminPanelViewModel;
         }
 
         #endregion

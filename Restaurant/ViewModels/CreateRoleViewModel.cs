@@ -11,6 +11,7 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private DelegateCommand<object> addRoleCommand;
+        private DelegateCommand<object> returnCommand;
         private readonly IRoleService roleService;
         private BaseViewModel baseViewModel;
         private CreateUserViewModel createUserViewModel;
@@ -37,6 +38,17 @@ namespace Restaurant.ViewModels
                     addRoleCommand = new DelegateCommand<object>(CreateRole,CanCreateRole);
 
                 return addRoleCommand;
+            }
+        }
+
+        public DelegateCommand<object> ReturnCommand
+        {
+            get
+            {
+                if (returnCommand == null)
+                    returnCommand = new DelegateCommand<object>(Return);
+
+                return returnCommand;
             }
         }
 
@@ -99,6 +111,11 @@ namespace Restaurant.ViewModels
                 return false;
 
             return true;
+        }
+
+        private void Return(object obj)
+        {
+            BaseViewModel = CreateUserViewModel;
         }
 
         #endregion

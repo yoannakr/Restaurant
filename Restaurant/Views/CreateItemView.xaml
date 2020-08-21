@@ -86,9 +86,15 @@
                         Stretch="Uniform"/>
                     <Button 
                         Grid.Row="3" Grid.Column="1"
-                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        HorizontalAlignment="Center" VerticalAlignment="Bottom"
                         Content="Добави "
                         Command="{Binding CreateItemCommand}"
+                        Height="25" Width="70"/>
+                    <Button 
+                        Grid.Row="3" Grid.Column="1"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Content="Назад"
+                        Command="{Binding ReturnCommand}"
                         Height="25" Width="70"/>
                 </Grid>
             </Border>
