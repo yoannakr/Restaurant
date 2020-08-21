@@ -9,77 +9,92 @@
     <Grid>
         <Grid
         Background="AliceBlue">
-            <Grid Margin="30" 
-              Background="Transparent" 
-              Height="300"
-              Width="450"
-              VerticalAlignment="Center"
-              HorizontalAlignment="Center">
-             <Border 
-              Background="White" 
-              Height="300"
-              Width="450"
-              VerticalAlignment="Center"
-              HorizontalAlignment="Center"
-              CornerRadius="20"/>
-                <TextBlock Height="23" 
-                       HorizontalAlignment="Left" 
-                       Margin="40,50,0,0"
-                       VerticalAlignment="Top" 
-                       Width="120"
-                       Text="Име :" />
-                <TextBlock Height="23" 
-                       HorizontalAlignment="Left" 
-                       Margin="40,80,0,0"  
-                       VerticalAlignment="Top"
-                       Width="120" 
-                       Text="Цена :"/>
-                <TextBlock Height="23" 
-                       HorizontalAlignment="Left"
-                       Margin="40,110,0,0"
-                       VerticalAlignment="Top"
-                       Width="120" 
-                       Text="Снимка :" />
-                <TextBox Height="23"
-                     HorizontalAlignment="Left"
-                     Margin="180,50,0,0" 
-                     VerticalAlignment="Top" 
-                     Width="222"
-                     MaxLength="50"
-                     Text="{Binding Name}"/>
-                <TextBox Height="23"
-                     HorizontalAlignment="Left"
-                     Margin="180,80,0,0"
-                     VerticalAlignment="Top"
-                     Width="222"
-                     Text="{Binding Price}"/>
-                <Button
-                    Height="25" 
-                    HorizontalAlignment="Left"
-                    Margin="180,110,0,0"
-                    VerticalAlignment="Top"
-                    Width="70" 
-                    Content="Browse "
-                    Command="{Binding BrowseCommand}"
-                    />
-                <Image
-                    Height="100" 
-                    Width="200" 
-                    HorizontalAlignment="Left"
-                    Margin="80,110,0,30"
-                    VerticalAlignment="Bottom"
-                    Stretch="Uniform"
-                    Source="{Binding ImageSource}"/>
-                <Button Height="25" 
-                    HorizontalAlignment="Left"
-                    Margin="350,0,0,15"
-                    VerticalAlignment="Bottom"
-                    Width="70" 
-                    Content="Добави "
-                    Command="{Binding CreateItemCommand}"/>
-            </Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Border 
+                Grid.Row="1" Grid.Column="1"
+                VerticalAlignment="Center"
+                CornerRadius="25" 
+                MinWidth="450" MinHeight="300"
+                Background="White">
+                <Grid
+                    Margin="30">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0" Grid.Column="0"
+                        HorizontalAlignment="Left" 
+                        Text="Име :"
+                        Height="23" Width="120"/>
+                    <TextBox 
+                        Grid.Row="0" Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        Text="{Binding Name}"
+                        Height="23" Width="255"
+                        MaxLength="30"/>
+
+                    <TextBlock
+                        Grid.Row="1" Grid.Column="0"
+                        HorizontalAlignment="Left" 
+                        Text="Цена :"
+                        Height="23" Width="120"/>
+                    <TextBox 
+                        Grid.Row="1" Grid.Column="1"
+                        HorizontalAlignment="Left" 
+                        Text="{Binding Price}"
+                        Height="23" Width="255"
+                        MaxLength="20"/>
+
+                    <TextBlock 
+                        Grid.Row="2" Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        Text="Снимка :"
+                        Height="23" Width="120"/>
+                    <Button
+                        Grid.Row="2" Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        Content="Browse "
+                        Command="{Binding BrowseCommand}"
+                        Height="25" Width="70"/>
+
+                    <Image
+                        Grid.Row="3" Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,0"
+                        Source="{Binding ImageSource}"
+                        Height="100" Width="200" 
+                        Stretch="Uniform"/>
+                    <Button 
+                        Grid.Row="3" Grid.Column="1"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Content="Добави "
+                        Command="{Binding CreateItemCommand}"
+                        Height="25" Width="70"/>
+                </Grid>
+            </Border>
         </Grid>
         <ContentPresenter
+            Grid.RowSpan="3" Grid.ColumnSpan="3"
             Content="{Binding BaseViewModel}"/>
     </Grid>
 </UserControl>

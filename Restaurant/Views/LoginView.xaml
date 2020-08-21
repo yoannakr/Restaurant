@@ -29,8 +29,8 @@
 
         <Border 
             Grid.Row="1" Grid.Column="1"
-            MinWidth="300" MinHeight="200"
             CornerRadius="25" 
+            MinWidth="300" MinHeight="200"
             Background="White">
             <Grid 
                 Margin="10,0,10,0">
@@ -53,9 +53,9 @@
                     FontSize="10pt"/>
                 <TextBox 
                     Grid.Row="0" Grid.Column="1"
-                    MinHeight="20" Width="120"
                     Margin="0,40,0,0"
-                    Text="{Binding Username}"/>
+                    Text="{Binding Username}"
+                    MinHeight="20" Width="120"/>
 
                 <TextBlock 
                     Grid.Row="1" Grid.Column="0" 
@@ -64,20 +64,20 @@
                     Text="Парола : "/>
                 <PasswordBox 
                     Grid.Row="1" Grid.Column="1"
-                    MinHeight="20" Width="120"
                     Margin="0,20,0,0"
                     bh:PasswordHelper.Attach="True"
-                    bh:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"/>
+                    bh:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
+                    MinHeight="20" Width="120"/>
 
                 <Button 
                     Grid.Row="2" Grid.Column="2"
                     Margin="20" 
-                    Width="100" Height="25"
                     Content="Влез" 
                     Command="{Binding LoginCommand}"
+                    Width="100" Height="25"
                     Cursor="Hand"
-                    Background="#edecdd"
-                    BorderThickness="0.5"/>
+                    BorderThickness="0.5"
+                    Background="#edecdd"/>
                 
             </Grid>
         </Border>

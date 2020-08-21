@@ -8,11 +8,10 @@
              d:DesignHeight="400" d:DesignWidth="400">
     <Grid>
         <ScrollViewer 
-            Margin="10"
+            Margin="5"
             VerticalScrollBarVisibility="Auto">
             <ItemsControl 
                 x:Name="FromViewModel"
-                VerticalAlignment="Top"
                 ItemsSource="{Binding Items}">
                 <!-- x:Name is like variable, this is binding from DataContext -->
                 <ItemsControl.ItemsPanel>
@@ -24,11 +23,11 @@
                     <DataTemplate>
                         <Button 
                             Margin="2"
-                            Height="155" Width="120"
                             Command="{Binding ElementName=FromViewModel, Path=DataContext.AddItemToSelected}"
                             CommandParameter="{Binding}"
-                            Background="#f0edc7"
-                            BorderThickness="0">
+                            Height="155" Width="120"
+                            BorderThickness="0"
+                            Background="#f0edc7">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -42,13 +41,15 @@
                                 
                                 <Image 
                                     Grid.RowSpan="2" Grid.Column="0"
-                                    Width="48" Height="48" 
+                                    Margin="2"
                                     Source="{Binding ImageSource}"
+                                    Width="48" Height="48" 
                                     Stretch="Uniform"/>
                                 
                                 <TextBlock 
                                     Grid.Row="0" Grid.Column="1" 
                                     Text="{Binding Name}"
+                                    Width="50"
                                     TextWrapping="Wrap"/>
                                 <!-- this is binding from ItemsSource -->
                                 

@@ -18,48 +18,35 @@
     <Grid
         Background="AliceBlue">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border
+
+        <Button
             Grid.Column="0"
-            Height="50"
-            Width="200"
-            CornerRadius="20"
-            Background="#ede9a8">
-            <Button
-            Grid.Column="0"
-            Height="50"
-            Width="200"
-            Background="Transparent"
-            BorderBrush="Transparent"
-            FontSize="12pt"
-            Foreground="#91918d"
-            FontWeight="Bold"
-            FontStyle="Oblique"
             Content="Нов потребител"
-            Command="{Binding NewUserCommand}"/>
-        </Border>
-        <Border
-            Grid.Column="1"
-            Height="50"
-            Width="200"
-            CornerRadius="20"
-            Background="#ede9a8">
-            <Button
-            Grid.Column="1"
-            Height="50"
-            Width="200"
-            Background="Transparent"
-            BorderBrush="Transparent"
+            Command="{Binding NewUserCommand}"
+            Height="50" Width="200"
             FontSize="12pt"
-            Foreground="#91918d"
             FontWeight="Bold"
             FontStyle="Oblique"
+            BorderBrush="Transparent"
+            Background="#ede9a8"
+            Foreground="#91918d"/>
+
+        <Button
+            Grid.Column="1"
             Content="Добави стока"
-            Command="{Binding NewItemCommand}"/>
-        </Border>
+            Command="{Binding NewItemCommand}"
+            Height="50" Width="200"
+            FontSize="12pt"
+            FontWeight="Bold"
+            FontStyle="Oblique"
+            BorderBrush="Transparent"
+            Background="#ede9a8"
+            Foreground="#91918d"/>
+        
         <ContentPresenter
             Grid.ColumnSpan="3"
             Content="{Binding BaseViewModel}"/>

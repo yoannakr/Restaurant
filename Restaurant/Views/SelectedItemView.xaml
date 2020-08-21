@@ -10,232 +10,232 @@
         <BooleanToVisibilityConverter x:Key="ShowListBtnVisibilityConverter" />
         <BooleanToVisibilityConverter x:Key="ListVisibilityConverter" />
     </UserControl.Resources>
-    <Grid>
+    <Grid
+        Margin="10,10,10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="290"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="360"/>
+        </Grid.ColumnDefinitions>
+
         <Border
-            BorderBrush="Gray"
-            BorderThickness="0.5,0.5,0.5,0"
-            Height="30"
-            Width="360"
-            VerticalAlignment="Top"
+            Grid.Row="0" Grid.Column="0"
+            Margin="0,0,20,20"
+            BorderBrush="Black"
+            BorderThickness="0.6"
             Background="White">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0"/>
-                    <ColumnDefinition Width="110"/>
-                    <ColumnDefinition Width="130"/>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="40"/>
-                </Grid.ColumnDefinitions>
+            <Grid
+                x:Name="firstGrid">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition/>
+                    <RowDefinition MaxHeight="30"/>
+                    <RowDefinition MinHeight="210"/>
+                    <RowDefinition MaxHeight="30"/>
                 </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition MinWidth="100"/>
+                    <ColumnDefinition MinWidth="100"/>
+                    <ColumnDefinition MinWidth="100"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+
                 <TextBlock
-            Grid.Column="1"
-            Grid.Row="0"
-            TextAlignment="Center"
-            VerticalAlignment="Center"
-            Text="Стока"/>
+                    Grid.Row="0" Grid.Column="1"
+                    Margin="0,10,0,0"
+                    Text="Стока"
+                    TextAlignment="Center"/>
                 <TextBlock
-            Grid.Column="2"
-            Grid.Row="0"
-            TextAlignment="Center"
-            VerticalAlignment="Center"
-            Text="Количество"/>
+                    Grid.Row="0" Grid.Column="2"
+                    Margin="0,10,0,0"
+                    Text="Количество"
+                    TextAlignment="Center"/>
+                <TextBlock 
+                    Grid.Row="0" Grid.Column="3"
+                    Margin="0,10,0,0"
+                    Text="Цена"
+                    TextAlignment="Center"/>
+
+                <ListBox
+                    x:Name="FromViewModel"
+                    Grid.Row="1" Grid.ColumnSpan="5"
+                    Margin="0,5,0,0"
+                    ItemsSource="{Binding Items}"
+                    SelectedItem="{Binding SelectedItem}"
+                    MinHeight="200" 
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    BorderBrush="Black"
+                    BorderThickness="0,0.5,0,0.5">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                Width="{Binding ElementName=firstGrid, Path=ActualWidth}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition MinHeight="30"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition MinWidth="100"/>
+                                    <ColumnDefinition MinWidth="100"/>
+                                    <ColumnDefinition MinWidth="100"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button 
+                                    Grid.Row="0" Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    Margin="5"
+                                    Command="{Binding ShowOrHideListCommand}"
+                                    Visibility="{Binding ShowListBtnVisibility, Converter={StaticResource ShowListBtnVisibilityConverter}}"
+                                    Height="20" Width="20"
+                                    Cursor="Hand"
+                                    BorderThickness="0"
+                                    Background="Transparent">
+                                    <Image 
+                                        Source="{Binding IconSource}"/>
+                                </Button>
+                                <TextBlock 
+                                    Grid.Row="0" Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Item.Name}"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Center"/>
+                                <TextBox 
+                                    Grid.Row="0" Grid.Column="2"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Count,UpdateSourceTrigger=PropertyChanged}"
+                                    Width="50"
+                                    MaxLength="4"
+                                    TextAlignment="Center"/>
+                                <TextBlock 
+                                    Grid.Row="0" Grid.Column="3"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Total}"
+                                    Width="50"
+                                    TextAlignment="Center"/>
+                                <Button 
+                                    Grid.Row="0" Grid.Column="4"
+                                    HorizontalAlignment="Left"
+                                    Content="X"
+                                    Command="{Binding ElementName=FromViewModel, Path=DataContext.DeleteItemCommand}"
+                                    CommandParameter="{Binding}"
+                                    Width="20"
+                                    HorizontalContentAlignment="Center"
+                                    BorderBrush="Transparent"
+                                    Background="Transparent"/>
+
+                                <ItemsControl
+                                    Grid.Row="1" Grid.ColumnSpan="5"
+                                    ItemsSource="{Binding Extras}"
+                                    Visibility="{Binding ListVisibility, Converter={StaticResource ListVisibilityConverter}}"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    BorderThickness="0"
+                                    Background="Transparent">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid
+                                                Margin="0,5,0,0"
+                                                Width="{Binding ElementName=firstGrid, Path=ActualWidth}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="30"/>
+                                                    <ColumnDefinition MinWidth="100"/>
+                                                    <ColumnDefinition MinWidth="100"/>
+                                                    <ColumnDefinition MinWidth="100"/>
+                                                    <ColumnDefinition Width="50"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding Item.Name}"
+                                                    TextWrapping="Wrap"
+                                                    TextAlignment="Center"/>
+                                                
+                                                <TextBox
+                                                    Grid.Column="2"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding Count,UpdateSourceTrigger=PropertyChanged}"
+                                                    Width="50"
+                                                    MaxLength="4"
+                                                    TextAlignment="Center"/>
+                                                
+                                                <TextBlock
+                                                    Grid.Column="3"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding Total}"
+                                                    Width="50"
+                                                    TextAlignment="Center"/>
+                                                
+                                                <Button
+                                                    Grid.Column="4"
+                                                    HorizontalAlignment="Left"
+                                                    Content="X"
+                                                    Command="{Binding DeleteExtraCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    Width="20"
+                                                    BorderBrush="Transparent"
+                                                    Background="Transparent"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
                 <TextBlock
-            Grid.Column="3"
-            Grid.Row="0"
-            TextAlignment="Center"
-            VerticalAlignment="Center"
-            Text="Цена"/>
+                    Grid.Row="2" Grid.ColumnSpan="2"
+                    VerticalAlignment="Center"
+                    Margin="10,0,0,0"
+                    Text="Тотал"
+                    FontSize="12pt"/>
+                <TextBlock
+                    Grid.Row="2" Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Text="{Binding Total}"
+                    FontSize="12pt"
+                    TextAlignment="Center"/>
             </Grid>
         </Border>
-        <Grid>
+        <Grid
+            Grid.Row="1" Grid.Column="0"
+            Margin="5,10,0,30">
             <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25"/>
-            <ColumnDefinition />
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="40"/>
-        </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <ListBox
-            Grid.ColumnSpan="5"
-            Grid.Row="1"
-            Height="250"
-            Width="360"
-            VerticalAlignment="Top"
-            BorderThickness="0.5"
-            x:Name="FromViewModel"
-            ItemsSource="{Binding Items}"
-            SelectedItem="{Binding SelectedItem}"
-            SelectionMode="Single">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="35"/>
-                            <ColumnDefinition Width="90"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="30"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Button
-                            Grid.Column="0"
-                            Grid.Row="0"
-                            BorderThickness="0"
-                            Background="Transparent"
-                            Cursor="Hand"
-                            Width="20"
-                            Height="20"
-                            HorizontalAlignment="Left"
-                            Visibility="{Binding ShowListBtnVisibility, Converter={StaticResource ShowListBtnVisibilityConverter}}"
-                            Command="{Binding ShowOrHideListCommand}">
-                            <Image
-                                Source="{Binding IconSource}"/>
-                        </Button>
-                        <TextBlock
-                            Grid.Column="1"
-                            Grid.Row="0"
-                            TextWrapping="Wrap"
-                            VerticalAlignment="Center"
-                            Text="{Binding Item.Name}"/>
-                        <TextBox
-                            Grid.Column="2"
-                            Grid.Row="0"
-                            Width="30"
-                            TextAlignment="Center"
-                            VerticalAlignment="Center"
-                            MaxLength="4"
-                            Text="{Binding Count,UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock
-                            Grid.Column="3"
-                            Grid.Row="0"
-                            TextAlignment="Center"
-                            VerticalAlignment="Center"
-                            Width="60"
-                            Text="{Binding Total}"/>
-                        <Button
-                            Grid.Column="4"
-                            Grid.Row="0"
-                            Content="X"
-                            BorderBrush="Transparent"
-                            Background="Transparent"
-                            Command="{Binding ElementName=FromViewModel, Path=DataContext.DeleteItemCommand}"
-                            CommandParameter="{Binding}"/>
-                        <ListBox
-                            Grid.ColumnSpan="5"
-                            Grid.Row="1"
-                            Width="330"
-                            Margin="40,0,0,0"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Visibility="{Binding ListVisibility, Converter={StaticResource ListVisibilityConverter}}"
-                            ItemsSource="{Binding Extras}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="90"/>
-                                            <ColumnDefinition Width="80"/>
-                                            <ColumnDefinition Width="90"/>
-                                            <ColumnDefinition Width="30"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            TextWrapping="Wrap"
-                                            VerticalAlignment="Center"
-                                            Text="{Binding Item.Name}"/>
-                                        <TextBox
-                                            Grid.Column="1"
-                                            Width="30"
-                                            TextAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            MaxLength="4"
-                                            Text="{Binding Count,UpdateSourceTrigger=PropertyChanged}"/>
-                                        <TextBlock
-                                            Grid.Column="2"
-                                            TextAlignment="Center"
-                                            Width="60"
-                                            VerticalAlignment="Center"
-                                            Margin="6,0,0,0"
-                                            Text="{Binding Total}"/>
-                                        <Button
-                                            Grid.Column="3"
-                                            Content="X"
-                                            BorderBrush="Transparent"
-                                            Background="Transparent"
-                                            Command="{Binding DeleteExtraCommand}"
-                                            CommandParameter="{Binding}"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Border
-            Grid.ColumnSpan="5"
-            Grid.Row="1"
-            VerticalAlignment="Bottom"
-            Margin="17,0,16.5,66"
-            Background="White"
-            BorderBrush="Gray"
-            Height="30"
-            BorderThickness="0.5,0.5,0.5,0.5">
-            <StackPanel
-                Margin="5,0,0,0"
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock
+                Grid.Column="0"
                 VerticalAlignment="Center"
-                Orientation="Horizontal">
-                <TextBlock
-                Margin="5,0,0,0"
+                Text="Платени"
+                FontSize="12pt"/>
+            
+            <TextBox
+                Grid.Column="1"
                 VerticalAlignment="Center"
+                Margin="20,0,0,0"
+                Text="{Binding Payed}"
+                MaxWidth="80" MaxHeight="30"
+                MaxLength="10"
+                FontSize="12pt"/>
+            
+            <Button
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                Margin="0,0,15,0"
+                Command="{Binding FinishPaymentCommand}"
+                Height="30" Width="70"
+                Content="Прикл."
                 FontSize="12pt"
-                Text="Тотал"/>
-                <TextBlock
-                Margin="205,0,0,0"
-                VerticalAlignment="Center"
-                FontSize="12pt"
-                Text="{Binding Total}"/>
-            </StackPanel>
-        </Border>
-        <TextBlock
-            Grid.ColumnSpan="5"
-            Grid.Row="1"
-            VerticalAlignment="Bottom"
-            Margin="18,0,16.5,30"
-            FontSize="12pt"
-            Text="Платени"/>
-        <TextBox
-            Grid.ColumnSpan="3"
-            Grid.Row="1"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Margin="90,0,16.5,30"
-            FontSize="12pt"
-            MaxWidth="80"
-            MaxLength="10"
-            Text="{Binding Payed}"/>
-        <Button
-            Grid.ColumnSpan="5"
-            Grid.Row="1"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Height="30"
-            Width="70"
-            Margin="225,0,16.5,30"
-            Background="White"
-            FontSize="12pt"
-            Content="Прикл."
-            Command="{Binding FinishPaymentCommand}"/>
-    </Grid>
+                Background="White"/>
+        </Grid>
     </Grid>
 </UserControl>

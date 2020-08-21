@@ -15,126 +15,142 @@
     </UserControl.Resources>
     <Grid
         Background="AliceBlue">
-        <Grid Margin="30" 
-              Background="Transparent" 
-              Height="300"
-              Width="450"
-              VerticalAlignment="Center"
-              HorizontalAlignment="Center">
-            <Border 
-              Background="White" 
-              Height="300"
-              Width="450"
-              VerticalAlignment="Center"
-              HorizontalAlignment="Center"
-              CornerRadius="20"/>
-            <TextBlock Height="23" 
-                       HorizontalAlignment="Left" 
-                       Margin="40,50,0,0"
-                       VerticalAlignment="Top" 
-                       Width="120"
-                       Text="Име :" />
-            <TextBlock Height="23" 
-                       HorizontalAlignment="Left" 
-                       Margin="40,80,0,0"  
-                       VerticalAlignment="Top"
-                       Width="120" 
-                       Text="Потребителско име :"/>
-            <TextBlock Height="23" 
-                       HorizontalAlignment="Left"
-                       Margin="40,110,0,0"
-                       VerticalAlignment="Top"
-                       Width="120" 
-                       Text="Парола :" />
-            <TextBlock Height="23" 
-                       HorizontalAlignment="Left"
-                       Margin="40,140,0,0"
-                       VerticalAlignment="Top"
-                       Width="120" 
-                       Text="Потвърди парола :" />
-            <TextBlock Height="23"
-                       HorizontalAlignment="Left" 
-                       Margin="40,175,0,0"
-                       VerticalAlignment="Top"
-                       Width="120"
-                       Text="Роля :"/>
-            <TextBox Height="23"
-                     HorizontalAlignment="Left"
-                     Margin="180,50,0,0" 
-                     VerticalAlignment="Top" 
-                     Width="222"
-                     MaxLength="30"
-                     Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Height="23"
-                     HorizontalAlignment="Left"
-                     Margin="180,80,0,0"
-                     VerticalAlignment="Top"
-                     Width="222"
-                     MaxLength="20"
-                     Text="{Binding Username,UpdateSourceTrigger=PropertyChanged}"/>
-            <PasswordBox bh:PasswordHelper.Attach="True"
-                         bh:PasswordHelper.Password="{Binding Path=Password, Mode=TwoWay}"
-                         Height="23"
-                         HorizontalAlignment="Left"
-                         Margin="180,110,0,0"
-                         VerticalAlignment="Top"
-                         Width="222" />
-            <PasswordBox bh:PasswordHelper.Attach="True"
-                         bh:PasswordHelper.Password="{Binding Path=ConfirmPassword, Mode=TwoWay}"
-                         Height="23"
-                         HorizontalAlignment="Left"
-                         Margin="180,140,0,0" 
-                         VerticalAlignment="Top"
-                         Width="222"/>
-            <ScrollViewer
-                      Margin="105,170,130,0" 
-                      VerticalAlignment="Top"
-                      MaxHeight="150"
-                      VerticalScrollBarVisibility="Auto"
-                      x:Name="FromViewModel">
-                <ItemsControl 
-                      HorizontalAlignment="Left" 
-                      VerticalAlignment="Top"
-                      Width="200"
-                      ItemsSource="{Binding Roles}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <ToggleButton
-                            Background="White"
-                            Margin="2"
-                            MinWidth="50"
-                            Cursor="Hand"
-                            Content="{Binding Name}"
-                            IsChecked="{Binding ElementName=FromViewModel, Path=DataContext.IsChecked}"
-                            Command="{Binding ElementName=FromViewModel, Path=DataContext.AddRoleCommand}"
-                            CommandParameter="{Binding}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-            <Button
-                Height="23" 
-                HorizontalAlignment="Left" 
-                Margin="330,170,0,0" 
-                VerticalAlignment="Top"
-                BorderBrush="Transparent"
-                Width="70"
-                Content="Нова роля"
-                Command="{Binding NewRoleCommand}"/>
-            <Button Height="25" 
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border 
+            Grid.Row="1" Grid.Column="1"
+            VerticalAlignment="Center"
+            CornerRadius="25" 
+            MinWidth="450" MinHeight="300"
+            Background="White">
+            <Grid
+                Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock 
+                    Grid.Row="0" Grid.Column="0"
+                    HorizontalAlignment="Left" 
+                    Text="Име :"
+                    Height="23" Width="120"/>
+                <TextBox 
+                    Grid.Row="0" Grid.Column="1"
                     HorizontalAlignment="Left"
-                    Margin="330,250,0,0"
-                    VerticalAlignment="Top"
-                    Width="70" 
+                    Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}"
+                    Height="23" Width="255"
+                    MaxLength="30"/>
+
+                <TextBlock 
+                    Grid.Row="1" Grid.Column="0"
+                    HorizontalAlignment="Left" 
+                    Text="Потребителско име :"
+                    Height="23" Width="120"/>
+                <TextBox 
+                    Grid.Row="1" Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Text="{Binding Username,UpdateSourceTrigger=PropertyChanged}"
+                    Height="23" Width="255"
+                    MaxLength="20"/>
+
+                <TextBlock 
+                    Grid.Row="2" Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    Text="Парола :"
+                    Height="23" Width="120"/>
+                <PasswordBox 
+                    Grid.Row="2" Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    bh:PasswordHelper.Attach="True"
+                    bh:PasswordHelper.Password="{Binding Path=Password, Mode=TwoWay}"
+                    Height="23" Width="255"/>
+
+                <TextBlock 
+                    Grid.Row="3" Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    Text="Потвърди парола :"
+                    Height="23" Width="120"/>
+                <PasswordBox 
+                    Grid.Row="3" Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    bh:PasswordHelper.Attach="True"
+                    bh:PasswordHelper.Password="{Binding Path=ConfirmPassword, Mode=TwoWay}"
+                    Height="23" Width="255"/>
+
+                <TextBlock 
+                    Grid.Row="4" Grid.Column="0"
+                    HorizontalAlignment="Left" 
+                    Text="Роля :"
+                    Height="23" Width="120"/>
+                <ScrollViewer
+                    x:Name="FromViewModel"
+                    Grid.Row="4" Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    MaxHeight="50" MaxWidth="180"
+                    VerticalScrollBarVisibility="Auto">
+                    <ItemsControl
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                        ItemsSource="{Binding Roles}"
+                        Width="170">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ToggleButton
+                                    Margin="2"
+                                    Content="{Binding Name}"
+                                    IsChecked="{Binding ElementName=FromViewModel, Path=DataContext.IsChecked}"
+                                    Command="{Binding ElementName=FromViewModel, Path=DataContext.AddRoleCommand}"
+                                    CommandParameter="{Binding}"
+                                    MinWidth="50"
+                                    Cursor="Hand"
+                                    Background="White"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <Button
+                    Grid.Row="4" Grid.Column="1"
+                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                    Content="Нова роля"
+                    Command="{Binding NewRoleCommand}"
+                    Height="23" Width="70"
+                    BorderBrush="Transparent"/>
+
+                <Button 
+                    Grid.Row="5" Grid.Column="1"
+                    HorizontalAlignment="Right" 
                     Content="Добави "
-                    Command="{Binding AddUserCommand}"/>
-        </Grid>
+                    Command="{Binding AddUserCommand}"
+                    Height="25" Width="70"/>
+
+            </Grid>
+        </Border>
         <ContentPresenter
+            Grid.RowSpan="3" Grid.ColumnSpan="3"
             Content="{Binding BaseViewModel}"/>
     </Grid>
 </UserControl>

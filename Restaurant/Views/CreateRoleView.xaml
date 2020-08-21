@@ -14,42 +14,58 @@
     </UserControl.Resources>
     <Grid
         Background="AliceBlue">
-        <Grid
-              Margin="30" 
-              Background="Transparent" 
-              Height="300"
-              Width="450"
-              VerticalAlignment="Center"
-              HorizontalAlignment="Center">
-            <Border 
-              Background="White" 
-              Height="300"
-              Width="450"
-              VerticalAlignment="Center"
-              HorizontalAlignment="Center"
-              CornerRadius="20"/>
-            <TextBlock Height="23" 
-                       HorizontalAlignment="Left"
-                       Margin="40,110,0,0"
-                       VerticalAlignment="Top"
-                       Width="120" 
-                       Text="Име :" />
-            <TextBox Height="23"
-                         HorizontalAlignment="Left"
-                         Margin="180,110,0,0"
-                         VerticalAlignment="Top"
-                         Width="222" 
-                         MaxLength="15"
-                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Height="25" 
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border 
+            Grid.Row="1" Grid.Column="1"
+            VerticalAlignment="Center"
+            CornerRadius="25" 
+            MinWidth="450" MinHeight="300"
+            Background="White">
+            <Grid
+                Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Row="0" Grid.Column="0"
                     HorizontalAlignment="Left"
-                    Margin="190,209,0,0"
-                    VerticalAlignment="Top"
-                    Width="70" 
-                    Content="Добави "
-                    Command="{Binding AddRoleCommand}"/>
-        </Grid>
+                    Text="Име :"
+                    Height="23" Width="120"/>
+                <TextBox 
+                    Grid.Row="0" Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                    Height="23" Width="255" 
+                    MaxLength="15"/>
+
+                <Button 
+                    Grid.Row="1" Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Command="{Binding AddRoleCommand}"
+                    Height="25" Width="70" 
+                    Content="Добави "/>
+            </Grid>
+        </Border>
         <ContentPresenter
+            Grid.RowSpan="3" Grid.ColumnSpan="3"
             Content="{Binding BaseViewModel}"/>
     </Grid>
 </UserControl>
