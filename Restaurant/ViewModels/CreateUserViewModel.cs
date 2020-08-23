@@ -21,7 +21,6 @@ namespace Restaurant.ViewModels
         private readonly IRoleService roleService;
         private BaseViewModel baseViewModel;
         private CreateRoleViewModel createRoleViewModel;
-        private AdminPanelViewModel adminPanelViewModel;
         private string name;
         private string username;
         private string password;
@@ -32,8 +31,9 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public CreateUserViewModel()
+        public CreateUserViewModel(MenuViewModel menuViewModel)
         {
+            MenuViewModel = menuViewModel;
             userService = new UserService();
             roleService = new RoleService();
         }
@@ -83,52 +83,6 @@ namespace Restaurant.ViewModels
                     returnCommand = new DelegateCommand<object>(Return);
 
                 return returnCommand;
-            }
-        }
-
-        public BaseViewModel BaseViewModel
-        {
-            get => baseViewModel;
-            set
-            {
-                baseViewModel = value;
-                OnPropertyChanged("BaseViewModel");
-            }
-        }
-
-        public CreateRoleViewModel CreateRoleViewModel
-        {
-            get
-            {
-                if (createRoleViewModel == null)
-                {
-                    createRoleViewModel = new CreateRoleViewModel();
-                    CreateRoleView createRoleView = new CreateRoleView();
-
-                    createRoleViewModel.View = createRoleView;
-
-                    createRoleView.DataContext = createRoleViewModel;
-                }
-
-                return createRoleViewModel;
-            }
-        }
-
-        public AdminPanelViewModel AdminPanelViewModel
-        {
-            get
-            {
-                if (adminPanelViewModel == null)
-                {
-                    adminPanelViewModel = new AdminPanelViewModel();
-                    AdminPanelView adminPanelView = new AdminPanelView();
-
-                    adminPanelViewModel.View = adminPanelView;
-
-                    adminPanelView.DataContext = adminPanelViewModel;
-                }
-
-                return adminPanelViewModel;
             }
         }
 
@@ -195,6 +149,33 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public BaseViewModel BaseViewModel
+        {
+            get => baseViewModel;
+            set
+            {
+                baseViewModel = value;
+                OnPropertyChanged("BaseViewModel");
+            }
+        }
+
+        public CreateRoleViewModel CreateRoleViewModel
+        {
+            get
+            {
+                createRoleViewModel = new CreateRoleViewModel(this);
+                CreateRoleView createRoleView = new CreateRoleView();
+
+                createRoleViewModel.View = createRoleView;
+
+                createRoleView.DataContext = createRoleViewModel;
+
+                return createRoleViewModel;
+            }
+        }
+
+        public MenuViewModel MenuViewModel { get; set; }
+
         #endregion
 
         #region Methods
@@ -207,12 +188,12 @@ namespace Restaurant.ViewModels
 
             if (User != null)
             {
-                MessageBox.Show("User with that username already exist.");
+                MessageBox.Show("Username already taken.");
                 return;
             }
 
             userService.CreateUser(Name, Username, Password, UserRoles);
-            BaseViewModel = AdminPanelViewModel;
+            MenuViewModel.BaseViewModel = MenuViewModel.AdminPanelViewModel;
         }
 
         private bool CanCreateUser(object arg)
@@ -251,7 +232,7 @@ namespace Restaurant.ViewModels
 
         private void Return(object obj)
         {
-            BaseViewModel = AdminPanelViewModel;
+            MenuViewModel.BaseViewModel = MenuViewModel.AdminPanelViewModel;
         }
 
         #endregion

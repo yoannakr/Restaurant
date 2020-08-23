@@ -16,7 +16,6 @@ namespace Restaurant.ViewModels
 
         private DelegateCommand<object> loginCommand;
         private readonly IUserService userService;
-        private BaseViewModel baseViewModel;
         private MenuViewModel menuViewModel;
         private string password;
 
@@ -24,8 +23,9 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public LoginViewModel()
+        public LoginViewModel(MainWindowViewModel mainWindowViewModel)
         {
+            MainWindowViewModel = mainWindowViewModel;
             userService = new UserService();
         }
 
@@ -43,16 +43,7 @@ namespace Restaurant.ViewModels
                 return loginCommand;
             }
         }
-
-        public BaseViewModel BaseViewModel
-        {
-            get => baseViewModel;
-            set
-            {
-                baseViewModel = value;
-                OnPropertyChanged("BaseViewModel");
-            }
-        }
+        public MainWindowViewModel MainWindowViewModel { get; set; }
 
         public MenuViewModel MenuViewModel
         {
@@ -60,7 +51,7 @@ namespace Restaurant.ViewModels
             {
                 if (menuViewModel == null)
                 {
-                    menuViewModel = new MenuViewModel(User);
+                    menuViewModel = new MenuViewModel(MainWindowViewModel, User);
                     MenuView menuView = new MenuView();
 
                     menuViewModel.View = menuView;
@@ -74,7 +65,7 @@ namespace Restaurant.ViewModels
 
         public string Username { get; set; }
 
-        public string Password 
+        public string Password
         {
             get => password;
             set
@@ -98,17 +89,15 @@ namespace Restaurant.ViewModels
             if (User == null)
                 return;
 
-            BaseViewModel = MenuViewModel;
+            MainWindowViewModel.BaseViewModel = MenuViewModel;
         }
 
         public string ComputePasswordHashing(string rowPassword)
         {
             using (SHA256 sha256Hash = SHA256.Create())
             {
-                // ComputeHash - returns byte array  
                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rowPassword));
 
-                // Convert byte array to a string   
                 StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < bytes.Length; i++)
                 {

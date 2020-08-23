@@ -13,8 +13,6 @@ namespace Restaurant.ViewModels
         private DelegateCommand<object> createItemCommand;
         private DelegateCommand<object> returnCommand;
         private readonly IItemService itemService;
-        private AdminPanelViewModel adminPanelViewModel;
-        private BaseViewModel baseViewModel;
         private string name;
         private decimal price;
         private string imageSource;
@@ -24,14 +22,48 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public CreateItemViewModel()
+        public CreateItemViewModel(MenuViewModel menuViewModel)
         {
+            MenuViewModel = menuViewModel;
             itemService = new ItemService();
         }
 
         #endregion
 
         #region Properties
+
+        public DelegateCommand<object> CreateItemCommand
+        {
+            get
+            {
+                if (createItemCommand == null)
+                    createItemCommand = new DelegateCommand<object>(CreateItem, CanCreateItem);
+
+                return createItemCommand;
+            }
+        }
+
+        public DelegateCommand<object> BrowseCommand
+        {
+            get
+            {
+                if (browseCommand == null)
+                    browseCommand = new DelegateCommand<object>(BrowseFolder);
+
+                return browseCommand;
+            }
+        }
+
+        public DelegateCommand<object> ReturnCommand
+        {
+            get
+            {
+                if (returnCommand == null)
+                    returnCommand = new DelegateCommand<object>(Return);
+
+                return returnCommand;
+            }
+        }
 
         public string Name
         {
@@ -73,66 +105,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public BaseViewModel BaseViewModel
-        {
-            get => baseViewModel;
-            set
-            {
-                baseViewModel = value;
-                OnPropertyChanged("BaseViewModel");
-            }
-        }
-
-        public AdminPanelViewModel AdminPanelViewModel
-        {
-            get
-            {
-                if (adminPanelViewModel == null)
-                {
-                    adminPanelViewModel = new AdminPanelViewModel();
-                    AdminPanelView adminPanelView = new AdminPanelView();
-
-                    adminPanelViewModel.View = adminPanelView;
-
-                    adminPanelView.DataContext = adminPanelViewModel;
-                }
-
-                return adminPanelViewModel;
-            }
-        }
-
-        public DelegateCommand<object> BrowseCommand
-        {
-            get
-            {
-                if (browseCommand == null)
-                    browseCommand = new DelegateCommand<object>(BrowseFolder);
-
-                return browseCommand;
-            }
-        }
-
-        public DelegateCommand<object> CreateItemCommand
-        {
-            get
-            {
-                if (createItemCommand == null)
-                    createItemCommand = new DelegateCommand<object>(CreateItem, CanCreateItem);
-
-                return createItemCommand;
-            }
-        }
-
-        public DelegateCommand<object> ReturnCommand
-        {
-            get
-            {
-                if (returnCommand == null)
-                    returnCommand = new DelegateCommand<object>(Return);
-
-                return returnCommand;
-            }
-        }
+        public MenuViewModel MenuViewModel { get; set; }
 
         #endregion
 
@@ -156,7 +129,7 @@ namespace Restaurant.ViewModels
         {
             itemService.CreateItem(Name, Price, ImageContent);
 
-            BaseViewModel = AdminPanelViewModel;
+            MenuViewModel.BaseViewModel = MenuViewModel.AdminPanelViewModel;
         }
 
         private bool CanCreateItem(object arg)
@@ -166,7 +139,7 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
-            if (Name == null || Price <=0 || ImageContent == null)
+            if (Name == null || Price <= 0 || ImageContent == null)
                 return false;
 
             return true;
@@ -174,7 +147,7 @@ namespace Restaurant.ViewModels
 
         private void Return(object obj)
         {
-            BaseViewModel = AdminPanelViewModel;
+            MenuViewModel.BaseViewModel = MenuViewModel.AdminPanelViewModel;
         }
 
         #endregion

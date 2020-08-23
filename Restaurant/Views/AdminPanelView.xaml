@@ -26,7 +26,8 @@
         <Button
             Grid.Column="0"
             Content="Нов потребител"
-            Command="{Binding NewUserCommand}"
+            Command="{Binding CreateCommand}"
+            CommandParameter="{Binding CreateUserViewModel}"
             Height="50" Width="200"
             FontSize="12pt"
             FontWeight="Bold"
@@ -38,7 +39,8 @@
         <Button
             Grid.Column="1"
             Content="Добави стока"
-            Command="{Binding NewItemCommand}"
+            Command="{Binding CreateCommand}"
+            CommandParameter="{Binding CreateItemViewModel}"
             Height="50" Width="200"
             FontSize="12pt"
             FontWeight="Bold"
@@ -46,9 +48,5 @@
             BorderBrush="Transparent"
             Background="#ede9a8"
             Foreground="#91918d"/>
-        
-        <ContentPresenter
-            Grid.ColumnSpan="3"
-            Content="{Binding BaseViewModel}"/>
     </Grid>
 </UserControl>
