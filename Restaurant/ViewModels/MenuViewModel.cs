@@ -1,7 +1,7 @@
-﻿using Prism.Commands;
+﻿using System.Linq;
+using Prism.Commands;
 using Restaurant.Views;
 using Restaurant.Database.Models;
-using System.Linq;
 
 namespace Restaurant.ViewModels
 {
@@ -9,12 +9,10 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private DelegateCommand<object> salesCommand;
-        private DelegateCommand<object> adminPanelCommand;
+        private DelegateCommand<object> menuCommand;
         private DelegateCommand<object> exitCommand;
         private BaseViewModel baseViewModel;
-        private BaseViewModel exitViewModel;
-        private SalesViewModel salesViewModel;
+        private AllTablesViewModel alltablesViewModel;
         private AdminPanelViewModel adminPanelViewModel;
         private LoginViewModel loginViewModel;
         private User user;
@@ -24,15 +22,38 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public MenuViewModel(User user)
+        public MenuViewModel(MainWindowViewModel mainWindowViewModel, User user)
         {
-            BaseViewModel = SalesViewModel;
+            MainWindowViewModel = mainWindowViewModel;
+            BaseViewModel = AllTablesViewModel;
             User = user;
         }
 
         #endregion
 
         #region Properties
+
+        public DelegateCommand<object> MenuCommand
+        {
+            get
+            {
+                if (menuCommand == null)
+                    menuCommand = new DelegateCommand<object>(ChangeView);
+
+                return menuCommand;
+            }
+        }
+
+        public DelegateCommand<object> ExitCommand
+        {
+            get
+            {
+                if (exitCommand == null)
+                    exitCommand = new DelegateCommand<object>(Exit);
+
+                return exitCommand;
+            }
+        }
 
         public BaseViewModel BaseViewModel
         {
@@ -44,31 +65,21 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public BaseViewModel ExitViewModel
-        {
-            get => exitViewModel;
-            set
-            {
-                exitViewModel = value;
-                OnPropertyChanged("ExitViewModel");
-            }
-        }
-
-        public SalesViewModel SalesViewModel
+        public AllTablesViewModel AllTablesViewModel
         {
             get
             {
-                if (salesViewModel == null)
+                if (alltablesViewModel == null)
                 {
-                    salesViewModel = new SalesViewModel();
-                    SalesView salesView = new SalesView();
+                    alltablesViewModel = new AllTablesViewModel(this);
+                    AllTablesView alltablesView = new AllTablesView();
 
-                    salesViewModel.View = salesView;
+                    alltablesViewModel.View = alltablesView;
 
-                    salesView.DataContext = salesViewModel;
+                    alltablesView.DataContext = alltablesViewModel;
                 }
 
-                return salesViewModel;
+                return alltablesViewModel;
             }
         }
 
@@ -76,12 +87,15 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                adminPanelViewModel = new AdminPanelViewModel();
-                AdminPanelView adminPanelView = new AdminPanelView();
+                if (adminPanelViewModel == null)
+                {
+                    adminPanelViewModel = new AdminPanelViewModel(this);
+                    AdminPanelView adminPanelView = new AdminPanelView();
 
-                adminPanelViewModel.View = adminPanelView;
+                    adminPanelViewModel.View = adminPanelView;
 
-                adminPanelView.DataContext = adminPanelViewModel;
+                    adminPanelView.DataContext = adminPanelViewModel;
+                }
 
                 return adminPanelViewModel;
             }
@@ -91,19 +105,18 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                if (loginViewModel == null)
-                {
-                    loginViewModel = new LoginViewModel();
-                    LoginView loginView = new LoginView();
+                loginViewModel = new LoginViewModel(MainWindowViewModel);
+                LoginView loginView = new LoginView();
 
-                    loginViewModel.View = loginView;
+                loginViewModel.View = loginView;
 
-                    loginView.DataContext = loginViewModel;
-                }
+                loginView.DataContext = loginViewModel;
 
                 return loginViewModel;
             }
         }
+
+        public MainWindowViewModel MainWindowViewModel { get; set; }
 
         public User User
         {
@@ -133,56 +146,20 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public DelegateCommand<object> SalesCommand
-        {
-            get
-            {
-                if (salesCommand == null)
-                    salesCommand = new DelegateCommand<object>(SalesViewOpen);
-
-                return salesCommand;
-            }
-        }
-
-        public DelegateCommand<object> AdminPanelCommand
-        {
-            get
-            {
-                if (adminPanelCommand == null)
-                    adminPanelCommand = new DelegateCommand<object>(AdminPanelViewOpen);
-
-                return adminPanelCommand;
-            }
-        }
-
-        public DelegateCommand<object> ExitCommand
-        {
-            get
-            {
-                if (exitCommand == null)
-                    exitCommand = new DelegateCommand<object>(Exit);
-
-                return exitCommand;
-            }
-        }
-
         #endregion
 
         #region Methods
 
-        private void SalesViewOpen(object obj)
+        private void ChangeView(object obj)
         {
-            BaseViewModel = SalesViewModel;
-        }
-
-        private void AdminPanelViewOpen(object obj)
-        {
-            BaseViewModel = AdminPanelViewModel;
+            if (obj is BaseViewModel baseViewModel)
+                BaseViewModel = baseViewModel;
         }
 
         private void Exit(object obj)
         {
-            ExitViewModel = LoginViewModel;
+            MainWindowViewModel.LoginViewModel = LoginViewModel;
+            MainWindowViewModel.BaseViewModel = LoginViewModel;
         }
 
         #endregion

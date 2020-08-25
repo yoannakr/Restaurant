@@ -195,8 +195,10 @@
     <Compile Include="Services\IItemService.cs" />
     <Compile Include="Services\Implementations\ItemService.cs" />
     <Compile Include="Services\Implementations\RoleService.cs" />
+    <Compile Include="Services\Implementations\TableService.cs" />
     <Compile Include="Services\Implementations\UserService.cs" />
     <Compile Include="Services\IRoleService.cs" />
+    <Compile Include="Services\ITableService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\Models\Item\ItemDto.cs" />
     <Compile Include="ViewModels\AdminPanelViewModel.cs" />
@@ -211,6 +213,8 @@
     <Compile Include="ViewModels\RowItemViewModel.cs" />
     <Compile Include="ViewModels\SalesViewModel.cs" />
     <Compile Include="ViewModels\SelectedItemViewModel.cs" />
+    <Compile Include="ViewModels\AllTablesViewModel.cs" />
+    <Compile Include="ViewModels\TableViewModel.cs" />
     <Compile Include="Views\AdminPanelView.xaml.cs">
       <DependentUpon>AdminPanelView.xaml</DependentUpon>
     </Compile>
@@ -237,6 +241,9 @@
     </Compile>
     <Compile Include="Views\SelectedItemView.xaml.cs">
       <DependentUpon>SelectedItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AllTablesView.xaml.cs">
+      <DependentUpon>AllTablesView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -287,6 +294,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AllTablesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -333,6 +344,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\table_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\green_button.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\red_button.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

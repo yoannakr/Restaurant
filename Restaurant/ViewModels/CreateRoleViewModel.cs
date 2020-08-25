@@ -11,17 +11,17 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private DelegateCommand<object> addRoleCommand;
+        private DelegateCommand<object> returnCommand;
         private readonly IRoleService roleService;
-        private BaseViewModel baseViewModel;
-        private CreateUserViewModel createUserViewModel;
         private string name;
 
         #endregion
 
         #region Constructors
 
-        public CreateRoleViewModel()
+        public CreateRoleViewModel(CreateUserViewModel createUserViewModel)
         {
+            CreateUserViewModel = createUserViewModel;
             roleService = new RoleService();
         }
 
@@ -34,37 +34,20 @@ namespace Restaurant.ViewModels
             get
             {
                 if (addRoleCommand == null)
-                    addRoleCommand = new DelegateCommand<object>(CreateRole,CanCreateRole);
+                    addRoleCommand = new DelegateCommand<object>(CreateRole, CanCreateRole);
 
                 return addRoleCommand;
             }
         }
 
-        public BaseViewModel BaseViewModel
-        {
-            get => baseViewModel;
-            set
-            {
-                baseViewModel = value;
-                OnPropertyChanged("BaseViewModel");
-            }
-        }
-
-        public CreateUserViewModel CreateUserViewModel
+        public DelegateCommand<object> ReturnCommand
         {
             get
             {
-                if (createUserViewModel == null)
-                {
-                    createUserViewModel = new CreateUserViewModel();
-                    CreateUserView createUserView = new CreateUserView();
+                if (returnCommand == null)
+                    returnCommand = new DelegateCommand<object>(Return);
 
-                    createUserViewModel.View = createUserView;
-
-                    createUserView.DataContext = createUserViewModel;
-                }
-
-                return createUserViewModel;
+                return returnCommand;
             }
         }
 
@@ -78,6 +61,8 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public CreateUserViewModel CreateUserViewModel { get; set; }
+
         #endregion
 
         #region Methods
@@ -85,7 +70,7 @@ namespace Restaurant.ViewModels
         private void CreateRole(object obj)
         {
             roleService.CreateRole(Name);
-            BaseViewModel = CreateUserViewModel;
+            CreateUserViewModel.BaseViewModel = null;
         }
 
         private bool CanCreateRole(object arg)
@@ -99,6 +84,11 @@ namespace Restaurant.ViewModels
                 return false;
 
             return true;
+        }
+
+        private void Return(object obj)
+        {
+            CreateUserViewModel.BaseViewModel = null;
         }
 
         #endregion

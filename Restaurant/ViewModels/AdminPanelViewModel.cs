@@ -7,78 +7,61 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private DelegateCommand<object> newUserCommand;
-        private DelegateCommand<object> newItemCommand;
-        private BaseViewModel baseViewModel;
+        private DelegateCommand<object> createCommand;
         private CreateUserViewModel createUserViewModel;
         private CreateItemViewModel createItemViewModel;
 
         #endregion
 
+        #region Constructors
+
+        public AdminPanelViewModel(MenuViewModel menuViewModel)
+        {
+            MenuViewModel = menuViewModel;
+        }
+
+        #endregion
+
         #region Properties
 
-        public DelegateCommand<object> NewUserCommand 
+        public DelegateCommand<object> CreateCommand
         {
             get
             {
-                if(newUserCommand == null)
-                    newUserCommand = new DelegateCommand<object>(CreateUser);
+                if (createCommand == null)
+                    createCommand = new DelegateCommand<object>(Create);
 
-                return newUserCommand;
+                return createCommand;
             }
         }
 
-        public DelegateCommand<object> NewItemCommand 
-        { get
-            {
-                if (newItemCommand == null)
-                    newItemCommand = new DelegateCommand<object>(CreateItem);
-
-                return newItemCommand;
-            }
-        }
-
-        public BaseViewModel BaseViewModel
-        {
-            get => baseViewModel;
-            set
-            {
-                baseViewModel = value;
-                OnPropertyChanged("BaseViewModel");
-            }
-        }
+        public MenuViewModel MenuViewModel { get; set; }
 
         public CreateUserViewModel CreateUserViewModel
         {
             get
             {
-                if (createUserViewModel == null)
-                {
-                    createUserViewModel = new CreateUserViewModel();
-                    CreateUserView createUserView = new CreateUserView();
+                createUserViewModel = new CreateUserViewModel(MenuViewModel);
+                CreateUserView createUserView = new CreateUserView();
 
-                    createUserViewModel.View = createUserView;
+                createUserViewModel.View = createUserView;
 
-                    createUserView.DataContext = createUserViewModel;
-                }
+                createUserView.DataContext = createUserViewModel;
 
                 return createUserViewModel;
             }
         }
 
-        public CreateItemViewModel CreateItemViewModel 
+        public CreateItemViewModel CreateItemViewModel
         {
             get
             {
-                if (createItemViewModel == null)
-                {
-                    createItemViewModel = new CreateItemViewModel();
-                    CreateItemView createItemView = new CreateItemView();
+                createItemViewModel = new CreateItemViewModel(MenuViewModel);
+                CreateItemView createItemView = new CreateItemView();
 
-                    createItemViewModel.View = createItemView;
+                createItemViewModel.View = createItemView;
 
-                    createItemView.DataContext = createItemViewModel;
-                }
+                createItemView.DataContext = createItemViewModel;
 
                 return createItemViewModel;
             }
@@ -88,14 +71,10 @@ namespace Restaurant.ViewModels
 
         #region Methods
 
-        private void CreateUser(object obj)
+        private void Create(object obj)
         {
-            BaseViewModel = CreateUserViewModel;
-        }
-
-        private void CreateItem(object obj)
-        {
-            BaseViewModel = CreateItemViewModel;
+            if (obj is BaseViewModel baseViewModel)
+                MenuViewModel.BaseViewModel = baseViewModel;
         }
 
         #endregion

@@ -38,7 +38,7 @@ namespace Restaurant.ViewModels
             {
                 if (loginViewModel == null)
                 {
-                    loginViewModel = new LoginViewModel();
+                    loginViewModel = new LoginViewModel(this);
                     LoginView loginView = new LoginView();
 
                     loginViewModel.View = loginView;
@@ -47,6 +47,10 @@ namespace Restaurant.ViewModels
                 }
 
                 return loginViewModel;
+            }
+            set
+            {
+                loginViewModel = value;
             }
         }
 

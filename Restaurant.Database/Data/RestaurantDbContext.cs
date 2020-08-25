@@ -13,6 +13,8 @@ namespace Restaurant.Database.Data
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Table> Tables { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             if (!builder.IsConfigured)

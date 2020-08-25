@@ -1,0 +1,33 @@
+﻿using System.Linq;
+using Restaurant.Database.Data;
+using Restaurant.Database.Models;
+
+namespace Restaurant.Database.Services.Implementations
+{
+    public class TableDbService : ITableDbService
+    {
+        #region Declarations
+
+        private readonly RestaurantDbContext context;
+
+        #endregion
+
+        #region Constructors
+
+        public TableDbService()
+        {
+            context = new RestaurantDbContext();
+        }
+
+        #endregion
+
+        #region Methods
+
+        public IQueryable<Table> GetAllTables()
+        {
+            return context.Tables;
+        }
+
+        #endregion
+    }
+}

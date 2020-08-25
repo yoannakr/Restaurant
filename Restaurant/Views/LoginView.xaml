@@ -8,11 +8,6 @@
              xmlns:bh="clr-namespace:Restaurant.Common.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <DataTemplate DataType="{x:Type vm:MenuViewModel}">
-            <v:MenuView/>
-        </DataTemplate>
-    </UserControl.Resources>
     <Grid
         Background="#ede9a8">
         <Grid.RowDefinitions>
@@ -78,11 +73,8 @@
                     Cursor="Hand"
                     BorderThickness="0.5"
                     Background="#edecdd"/>
-                
+
             </Grid>
         </Border>
-        <ContentPresenter
-            Grid.RowSpan="3" Grid.ColumnSpan="3"
-            Content="{Binding BaseViewModel}"/>
     </Grid>
 </UserControl>

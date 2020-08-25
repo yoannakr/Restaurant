@@ -8,14 +8,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vm:AllTablesViewModel}">
+            <v:AllTablesView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:SalesViewModel}">
             <v:SalesView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:AdminPanelViewModel}">
             <v:AdminPanelView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:LoginViewModel}">
-            <v:LoginView/>
+        <DataTemplate DataType="{x:Type vm:CreateUserViewModel}">
+            <v:CreateUserView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CreateItemViewModel}">
+            <v:CreateItemView/>
         </DataTemplate>
         <BooleanToVisibilityConverter x:Key="AdminBtnVisibilityConverter" />
     </UserControl.Resources>
@@ -36,8 +42,9 @@
             <Button 
                 Grid.Row="0" Grid.Column="0"
                 Margin="10"
-                Content="Продажби"
-                Command="{Binding SalesCommand}"
+                Content="Маси"
+                Command="{Binding MenuCommand}"
+                CommandParameter="{Binding AllTablesViewModel}"
                 MinHeight="30" MinWidth="150"
                 Cursor="Hand"
                 FontSize="12pt"
@@ -51,7 +58,8 @@
                 Grid.Row="0" Grid.Column="1"
                 Margin="30,10,10,10"
                 Content="Админ"
-                Command="{Binding AdminPanelCommand}"
+                Command="{Binding MenuCommand}"
+                CommandParameter="{Binding AdminPanelViewModel}"
                 Visibility="{Binding AdminBtnVisibility, Converter={StaticResource AdminBtnVisibilityConverter}}"
                 MinHeight="30" MinWidth="150"
                 Cursor="Hand"
@@ -77,12 +85,10 @@
                 BorderThickness="0.5"
                 Background="#ede9a8"
                 Foreground="#91918d"/>
-            
+
             <ContentPresenter 
                 Grid.Row="1" Grid.ColumnSpan="3"
                 Content="{Binding BaseViewModel}"/>
         </Grid>
-        <ContentPresenter
-            Content="{Binding ExitViewModel}"/>
     </Grid>
 </UserControl>
