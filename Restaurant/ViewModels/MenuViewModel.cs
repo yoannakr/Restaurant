@@ -126,7 +126,7 @@ namespace Restaurant.ViewModels
                 user = value;
 
                 UserRole role = user.Roles
-                                     .Where(u => u.Role.Name == "Admin")
+                                     .Where(u => u.Role.Name == "Админ")
                                      .FirstOrDefault();
 
                 if (role != null)
