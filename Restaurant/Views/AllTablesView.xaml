@@ -7,10 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ItemsControl 
-                x:Name="FromViewModel"
-                ItemsSource="{Binding Tables}">
-            <!-- x:Name is like variable, this is binding from DataContext -->
+        <ItemsControl
+            x:Name="FromViewModel"
+            Margin="10"
+            ItemsSource="{Binding Tables}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel/>
@@ -18,12 +18,12 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button 
-                            Margin="2"
-                            Command="{Binding SalesCommand}"
-                            Height="155" Width="120"
-                            BorderThickness="0"
-                            Background="#f0edc7">
+                    <Button
+                        Margin="2"
+                        Command="{Binding SalesCommand}"
+                        Height="155" Width="120"
+                        BorderThickness="0"
+                        Background="Azure">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -39,9 +39,10 @@
 
                             <Image
                                 Grid.Row="0" Grid.ColumnSpan="2"
+                                VerticalAlignment="Top"
                                 Margin="2"
                                 Source="{Binding ImageSource}"
-                                Width="30" Height="30" 
+                                Width="30" Height="50" 
                                 Stretch="Uniform"/>
 
                             <TextBlock
@@ -69,10 +70,9 @@
                             <Image
                                 Grid.Row="3" Grid.ColumnSpan="2"
                                 HorizontalAlignment="Center"
-                                Margin="10"
+                                Margin="20"
                                 Source="{Binding IsTakenSource}"
                                 Width="10"/>
-                            <!-- this is binding from ItemsSource -->
                         </Grid>
                     </Button>
                 </DataTemplate>
