@@ -20,6 +20,9 @@
         <DataTemplate DataType="{x:Type vm:CreateUserViewModel}">
             <v:CreateUserView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CreateRoleViewModel}">
+            <v:CreateRoleView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:CreateItemViewModel}">
             <v:CreateItemView/>
         </DataTemplate>

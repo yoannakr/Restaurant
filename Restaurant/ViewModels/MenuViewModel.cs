@@ -38,7 +38,7 @@ namespace Restaurant.ViewModels
             get
             {
                 if (menuCommand == null)
-                    menuCommand = new DelegateCommand<object>(ChangeView);
+                    menuCommand = new DelegateCommand<object>(ChangeMenuBaseViewModel);
 
                 return menuCommand;
             }
@@ -150,7 +150,7 @@ namespace Restaurant.ViewModels
 
         #region Methods
 
-        private void ChangeView(object obj)
+        private void ChangeMenuBaseViewModel(object obj)
         {
             if (obj is BaseViewModel baseViewModel)
                 BaseViewModel = baseViewModel;

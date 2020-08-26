@@ -2,7 +2,6 @@
 using System.Text;
 using Prism.Commands;
 using System.Windows;
-using Restaurant.Database.Models;
 using System.Collections.ObjectModel;
 
 namespace Restaurant.ViewModels

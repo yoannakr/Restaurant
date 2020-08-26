@@ -19,7 +19,6 @@ namespace Restaurant.ViewModels
         private DelegateCommand<object> returnCommand;
         private readonly IUserService userService;
         private readonly IRoleService roleService;
-        private BaseViewModel baseViewModel;
         private CreateRoleViewModel createRoleViewModel;
         private string name;
         private string username;
@@ -149,21 +148,11 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public BaseViewModel BaseViewModel
-        {
-            get => baseViewModel;
-            set
-            {
-                baseViewModel = value;
-                OnPropertyChanged("BaseViewModel");
-            }
-        }
-
         public CreateRoleViewModel CreateRoleViewModel
         {
             get
             {
-                createRoleViewModel = new CreateRoleViewModel(this);
+                createRoleViewModel = new CreateRoleViewModel(MenuViewModel, this);
                 CreateRoleView createRoleView = new CreateRoleView();
 
                 createRoleViewModel.View = createRoleView;
@@ -204,7 +193,7 @@ namespace Restaurant.ViewModels
 
         private void CreateRole(object obj)
         {
-            BaseViewModel = CreateRoleViewModel;
+            MenuViewModel.BaseViewModel = CreateRoleViewModel;
         }
 
         private bool IsValid()
