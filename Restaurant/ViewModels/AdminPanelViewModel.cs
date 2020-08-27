@@ -9,6 +9,7 @@ namespace Restaurant.ViewModels
 
         private DelegateCommand<object> createCommand;
         private CreateUserViewModel createUserViewModel;
+        private CreateTableViewModel createTableViewModel;
         private CreateItemViewModel createItemViewModel;
 
         #endregion
@@ -49,6 +50,21 @@ namespace Restaurant.ViewModels
                 createUserView.DataContext = createUserViewModel;
 
                 return createUserViewModel;
+            }
+        }
+
+        public CreateTableViewModel CreateTableViewModel
+        {
+            get
+            {
+                createTableViewModel = new CreateTableViewModel(MenuViewModel);
+                CreateTableView createTableView = new CreateTableView();
+
+                createTableViewModel.View = createTableView;
+
+                createTableView.DataContext = createTableViewModel;
+
+                return createTableViewModel;
             }
         }
 

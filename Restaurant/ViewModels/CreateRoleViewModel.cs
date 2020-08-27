@@ -1,6 +1,5 @@
 ﻿using System;
 using Prism.Commands;
-using Restaurant.Views;
 using Restaurant.Services;
 using Restaurant.Services.Implementations;
 

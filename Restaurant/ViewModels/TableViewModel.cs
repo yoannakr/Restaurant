@@ -1,8 +1,6 @@
 ﻿using Prism.Commands;
 using Restaurant.Views;
-using Restaurant.Services;
 using Restaurant.Database.Models;
-using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
 {
@@ -14,8 +12,8 @@ namespace Restaurant.ViewModels
         private SalesViewModel salesViewModel;
         private const string GreenButtonPath = "../Images/green_button.png";
         private const string RedButtonPath = "../Images/red_button.png";
+        private string imageSource;
         private string isTakenSource;
-        private readonly ITableService tableService;
 
         #endregion
 
@@ -23,7 +21,6 @@ namespace Restaurant.ViewModels
 
         public TableViewModel(MenuViewModel menuViewModel)
         {
-            tableService = new TableService();
             MenuViewModel = menuViewModel;
         }
 
@@ -44,14 +41,25 @@ namespace Restaurant.ViewModels
 
         public Table Table { get; set; }
 
-        public string ImageSource { get; } = "../Images/table_icon.png";
+        public string ImageSource
+        {
+            get
+            {
+                if (imageSource == null)
+                    imageSource = "../Images/table_icon.png";
+
+                return imageSource;
+            }
+        }
 
         public string IsTakenSource
         {
             get
             {
-                if (isTakenSource == null)
+                if (!IsTaken)
                     isTakenSource = GreenButtonPath;
+                else
+                    isTakenSource = RedButtonPath;
 
                 return isTakenSource;
             }
@@ -70,7 +78,7 @@ namespace Restaurant.ViewModels
             {
                 if (salesViewModel == null)
                 {
-                    salesViewModel = new SalesViewModel();
+                    salesViewModel = new SalesViewModel(MenuViewModel, this);
                     SalesView salesView = new SalesView();
 
                     salesViewModel.View = salesView;
@@ -91,7 +99,6 @@ namespace Restaurant.ViewModels
         private void SalesViewOpen(object obj)
         {
             MenuViewModel.BaseViewModel = SalesViewModel;
-            IsTakenSource = RedButtonPath;
         }
 
         #endregion

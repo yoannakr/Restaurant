@@ -125,8 +125,6 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public User User { get; set; }
-
         public List<Role> Roles
         {
             get
@@ -171,13 +169,13 @@ namespace Restaurant.ViewModels
 
         private void CreateUser(object obj)
         {
-            User = userService.GetAllUsers()
+            User user = userService.GetAllUsers()
                               .Where(u => u.Username == Username)
                               .FirstOrDefault();
 
-            if (User != null)
+            if (user != null)
             {
-                MessageBox.Show("Username already taken.");
+                MessageBox.Show("Потребителското име вече е заето.");
                 return;
             }
 

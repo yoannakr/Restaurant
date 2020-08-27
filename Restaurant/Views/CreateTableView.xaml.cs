@@ -17,11 +17,11 @@ using System.Windows.Shapes;
 namespace Restaurant.Views
 {
     /// <summary>
-    /// Interaction logic for AllItemView.xaml
+    /// Interaction logic for CreateTableView.xaml
     /// </summary>
-    public partial class AllItemView : UserControl, IView
+    public partial class CreateTableView : UserControl, IView
     {
-        public AllItemView()
+        public CreateTableView()
         {
             InitializeComponent();
         }
