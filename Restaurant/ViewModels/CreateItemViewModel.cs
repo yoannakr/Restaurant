@@ -1,5 +1,4 @@
 ﻿using Prism.Commands;
-using Restaurant.Views;
 using Restaurant.Services;
 using Restaurant.Services.Implementations;
 
@@ -22,9 +21,8 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public CreateItemViewModel(MenuViewModel menuViewModel)
+        public CreateItemViewModel()
         {
-            MenuViewModel = menuViewModel;
             itemService = new ItemService();
         }
 
@@ -105,16 +103,16 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public MenuViewModel MenuViewModel { get; set; }
-
         #endregion
 
         #region Methods
 
         private void BrowseFolder(object obj)
         {
-            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
-            openFileDlg.Filter = "Image files (*.png) | *.png";
+            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "Image files (*.png) | *.png"
+            };
 
             bool? result = openFileDlg.ShowDialog();
 
@@ -129,7 +127,7 @@ namespace Restaurant.ViewModels
         {
             itemService.CreateItem(Name, Price, ImageContent);
 
-            MenuViewModel.BaseViewModel = MenuViewModel.AdminPanelViewModel;
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }
 
         private bool CanCreateItem(object arg)
@@ -147,7 +145,7 @@ namespace Restaurant.ViewModels
 
         private void Return(object obj)
         {
-            MenuViewModel.BaseViewModel = MenuViewModel.AdminPanelViewModel;
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }
 
         #endregion

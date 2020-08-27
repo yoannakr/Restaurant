@@ -27,11 +27,11 @@ namespace Restaurant.Services.Implementations
 
         #region Methods
 
-        public void CreateUser(string name, string username, string password, List<Role> roles)
+        public void CreateUser(string name, string username, string password, List<int> rolesId)
         {
             string securityPassword = ComputePasswordHashing(password);
 
-            userDb.CreateUser(name, username, securityPassword, roles);
+            userDb.CreateUser(name, username, securityPassword, rolesId);
         }
 
         public IEnumerable<User> GetAllUsers()

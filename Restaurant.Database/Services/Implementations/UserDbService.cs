@@ -25,7 +25,7 @@ namespace Restaurant.Database.Services.Implementations
 
         #region Methods
 
-        public void CreateUser(string name, string username, string password, List<Role> roles)
+        public void CreateUser(string name, string username, string password, List<int> rolesId)
         {
             User user = new User()
             {
@@ -34,10 +34,10 @@ namespace Restaurant.Database.Services.Implementations
                 Password = password
             };
 
-            ICollection<UserRole> userRoles = roles.Select(r => new UserRole()
+            ICollection<UserRole> userRoles = rolesId.Select(id => new UserRole()
             {
                 User = user,
-                RoleId = r.Id
+                RoleId = id
             }).ToList();
 
             foreach (UserRole userRole in userRoles)

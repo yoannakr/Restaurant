@@ -16,10 +16,9 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public AllTablesViewModel(MenuViewModel menuViewModel)
+        public AllTablesViewModel()
         {
             tableService = new TableService();
-            MenuViewModel = menuViewModel;
         }
 
         #endregion
@@ -34,7 +33,7 @@ namespace Restaurant.ViewModels
                 {
                     tables = new List<TableViewModel>();
 
-                    tables = tableService.GetAllTables().Select(t => new TableViewModel(MenuViewModel)
+                    tables = tableService.GetAllTables().Select(t => new TableViewModel(MenuViewModel.Instance)
                     {
                         Table = t,
                         IsTaken = t.IsTaken
@@ -44,8 +43,6 @@ namespace Restaurant.ViewModels
                 return tables;
             }
         }
-
-        public MenuViewModel MenuViewModel { get; set; }
 
         #endregion
 

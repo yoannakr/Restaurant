@@ -14,15 +14,6 @@ namespace Restaurant.ViewModels
 
         #endregion
 
-        #region Constructors
-
-        public AdminPanelViewModel(MenuViewModel menuViewModel)
-        {
-            MenuViewModel = menuViewModel;
-        }
-
-        #endregion
-
         #region Properties
 
         public DelegateCommand<object> CreateCommand
@@ -36,13 +27,11 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public MenuViewModel MenuViewModel { get; set; }
-
         public CreateUserViewModel CreateUserViewModel
         {
             get
             {
-                createUserViewModel = new CreateUserViewModel(MenuViewModel);
+                createUserViewModel = new CreateUserViewModel();
                 CreateUserView createUserView = new CreateUserView();
 
                 createUserViewModel.View = createUserView;
@@ -57,7 +46,7 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                createTableViewModel = new CreateTableViewModel(MenuViewModel);
+                createTableViewModel = new CreateTableViewModel();
                 CreateTableView createTableView = new CreateTableView();
 
                 createTableViewModel.View = createTableView;
@@ -72,7 +61,7 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                createItemViewModel = new CreateItemViewModel(MenuViewModel);
+                createItemViewModel = new CreateItemViewModel();
                 CreateItemView createItemView = new CreateItemView();
 
                 createItemViewModel.View = createItemView;
@@ -90,7 +79,7 @@ namespace Restaurant.ViewModels
         private void Create(object obj)
         {
             if (obj is BaseViewModel baseViewModel)
-                MenuViewModel.BaseViewModel = baseViewModel;
+                MenuViewModel.Instance.ChangeMenuViewCommand.Execute(baseViewModel);
         }
 
         #endregion

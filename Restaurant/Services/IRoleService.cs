@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Restaurant.Database.Models;
+using Restaurant.Services.Models.Role;
 
 namespace Restaurant.Services
 {
@@ -7,6 +7,6 @@ namespace Restaurant.Services
     {
         void CreateRole(string name);
 
-        IEnumerable<Role> GetAllRoles();
+        IEnumerable<RoleDto> GetAllRoles();
     }
 }

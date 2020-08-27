@@ -24,9 +24,8 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public LoginViewModel(MainWindowViewModel mainWindowViewModel)
+        public LoginViewModel()
         {
-            MainWindowViewModel = mainWindowViewModel;
             userService = new UserService();
         }
 
@@ -44,7 +43,6 @@ namespace Restaurant.ViewModels
                 return loginCommand;
             }
         }
-        public MainWindowViewModel MainWindowViewModel { get; set; }
 
         public MenuViewModel MenuViewModel
         {
@@ -52,7 +50,7 @@ namespace Restaurant.ViewModels
             {
                 if (menuViewModel == null)
                 {
-                    menuViewModel = new MenuViewModel(MainWindowViewModel, User);
+                    menuViewModel = new MenuViewModel(User);
                     MenuView menuView = new MenuView();
 
                     menuViewModel.View = menuView;
@@ -93,7 +91,7 @@ namespace Restaurant.ViewModels
                 return;
             }
 
-            MainWindowViewModel.BaseViewModel = MenuViewModel;
+            MainWindowViewModel.Instance.ChangeMainViewCommand.Execute(MenuViewModel);
         }
 
         public string ComputePasswordHashing(string rowPassword)

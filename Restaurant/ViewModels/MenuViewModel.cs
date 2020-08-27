@@ -9,7 +9,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private DelegateCommand<object> menuCommand;
+        private DelegateCommand<object> changeMenuViewCommand;
         private DelegateCommand<object> exitCommand;
         private BaseViewModel baseViewModel;
         private AllTablesViewModel alltablesViewModel;
@@ -22,9 +22,9 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public MenuViewModel(MainWindowViewModel mainWindowViewModel, User user)
+        public MenuViewModel(User user)
         {
-            MainWindowViewModel = mainWindowViewModel;
+            Instance = this;
             BaseViewModel = AllTablesViewModel;
             User = user;
         }
@@ -33,14 +33,14 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public DelegateCommand<object> MenuCommand
+        public DelegateCommand<object> ChangeMenuViewCommand
         {
             get
             {
-                if (menuCommand == null)
-                    menuCommand = new DelegateCommand<object>(ChangeMenuBaseViewModel);
+                if (changeMenuViewCommand == null)
+                    changeMenuViewCommand = new DelegateCommand<object>(ChangeMenuView);
 
-                return menuCommand;
+                return changeMenuViewCommand;
             }
         }
 
@@ -54,6 +54,8 @@ namespace Restaurant.ViewModels
                 return exitCommand;
             }
         }
+
+        public static MenuViewModel Instance { get; set; }
 
         public BaseViewModel BaseViewModel
         {
@@ -71,7 +73,7 @@ namespace Restaurant.ViewModels
             {
                 if (alltablesViewModel == null)
                 {
-                    alltablesViewModel = new AllTablesViewModel(this);
+                    alltablesViewModel = new AllTablesViewModel();
                     AllTablesView alltablesView = new AllTablesView();
 
                     alltablesViewModel.View = alltablesView;
@@ -89,7 +91,7 @@ namespace Restaurant.ViewModels
             {
                 if (adminPanelViewModel == null)
                 {
-                    adminPanelViewModel = new AdminPanelViewModel(this);
+                    adminPanelViewModel = new AdminPanelViewModel();
                     AdminPanelView adminPanelView = new AdminPanelView();
 
                     adminPanelViewModel.View = adminPanelView;
@@ -105,7 +107,7 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                loginViewModel = new LoginViewModel(MainWindowViewModel);
+                loginViewModel = new LoginViewModel();
                 LoginView loginView = new LoginView();
 
                 loginViewModel.View = loginView;
@@ -115,8 +117,6 @@ namespace Restaurant.ViewModels
                 return loginViewModel;
             }
         }
-
-        public MainWindowViewModel MainWindowViewModel { get; set; }
 
         public User User
         {
@@ -150,7 +150,7 @@ namespace Restaurant.ViewModels
 
         #region Methods
 
-        private void ChangeMenuBaseViewModel(object obj)
+        private void ChangeMenuView(object obj)
         {
             if (obj is BaseViewModel baseViewModel)
                 BaseViewModel = baseViewModel;
@@ -158,8 +158,7 @@ namespace Restaurant.ViewModels
 
         private void Exit(object obj)
         {
-            MainWindowViewModel.LoginViewModel = LoginViewModel;
-            MainWindowViewModel.BaseViewModel = LoginViewModel;
+            MainWindowViewModel.Instance.ChangeMainViewCommand.Execute(LoginViewModel);
         }
 
         #endregion

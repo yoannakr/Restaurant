@@ -6,7 +6,7 @@ namespace Restaurant.Database.Services
 {
     public interface IUserDbService
     {
-        void CreateUser(string name, string username, string password, List<Role> roles);
+        void CreateUser(string name, string username, string password, List<int> rolesId);
 
         IQueryable<User> GetAllUsers();
     }
