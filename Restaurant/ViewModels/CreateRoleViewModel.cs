@@ -1,6 +1,5 @@
 ﻿using System;
 using Prism.Commands;
-using Restaurant.Views;
 using Restaurant.Services;
 using Restaurant.Services.Implementations;
 
@@ -19,8 +18,9 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public CreateRoleViewModel(CreateUserViewModel createUserViewModel)
+        public CreateRoleViewModel(MenuViewModel menuViewModel, CreateUserViewModel createUserViewModel)
         {
+            MenuViewModel = menuViewModel;
             CreateUserViewModel = createUserViewModel;
             roleService = new RoleService();
         }
@@ -61,6 +61,8 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public MenuViewModel MenuViewModel { get; set; }
+
         public CreateUserViewModel CreateUserViewModel { get; set; }
 
         #endregion
@@ -70,7 +72,7 @@ namespace Restaurant.ViewModels
         private void CreateRole(object obj)
         {
             roleService.CreateRole(Name);
-            CreateUserViewModel.BaseViewModel = null;
+            MenuViewModel.BaseViewModel = CreateUserViewModel;
         }
 
         private bool CanCreateRole(object arg)
@@ -88,7 +90,7 @@ namespace Restaurant.ViewModels
 
         private void Return(object obj)
         {
-            CreateUserViewModel.BaseViewModel = null;
+            MenuViewModel.BaseViewModel = CreateUserViewModel;
         }
 
         #endregion

@@ -8,7 +8,7 @@ using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
 {
-    public class AllItemViewModel : BaseViewModel
+    public class AllItemsViewModel : BaseViewModel
     {
         #region Declarations
 
@@ -20,9 +20,10 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public AllItemViewModel(SalesViewModel salesViewModel)
+        public AllItemsViewModel(SalesViewModel salesViewModel)
         {
             itemService = new ItemService();
+            SalesViewModel = salesViewModel;
             SelectedItemViewModel = salesViewModel.SelectedItemViewModel;
         }
 
@@ -55,6 +56,8 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public SalesViewModel SalesViewModel { get; set; }
+
         public SelectedItemViewModel SelectedItemViewModel { get; set; }
 
         #endregion
@@ -63,6 +66,9 @@ namespace Restaurant.ViewModels
 
         private void AddItem(object obj)
         {
+            if (!SalesViewModel.TableViewModel.IsTaken)
+                SalesViewModel.TakeTableCommand.Execute();
+
             ItemDto itemDto = obj as ItemDto;
 
             RowItemViewModel selectedItem = SelectedItemViewModel.SelectedItem;

@@ -2,7 +2,6 @@
 using System.Text;
 using Prism.Commands;
 using System.Windows;
-using Restaurant.Database.Models;
 using System.Collections.ObjectModel;
 
 namespace Restaurant.ViewModels
@@ -19,7 +18,39 @@ namespace Restaurant.ViewModels
 
         #endregion
 
+        #region Constructors
+
+        public SelectedItemViewModel(MenuViewModel menuViewModel,TableViewModel tableViewModel)
+        {
+            MenuViewModel = menuViewModel;
+            TableViewModel = tableViewModel;
+        }
+
+        #endregion
+
         #region Properties
+
+        public DelegateCommand<object> DeleteItemCommand
+        {
+            get
+            {
+                if (deleteItemCommand == null)
+                    deleteItemCommand = new DelegateCommand<object>(DeleteItem);
+
+                return deleteItemCommand;
+            }
+        }
+
+        public DelegateCommand<object> FinishPaymentCommand
+        {
+            get
+            {
+                if (finishPaymentCommand == null)
+                    finishPaymentCommand = new DelegateCommand<object>(FinishPayment, CanFinishPayment);
+
+                return finishPaymentCommand;
+            }
+        }
 
         public ObservableCollection<RowItemViewModel> Items
         {
@@ -61,27 +92,9 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public DelegateCommand<object> DeleteItemCommand
-        {
-            get
-            {
-                if (deleteItemCommand == null)
-                    deleteItemCommand = new DelegateCommand<object>(DeleteItem);
+        public MenuViewModel MenuViewModel { get; set; }
 
-                return deleteItemCommand;
-            }
-        }
-
-        public DelegateCommand<object> FinishPaymentCommand
-        {
-            get
-            {
-                if (finishPaymentCommand == null)
-                    finishPaymentCommand = new DelegateCommand<object>(FinishPayment, CanFinishPayment);
-
-                return finishPaymentCommand;
-            }
-        }
+        public TableViewModel TableViewModel { get; set; }
 
         #endregion
 
@@ -124,6 +137,8 @@ namespace Restaurant.ViewModels
                 Items.Clear();
                 Total = 0;
                 Payed = 0;
+                TableViewModel.IsTaken = false;
+                MenuViewModel.BaseViewModel = MenuViewModel.AllTablesViewModel;
             }
 
         }

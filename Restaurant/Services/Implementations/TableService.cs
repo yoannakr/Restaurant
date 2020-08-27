@@ -24,6 +24,11 @@ namespace Restaurant.Services.Implementations
 
         #region Methods
 
+        public void CreateTable(long number, int seats)
+        {
+            tableDb.CreateTable(number, seats);
+        }
+
         public IEnumerable<Table> GetAllTables()
         {
             return tableDb.GetAllTables();

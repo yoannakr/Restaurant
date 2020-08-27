@@ -139,7 +139,7 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
-            if (Name == null || Price <= 0 || ImageContent == null)
+            if (string.IsNullOrEmpty(Name) || Price <= 0 || ImageContent == null)
                 return false;
 
             return true;

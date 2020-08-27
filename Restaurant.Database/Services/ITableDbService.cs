@@ -5,6 +5,8 @@ namespace Restaurant.Database.Services
 {
     public interface ITableDbService
     {
+        void CreateTable(long number, int seats);
+
         IQueryable<Table> GetAllTables();
     }
 }

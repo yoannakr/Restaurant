@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Linq;
+using System.Windows;
 using Prism.Commands;
 using Restaurant.Views;
 using Restaurant.Services;
@@ -87,7 +88,10 @@ namespace Restaurant.ViewModels
                                .FirstOrDefault();
 
             if (User == null)
+            {
+                MessageBox.Show("Грешно потребителско име и/или парола !");
                 return;
+            }
 
             MainWindowViewModel.BaseViewModel = MenuViewModel;
         }

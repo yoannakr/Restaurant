@@ -48,7 +48,7 @@
                             <TextBlock
                                 Grid.Row="1" Grid.Column="0"
                                 HorizontalAlignment="Left"
-                                Text="Number :"
+                                Text="Номер :"
                                 Width="60"/>
                             <TextBlock 
                                 Grid.Row="1" Grid.Column="1"
@@ -59,7 +59,7 @@
                             <TextBlock
                                 Grid.Row="2" Grid.Column="0"
                                 HorizontalAlignment="Left"
-                                Text="Seats :"
+                                Text="Места :"
                                 Width="60"/>
                             <TextBlock 
                                 Grid.Row="2" Grid.Column="1" 

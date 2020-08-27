@@ -38,6 +38,19 @@
 
         <Button
             Grid.Column="1"
+            Content="Добави маса"
+            Command="{Binding CreateCommand}"
+            CommandParameter="{Binding CreateTableViewModel}"
+            Height="50" Width="200"
+            FontSize="12pt"
+            FontWeight="Bold"
+            FontStyle="Oblique"
+            BorderBrush="Transparent"
+            Background="#ede9a8"
+            Foreground="#91918d"/>
+
+        <Button
+            Grid.Column="2"
             Content="Добави стока"
             Command="{Binding CreateCommand}"
             CommandParameter="{Binding CreateItemViewModel}"

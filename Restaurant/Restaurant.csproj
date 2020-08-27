@@ -202,10 +202,11 @@
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\Models\Item\ItemDto.cs" />
     <Compile Include="ViewModels\AdminPanelViewModel.cs" />
-    <Compile Include="ViewModels\AllItemViewModel.cs" />
+    <Compile Include="ViewModels\AllItemsViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CreateItemViewModel.cs" />
     <Compile Include="ViewModels\CreateRoleViewModel.cs" />
+    <Compile Include="ViewModels\CreateTableViewModel.cs" />
     <Compile Include="ViewModels\CreateUserViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -218,14 +219,17 @@
     <Compile Include="Views\AdminPanelView.xaml.cs">
       <DependentUpon>AdminPanelView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AllItemView.xaml.cs">
-      <DependentUpon>AllItemView.xaml</DependentUpon>
+    <Compile Include="Views\AllItemsView.xaml.cs">
+      <DependentUpon>AllItemsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateItemView.xaml.cs">
       <DependentUpon>CreateItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateRoleView.xaml.cs">
       <DependentUpon>CreateRoleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateTableView.xaml.cs">
+      <DependentUpon>CreateTableView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateUserView.xaml.cs">
       <DependentUpon>CreateUserView.xaml</DependentUpon>
@@ -262,7 +266,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AllItemView.xaml">
+    <Page Include="Views\AllItemsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -271,6 +275,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreateRoleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateTableView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
