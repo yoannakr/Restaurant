@@ -20,9 +20,8 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public SelectedItemViewModel(MenuViewModel menuViewModel,TableViewModel tableViewModel)
+        public SelectedItemViewModel(TableViewModel tableViewModel)
         {
-            MenuViewModel = menuViewModel;
             TableViewModel = tableViewModel;
         }
 
@@ -92,8 +91,6 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public MenuViewModel MenuViewModel { get; set; }
-
         public TableViewModel TableViewModel { get; set; }
 
         #endregion
@@ -138,7 +135,7 @@ namespace Restaurant.ViewModels
                 Total = 0;
                 Payed = 0;
                 TableViewModel.IsTaken = false;
-                MenuViewModel.BaseViewModel = MenuViewModel.AllTablesViewModel;
+                MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
             }
 
         }

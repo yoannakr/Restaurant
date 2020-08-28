@@ -17,15 +17,6 @@ namespace Restaurant.ViewModels
 
         #endregion
 
-        #region Constructors
-
-        public TableViewModel(MenuViewModel menuViewModel)
-        {
-            MenuViewModel = menuViewModel;
-        }
-
-        #endregion
-
         #region Properties
 
         public DelegateCommand<object> SalesCommand
@@ -78,7 +69,7 @@ namespace Restaurant.ViewModels
             {
                 if (salesViewModel == null)
                 {
-                    salesViewModel = new SalesViewModel(MenuViewModel, this);
+                    salesViewModel = new SalesViewModel(this);
                     SalesView salesView = new SalesView();
 
                     salesViewModel.View = salesView;
@@ -90,15 +81,13 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public MenuViewModel MenuViewModel { get; set; }
-
         #endregion
 
         #region Methods
 
         private void SalesViewOpen(object obj)
         {
-            MenuViewModel.BaseViewModel = SalesViewModel;
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(SalesViewModel);
         }
 
         #endregion

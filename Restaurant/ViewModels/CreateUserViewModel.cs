@@ -126,7 +126,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        //TODO: ObserveableCollection
+        //TODO: ObservableCollection
         public List<RoleDto> Roles
         {
             get

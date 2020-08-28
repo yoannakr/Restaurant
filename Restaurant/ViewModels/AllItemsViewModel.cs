@@ -2,9 +2,10 @@
 using Prism.Commands;
 using Restaurant.Services;
 using Restaurant.Database.Models;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Item;
 using Restaurant.Services.Implementations;
+using Restaurant.Common.AllCollections;
 
 namespace Restaurant.ViewModels
 {
@@ -13,8 +14,7 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private DelegateCommand<object> addItemToSelected;
-        private readonly IItemService itemService;
-        private List<ItemDto> items;
+        private ObservableCollection<ItemDto> items;
 
         #endregion
 
@@ -22,7 +22,6 @@ namespace Restaurant.ViewModels
 
         public AllItemsViewModel(SalesViewModel salesViewModel)
         {
-            itemService = new ItemService();
             SalesViewModel = salesViewModel;
             SelectedItemViewModel = salesViewModel.SelectedItemViewModel;
         }
@@ -42,17 +41,14 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public List<ItemDto> Items
+        public ObservableCollection<ItemDto> Items
         {
             get
             {
                 if (items == null)
-                    items = new List<ItemDto>();
-
-                items = itemService.GetAllItems().ToList();
+                    items = CollectionHolder.Instance.Items;
 
                 return items;
-
             }
         }
 
@@ -127,9 +123,7 @@ namespace Restaurant.ViewModels
                 };
 
                 SelectedItemViewModel.Items.Add(item);
-
             }
-
         }
 
         #endregion

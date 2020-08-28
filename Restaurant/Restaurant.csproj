@@ -190,6 +190,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\AllCollections\CollectionHolder.cs" />
     <Compile Include="Common\Behaviors\PasswordHelper.cs" />
     <Compile Include="Interfaces\IHashPassword.cs" />
     <Compile Include="Services\IItemService.cs" />

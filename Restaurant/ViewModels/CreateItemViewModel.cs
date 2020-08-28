@@ -1,5 +1,8 @@
 ﻿using Prism.Commands;
 using Restaurant.Services;
+using Restaurant.Database.Models;
+using Restaurant.Services.Models.Item;
+using Restaurant.Common.AllCollections;
 using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
@@ -124,8 +127,16 @@ namespace Restaurant.ViewModels
         }
 
         private void CreateItem(object obj)
-        {
-            itemService.CreateItem(Name, Price, ImageContent);
+        { 
+            Item item = itemService.CreateItem(Name, Price, ImageContent);
+
+            CollectionHolder.Instance.Items.Add(new ItemDto()
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Price = item.Price,
+                ImageSource = ImageSource
+            });
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }

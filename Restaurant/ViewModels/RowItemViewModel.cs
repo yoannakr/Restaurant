@@ -32,6 +32,28 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
+        public DelegateCommand<object> DeleteExtraCommand
+        {
+            get
+            {
+                if (deleteExtraCommand == null)
+                    deleteExtraCommand = new DelegateCommand<object>(DeleteExtra);
+
+                return deleteExtraCommand;
+            }
+        }
+
+        public DelegateCommand<object> ShowOrHideListCommand
+        {
+            get
+            {
+                if (showOrHideListCommand == null)
+                    showOrHideListCommand = new DelegateCommand<object>(ShowOrHideList);
+
+                return showOrHideListCommand;
+            }
+        }
+
         public ObservableCollection<RowItemViewModel> Extras
         {
             get
@@ -61,9 +83,7 @@ namespace Restaurant.ViewModels
                     value = 1;
                 }
                 count = value;
-                SelectedItemViewModel.Total -= Total;
-                Total = count * Item.Price;
-                SelectedItemViewModel.Total += Total;
+                ChangeTotal();
                 OnPropertyChanged("Count");
             }
         }
@@ -123,28 +143,6 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public DelegateCommand<object> DeleteExtraCommand
-        {
-            get
-            {
-                if (deleteExtraCommand == null)
-                    deleteExtraCommand = new DelegateCommand<object>(DeleteExtra);
-
-                return deleteExtraCommand;
-            }
-        }
-
-        public DelegateCommand<object> ShowOrHideListCommand
-        {
-            get
-            {
-                if (showOrHideListCommand == null)
-                    showOrHideListCommand = new DelegateCommand<object>(ShowOrHideList);
-
-                return showOrHideListCommand;
-            }
-        }
-
         #endregion
 
         #region Methods
@@ -174,6 +172,13 @@ namespace Restaurant.ViewModels
 
             IsDown = !IsDown;
             ListVisibility = !ListVisibility;
+        }
+
+        public void ChangeTotal()
+        {
+            SelectedItemViewModel.Total -= Total;
+            Total = count * Item.Price;
+            SelectedItemViewModel.Total += Total;
         }
 
         #endregion

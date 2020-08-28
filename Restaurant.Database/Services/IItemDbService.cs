@@ -5,7 +5,7 @@ namespace Restaurant.Database.Services
 {
     public interface IItemDbService
     {
-        void CreateItem(string name, decimal price, byte[] imageContent);
+        Item CreateItem(string name, decimal price, byte[] imageContent);
 
         IQueryable<Item> GetAllItems();
     }

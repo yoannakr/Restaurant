@@ -19,9 +19,8 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public SalesViewModel(MenuViewModel menuViewModel,TableViewModel tableViewModel)
+        public SalesViewModel(TableViewModel tableViewModel)
         {
-            MenuViewModel = menuViewModel;
             TableViewModel = tableViewModel;
         }
 
@@ -64,7 +63,7 @@ namespace Restaurant.ViewModels
             {
                 if (selectedItemViewModel == null)
                 {
-                    selectedItemViewModel = new SelectedItemViewModel(MenuViewModel,TableViewModel);
+                    selectedItemViewModel = new SelectedItemViewModel(TableViewModel);
                     SelectedItemView selectedItemView = new SelectedItemView();
 
                     selectedItemViewModel.View = selectedItemView;
@@ -75,8 +74,6 @@ namespace Restaurant.ViewModels
                 return selectedItemViewModel;
             }
         }
-
-        public MenuViewModel MenuViewModel { get; set; }
 
         public TableViewModel TableViewModel { get; set; }
 

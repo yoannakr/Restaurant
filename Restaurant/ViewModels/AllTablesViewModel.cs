@@ -25,6 +25,7 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
+        //TODO: Observablecollection
         public List<TableViewModel> Tables
         {
             get
@@ -33,7 +34,7 @@ namespace Restaurant.ViewModels
                 {
                     tables = new List<TableViewModel>();
 
-                    tables = tableService.GetAllTables().Select(t => new TableViewModel(MenuViewModel.Instance)
+                    tables = tableService.GetAllTables().Select(t => new TableViewModel()
                     {
                         Table = t,
                         IsTaken = t.IsTaken

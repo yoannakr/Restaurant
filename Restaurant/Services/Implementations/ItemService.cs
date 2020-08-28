@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Media;
 using System.Collections.Generic;
+using Restaurant.Database.Models;
 using System.Windows.Media.Imaging;
 using Restaurant.Database.Services;
 using Restaurant.Services.Models.Item;
@@ -39,9 +40,9 @@ namespace Restaurant.Services.Implementations
             }).ToList();
         }
 
-        public void CreateItem(string name, decimal price, byte[] imageContent)
+        public Item CreateItem(string name, decimal price, byte[] imageContent)
         {
-            itemDb.CreateItem(name, price, imageContent);
+            return itemDb.CreateItem(name, price, imageContent);
         }
 
         private static ImageSource ConvertFromByteArrayToImageSource(byte[] imageContent)

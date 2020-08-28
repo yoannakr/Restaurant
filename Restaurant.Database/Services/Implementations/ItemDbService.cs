@@ -28,7 +28,7 @@ namespace Restaurant.Database.Services.Implementations
             return context.Items;
         }
 
-        public void CreateItem(string name, decimal price, byte[] imageContent)
+        public Item CreateItem(string name, decimal price, byte[] imageContent)
         {
             Image image = new Image()
             {
@@ -37,14 +37,18 @@ namespace Restaurant.Database.Services.Implementations
 
             context.Images.Add(image);
 
-            context.Items.Add(new Item()
+            Item item = new Item()
             {
                 Name = name,
                 Price = price,
                 Image = image
-            });
+            };
+
+            context.Items.Add(item);
 
             context.SaveChanges();
+
+            return item;
         }
 
         #endregion

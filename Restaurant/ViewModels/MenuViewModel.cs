@@ -55,7 +55,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public static MenuViewModel Instance { get; set; }
+        public static MenuViewModel Instance { get; private set; }
 
         public BaseViewModel BaseViewModel
         {
