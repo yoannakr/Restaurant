@@ -15,18 +15,18 @@ namespace Restaurant.ViewModels
         private AllTablesViewModel alltablesViewModel;
         private AdminPanelViewModel adminPanelViewModel;
         private LoginViewModel loginViewModel;
-        private User user;
+        private UserViewModel userViewModel;
         private bool adminBtnVisibility;
 
         #endregion
 
         #region Constructors
 
-        public MenuViewModel(User user)
+        public MenuViewModel(UserViewModel userViewModel)
         {
             Instance = this;
             BaseViewModel = AllTablesViewModel;
-            User = user;
+            UserViewModel = userViewModel;
         }
 
         #endregion
@@ -118,16 +118,17 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public User User
+        public UserViewModel UserViewModel
         {
-            get => user;
+            get => userViewModel;
             set
             {
-                user = value;
+                userViewModel = value;
 
-                UserRole role = user.Roles
-                                     .Where(u => u.Role.Name == "Админ")
-                                     .FirstOrDefault();
+                UserRole role = userViewModel.User
+                                             .Roles
+                                             .Where(u => u.Role.Name == "Админ")
+                                             .FirstOrDefault();
 
                 if (role != null)
                     AdminBtnVisibility = true;

@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using Restaurant.Database.Models;
 using Restaurant.Database.Services;
-using Restaurant.Services.Models.Role;
+using Restaurant.Common.InstanceHolder;
+using Restaurant.Services.Models.RoleModels;
 using Restaurant.Database.Services.Implementations;
 
 namespace Restaurant.Services.Implementations
@@ -26,9 +28,16 @@ namespace Restaurant.Services.Implementations
         #region Methods
 
 
-        public void CreateRole(string name)
+        public Role CreateRole(string name)
         {
-            roleDb.CreateRole(name);
+            Role role = roleDb.CreateRole(name);
+
+            CollectionInstance.Instance.Roles.Add(new RoleDto()
+            {
+                Role = role
+            });
+
+            return role;
         }
 
 
@@ -36,8 +45,7 @@ namespace Restaurant.Services.Implementations
         {
             return roleDb.GetAllRoles().Select(r => new RoleDto()
             {
-                Id = r.Id,
-                Name = r.Name
+                Role = r
             });
         }
 

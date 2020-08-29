@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using Restaurant.Services.Models.Role;
+using Restaurant.Database.Models;
+using Restaurant.Services.Models.RoleModels;
 
 namespace Restaurant.Services
 {
     public interface IRoleService
     {
-        void CreateRole(string name);
+        Role CreateRole(string name);
 
         IEnumerable<RoleDto> GetAllRoles();
     }

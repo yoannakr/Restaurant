@@ -7,8 +7,9 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private DelegateCommand<object> createCommand;
+        private DelegateCommand<object> changeAdminViewCommand;
         private CreateUserViewModel createUserViewModel;
+        private UpdateOrDeleteUserViewModel updateOrDeleteUserViewModel;
         private CreateTableViewModel createTableViewModel;
         private CreateItemViewModel createItemViewModel;
 
@@ -16,14 +17,14 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public DelegateCommand<object> CreateCommand
+        public DelegateCommand<object> ChangeAdminViewCommand
         {
             get
             {
-                if (createCommand == null)
-                    createCommand = new DelegateCommand<object>(Create);
+                if (changeAdminViewCommand == null)
+                    changeAdminViewCommand = new DelegateCommand<object>(ChangeAdminView);
 
-                return createCommand;
+                return changeAdminViewCommand;
             }
         }
 
@@ -39,6 +40,21 @@ namespace Restaurant.ViewModels
                 createUserView.DataContext = createUserViewModel;
 
                 return createUserViewModel;
+            }
+        }
+
+        public UpdateOrDeleteUserViewModel UpdateOrDeleteUserViewModel
+        {
+            get
+            {
+                updateOrDeleteUserViewModel = new UpdateOrDeleteUserViewModel();
+                UpdateOrDeleteUserView updateOrDeleteUserView = new UpdateOrDeleteUserView();
+
+                updateOrDeleteUserViewModel.View = updateOrDeleteUserView;
+
+                updateOrDeleteUserView.DataContext = updateOrDeleteUserViewModel;
+
+                return updateOrDeleteUserViewModel;
             }
         }
 
@@ -76,7 +92,7 @@ namespace Restaurant.ViewModels
 
         #region Methods
 
-        private void Create(object obj)
+        private void ChangeAdminView(object obj)
         {
             if (obj is BaseViewModel baseViewModel)
                 MenuViewModel.Instance.ChangeMenuViewCommand.Execute(baseViewModel);

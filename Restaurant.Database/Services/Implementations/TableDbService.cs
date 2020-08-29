@@ -23,15 +23,19 @@ namespace Restaurant.Database.Services.Implementations
 
         #region Methods
 
-        public void CreateTable(long number, int seats)
+        public Table CreateTable(int number, int seats)
         {
-            context.Tables.Add(new Table()
+            Table table = new Table()
             {
                 Number = number,
                 Seats = seats
-            });
+            };
+
+            context.Tables.Add(table);
 
             context.SaveChanges();
+
+            return table;
         }
 
         public IQueryable<Table> GetAllTables()

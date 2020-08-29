@@ -8,6 +8,7 @@ using Restaurant.Interfaces;
 using Restaurant.Database.Models;
 using System.Security.Cryptography;
 using Restaurant.Services.Implementations;
+using Restaurant.Common.InstanceHolder;
 
 namespace Restaurant.ViewModels
 {
@@ -16,18 +17,8 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private DelegateCommand<object> loginCommand;
-        private readonly IUserService userService;
         private MenuViewModel menuViewModel;
         private string password;
-
-        #endregion
-
-        #region Constructors
-
-        public LoginViewModel()
-        {
-            userService = new UserService();
-        }
 
         #endregion
 
@@ -50,7 +41,7 @@ namespace Restaurant.ViewModels
             {
                 if (menuViewModel == null)
                 {
-                    menuViewModel = new MenuViewModel(User);
+                    menuViewModel = new MenuViewModel(UserViewModel);
                     MenuView menuView = new MenuView();
 
                     menuViewModel.View = menuView;
@@ -73,7 +64,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public User User { get; set; }
+        public UserViewModel UserViewModel { get; set; }
 
         #endregion
 
@@ -81,11 +72,12 @@ namespace Restaurant.ViewModels
 
         private void Login(object obj)
         {
-            User = userService.GetAllUsers()
-                               .Where(u => u.Username == Username && u.Password == Password)
-                               .FirstOrDefault();
+            UserViewModel = CollectionInstance.Instance
+                                   .Users
+                                   .Where(u => u.User.Username == Username && u.User.Password == Password)
+                                   .FirstOrDefault();
 
-            if (User == null)
+            if (UserViewModel == null)
             {
                 MessageBox.Show("Грешно потребителско име и/или парола !");
                 return;

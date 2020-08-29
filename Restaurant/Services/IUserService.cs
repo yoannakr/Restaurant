@@ -5,7 +5,11 @@ namespace Restaurant.Services
 {
     public interface IUserService
     {
-        void CreateUser(string name, string username, string password, List<int> rolesId);
+        User CreateUser(string name, string username, string password, List<Role> roles);
+
+        void UpdateUser(User user, List<UserRole> userRoles);
+
+        void DeleteUser(User user);
 
         IEnumerable<User> GetAllUsers();
     }

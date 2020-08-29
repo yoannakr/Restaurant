@@ -1,10 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Text;
 using Prism.Commands;
 using System.Windows;
 using Restaurant.Views;
 using Restaurant.Services;
-using System.Collections.Generic;
+using Restaurant.Interfaces;
 using Restaurant.Database.Models;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Collections.ObjectModel;
 using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Implementations;
@@ -12,11 +16,11 @@ using Restaurant.Services.Models.RoleModels;
 
 namespace Restaurant.ViewModels
 {
-    public class CreateUserViewModel : BaseViewModel
+    public class UpdateUserViewModel : BaseViewModel, IHashPassword
     {
         #region Declarations
 
-        private DelegateCommand<object> addUserCommand;
+        private DelegateCommand<object> updateUserCommand;
         private DelegateCommand<object> newRoleCommand;
         private DelegateCommand<object> addRoleInCollectionCommand;
         private DelegateCommand<object> returnCommand;
@@ -33,23 +37,24 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public CreateUserViewModel()
+        public UpdateUserViewModel(User user)
         {
             userService = new UserService();
+            User = user;
         }
 
         #endregion
 
         #region Properties
 
-        public DelegateCommand<object> AddUserCommand
+        public DelegateCommand<object> UpdateUserCommand
         {
             get
             {
-                if (addUserCommand == null)
-                    addUserCommand = new DelegateCommand<object>(CreateUser, CanCreateUser);
+                if (updateUserCommand == null)
+                    updateUserCommand = new DelegateCommand<object>(UpdateUser, CanUpdateUser);
 
-                return addUserCommand;
+                return updateUserCommand;
             }
         }
 
@@ -86,23 +91,37 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public User User { get; set; }
+
         public string Name
         {
-            get => name;
+            get
+            {
+                if (name == null)
+                    name = User.Name;
+
+                return name;
+            }
             set
             {
                 name = value;
-                AddUserCommand.RaiseCanExecuteChanged();
+                UpdateUserCommand.RaiseCanExecuteChanged();
             }
         }
 
         public string Username
         {
-            get => username;
+            get
+            {
+                if (username == null)
+                    username = User.Username;
+
+                return username;
+            }
             set
             {
                 username = value;
-                AddUserCommand.RaiseCanExecuteChanged();
+                UpdateUserCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -111,8 +130,8 @@ namespace Restaurant.ViewModels
             get => password;
             set
             {
-                password = value;
-                AddUserCommand.RaiseCanExecuteChanged();
+                password = ComputePasswordHashing(value);
+                UpdateUserCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -121,8 +140,8 @@ namespace Restaurant.ViewModels
             get => confirmPassword;
             set
             {
-                confirmPassword = value;
-                AddUserCommand.RaiseCanExecuteChanged();
+                confirmPassword = ComputePasswordHashing(value);
+                UpdateUserCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -136,7 +155,12 @@ namespace Restaurant.ViewModels
 
                     foreach (RoleDto role in roles)
                     {
-                        role.IsChecked = false;
+                        RoleDto roleDto = UserRoles.Where(r => r.Role.Id == role.Role.Id)
+                                                   .FirstOrDefault();
+                        if (roleDto == null)
+                            role.IsChecked = false;
+                        else
+                            role.IsChecked = true;
                     }
                 }
 
@@ -149,7 +173,15 @@ namespace Restaurant.ViewModels
             get
             {
                 if (userRoles == null)
-                    userRoles = new List<RoleDto>();
+                {
+                    List<RoleDto> checkedRoles = User.Roles.Select(ur => ur.Role)
+                                                           .Select(r => new RoleDto()
+                                                           {
+                                                               Role = r
+                                                           }).ToList();
+
+                    userRoles = checkedRoles;
+                }
 
                 return userRoles;
             }
@@ -174,32 +206,60 @@ namespace Restaurant.ViewModels
 
         #region Methods
 
-        private void CreateUser(object obj)
+        private void UpdateUser(object obj)
         {
             UserViewModel user = CollectionInstance.Instance
                                         .Users
                                         .Where(u => u.User.Username == Username)
                                         .FirstOrDefault();
 
-            if (user != null)
+            if (user != null && User.Id != user.User.Id)
             {
                 MessageBox.Show("Потребителското име вече е заето.");
                 return;
             }
 
             List<Role> roles = UserRoles
-                                .Select(r => r.Role)
-                                .ToList();
+                                    .Select(r => r.Role)
+                                    .ToList();
 
-            userService.CreateUser(Name, Username, Password, roles);
+            List<UserRole> userRoles = roles.Select(r => new UserRole()
+            {
+                UserId = User.Id,
+                RoleId = r.Id,
+                Role = r
+            }).ToList();
+
+            try
+            {
+                User updatedUser = new User()
+                {
+                    Id = User.Id,
+                    Name = Name,
+                    Username = Username,
+                    Password = Password
+                };
+
+                userService.UpdateUser(updatedUser, userRoles);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                return;
+            }
+
+            User.Name = Name;
+            User.Username = Username;
+            User.Password = Password;
+            User.Roles = userRoles;
+
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }
 
-        private bool CanCreateUser(object arg)
+        private bool CanUpdateUser(object arg)
         {
             return IsValid();
         }
-
 
         private void CreateRole(object obj)
         {
@@ -230,14 +290,32 @@ namespace Restaurant.ViewModels
             if (role.IsChecked)
                 UserRoles.Add(role);
             else
-                UserRoles.Remove(role);
+            {
+                RoleDto removeRole = UserRoles.FirstOrDefault(r => r.Role.Id == role.Role.Id);
+                UserRoles.Remove(removeRole);
+            }
 
-            AddUserCommand.RaiseCanExecuteChanged();
+            UpdateUserCommand.RaiseCanExecuteChanged();
         }
 
         private void Return(object obj)
         {
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
+        }
+
+        public string ComputePasswordHashing(string rowPassword)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rowPassword));
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString());
+                }
+                return builder.ToString();
+            }
         }
 
         #endregion

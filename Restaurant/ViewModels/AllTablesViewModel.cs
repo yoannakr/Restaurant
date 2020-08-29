@@ -1,7 +1,8 @@
-﻿using System.Linq;
-using Restaurant.Services;
+﻿using Restaurant.Services;
 using System.Collections.Generic;
 using Restaurant.Services.Implementations;
+using System.Collections.ObjectModel;
+using Restaurant.Common.InstanceHolder;
 
 namespace Restaurant.ViewModels
 {
@@ -9,37 +10,18 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private List<TableViewModel> tables;
-        private readonly ITableService tableService;
-
-        #endregion
-
-        #region Constructors
-
-        public AllTablesViewModel()
-        {
-            tableService = new TableService();
-        }
+        private ObservableCollection<TableViewModel> tables;
 
         #endregion
 
         #region Properties
 
-        //TODO: Observablecollection
-        public List<TableViewModel> Tables
+        public ObservableCollection<TableViewModel> Tables
         {
             get
             {
                 if (tables == null)
-                {
-                    tables = new List<TableViewModel>();
-
-                    tables = tableService.GetAllTables().Select(t => new TableViewModel()
-                    {
-                        Table = t,
-                        IsTaken = t.IsTaken
-                    }).ToList();
-                }
+                    tables = CollectionInstance.Instance.Tables;
 
                 return tables;
             }

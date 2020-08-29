@@ -20,6 +20,12 @@
         <DataTemplate DataType="{x:Type vm:CreateUserViewModel}">
             <v:CreateUserView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateOrDeleteUserViewModel}">
+            <v:UpdateOrDeleteUserView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateUserViewModel}">
+            <v:UpdateUserView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:CreateTableViewModel}">
             <v:CreateTableView/>
         </DataTemplate>
@@ -42,7 +48,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Button 

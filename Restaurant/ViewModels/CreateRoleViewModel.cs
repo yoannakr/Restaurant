@@ -18,11 +18,9 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public CreateRoleViewModel(CreateUserViewModel createUserViewModel)
+        public CreateRoleViewModel(BaseViewModel baseViewModel)
         {
-            CreateUserViewModel = createUserViewModel;
-            CreateUserViewModel.Password = null;
-            CreateUserViewModel.ConfirmPassword = null;
+            BaseViewModel = baseViewModel;
             roleService = new RoleService();
         }
 
@@ -62,7 +60,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public CreateUserViewModel CreateUserViewModel { get; set; }
+        public BaseViewModel BaseViewModel { get; set; }
 
         #endregion
 
@@ -72,7 +70,7 @@ namespace Restaurant.ViewModels
         {
             roleService.CreateRole(Name);
 
-            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(CreateUserViewModel);
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(BaseViewModel);
         }
 
         private bool CanCreateRole(object arg)
@@ -90,7 +88,7 @@ namespace Restaurant.ViewModels
 
         private void Return(object obj)
         {
-            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(CreateUserViewModel);
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(BaseViewModel);
         }
 
         #endregion

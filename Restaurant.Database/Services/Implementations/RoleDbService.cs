@@ -23,14 +23,18 @@ namespace Restaurant.Database.Services.Implementations
 
         #region Methods
 
-        public void CreateRole(string name)
+        public Role CreateRole(string name)
         {
-            context.Roles.Add(new Role()
+            Role role = new Role()
             {
                 Name = name
-            });
+            };
+
+            context.Roles.Add(role);
 
             context.SaveChanges();
+
+            return role;
         }
 
         public IQueryable<Role> GetAllRoles()

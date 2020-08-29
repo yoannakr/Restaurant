@@ -190,7 +190,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Common\AllCollections\CollectionHolder.cs" />
+    <Compile Include="Common\InstanceHolder\CollectionInstance.cs" />
     <Compile Include="Common\Behaviors\PasswordHelper.cs" />
     <Compile Include="Interfaces\IHashPassword.cs" />
     <Compile Include="Services\IItemService.cs" />
@@ -202,7 +202,7 @@
     <Compile Include="Services\ITableService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\Models\Item\ItemDto.cs" />
-    <Compile Include="Services\Models\Role\RoleDto.cs" />
+    <Compile Include="Services\Models\RoleModels\RoleDto.cs" />
     <Compile Include="ViewModels\AdminPanelViewModel.cs" />
     <Compile Include="ViewModels\AllItemsViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -218,6 +218,9 @@
     <Compile Include="ViewModels\SelectedItemViewModel.cs" />
     <Compile Include="ViewModels\AllTablesViewModel.cs" />
     <Compile Include="ViewModels\TableViewModel.cs" />
+    <Compile Include="ViewModels\UpdateOrDeleteUserViewModel.cs" />
+    <Compile Include="ViewModels\UpdateUserViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\AdminPanelView.xaml.cs">
       <DependentUpon>AdminPanelView.xaml</DependentUpon>
     </Compile>
@@ -250,6 +253,12 @@
     </Compile>
     <Compile Include="Views\AllTablesView.xaml.cs">
       <DependentUpon>AllTablesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpdateOrDeleteUserView.xaml.cs">
+      <DependentUpon>UpdateOrDeleteUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpdateUserView.xaml.cs">
+      <DependentUpon>UpdateUserView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -305,6 +314,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AllTablesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UpdateOrDeleteUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UpdateUserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -369,6 +386,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\pepsi.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\user_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

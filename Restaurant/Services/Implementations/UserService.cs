@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Restaurant.Database.Services;
 using System.Security.Cryptography;
 using Restaurant.Database.Services.Implementations;
+using Restaurant.Common.InstanceHolder;
+using Restaurant.ViewModels;
 
 namespace Restaurant.Services.Implementations
 {
@@ -27,11 +29,28 @@ namespace Restaurant.Services.Implementations
 
         #region Methods
 
-        public void CreateUser(string name, string username, string password, List<int> rolesId)
+        public User CreateUser(string name, string username, string password, List<Role> roles)
         {
             string securityPassword = ComputePasswordHashing(password);
 
-            userDb.CreateUser(name, username, securityPassword, rolesId);
+            User user = userDb.CreateUser(name, username, securityPassword, roles);
+
+            CollectionInstance.Instance.Users.Add(new UserViewModel()
+            {
+                User = user
+            });
+
+            return user;
+        }
+
+        public void UpdateUser(User user, List<UserRole> userRoles)
+        {
+            userDb.UpdateUser(user, userRoles);
+        }
+
+        public void DeleteUser(User user)
+        {
+            userDb.DeleteUser(user);
         }
 
         public IEnumerable<User> GetAllUsers()

@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 using Restaurant.Database.Services;
 using Restaurant.Services.Models.Item;
 using Restaurant.Database.Services.Implementations;
+using Restaurant.Common.InstanceHolder;
 
 namespace Restaurant.Services.Implementations
 {
@@ -42,7 +43,17 @@ namespace Restaurant.Services.Implementations
 
         public Item CreateItem(string name, decimal price, byte[] imageContent)
         {
-            return itemDb.CreateItem(name, price, imageContent);
+            Item item = itemDb.CreateItem(name, price, imageContent);
+
+            CollectionInstance.Instance.Items.Add(new ItemDto()
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Price = item.Price,
+                ImageSource = ConvertFromByteArrayToImageSource(item.Image.Content)
+            });
+
+            return item;
         }
 
         private static ImageSource ConvertFromByteArrayToImageSource(byte[] imageContent)

@@ -5,7 +5,7 @@ using Restaurant.Database.Models;
 using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Item;
 using Restaurant.Services.Implementations;
-using Restaurant.Common.AllCollections;
+using Restaurant.Common.InstanceHolder;
 
 namespace Restaurant.ViewModels
 {
@@ -46,7 +46,7 @@ namespace Restaurant.ViewModels
             get
             {
                 if (items == null)
-                    items = CollectionHolder.Instance.Items;
+                    items = CollectionInstance.Instance.Items;
 
                 return items;
             }
@@ -71,7 +71,7 @@ namespace Restaurant.ViewModels
 
             if (selectedItem != null)
             {
-                if(selectedItem.Item.Id == itemDto.Id)
+                if (selectedItem.Item.Id == itemDto.Id)
                 {
                     selectedItem.Count += 1;
 
@@ -109,7 +109,7 @@ namespace Restaurant.ViewModels
                 selectedItem.ShowListBtnVisibility = true;
             }
             else
-            { 
+            {
                 RowItemViewModel item = new RowItemViewModel(SelectedItemViewModel)
                 {
                     Item = new Item()

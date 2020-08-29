@@ -5,7 +5,7 @@ namespace Restaurant.Database.Services
 {
     public interface IRoleDbService
     {
-        void CreateRole(string name);
+        Role CreateRole(string name);
 
         IQueryable<Role> GetAllRoles();
 
