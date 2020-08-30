@@ -22,7 +22,8 @@
                     <DataTemplate>
                         <Button
                             Margin="2"
-                            Command="{Binding SalesCommand}"
+                            Command="{Binding ChangeMenuViewCommand}"
+                            CommandParameter="{Binding SalesViewModel}"
                             Height="155" Width="115"
                             BorderThickness="0"
                             Background="Azure">

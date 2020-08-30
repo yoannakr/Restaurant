@@ -54,9 +54,9 @@
                 <Button 
                     Grid.Row="1" Grid.Column="1"
                     HorizontalAlignment="Center"
+                    Content="Добави "
                     Command="{Binding AddRoleCommand}"
-                    Height="25" Width="70" 
-                    Content="Добави "/>
+                    Height="25" Width="70"/>
                 <Button 
                     Grid.Row="1" Grid.Column="1"
                     HorizontalAlignment="Right" 

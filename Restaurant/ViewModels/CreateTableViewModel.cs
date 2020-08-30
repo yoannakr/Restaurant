@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using Prism.Commands;
 using Restaurant.Services;
 using Restaurant.Database.Models;
-using Restaurant.Services.Implementations;
 using Restaurant.Common.InstanceHolder;
+using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
 {
@@ -80,12 +81,19 @@ namespace Restaurant.ViewModels
                 return;
             }
 
-            Table createdTable = tableService.CreateTable(Number, Seats);
-
-            CollectionInstance.Instance.Tables.Add(new TableViewModel()
+            try
             {
-                Table = createdTable
-            });
+                Table createdTable = tableService.CreateTable(Number, Seats);
+
+                CollectionInstance.Instance.Tables.Add(new TableViewModel()
+                {
+                    Table = createdTable
+                });
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Грешка с базата ! Опитайте отново !");
+            }
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }

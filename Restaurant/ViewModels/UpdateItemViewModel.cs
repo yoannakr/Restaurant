@@ -1,13 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Prism.Commands;
+using System.Windows;
 using Restaurant.Services;
 using System.Windows.Media;
+using Restaurant.Common.Helpers;
 using Restaurant.Database.Models;
-using System.Windows.Media.Imaging;
 using Restaurant.Services.Models.Item;
 using Restaurant.Services.Implementations;
-using System;
-using System.Windows;
 
 namespace Restaurant.ViewModels
 {
@@ -123,18 +123,16 @@ namespace Restaurant.ViewModels
 
         private void BrowseFolder(object obj)
         {
-            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog
-            {
-                Filter = "Image files (*.png) | *.png"
-            };
+            string path = BrowseFolderHelper.BrowseFolder();
 
-            bool? result = openFileDlg.ShowDialog();
-
-            if (result == true)
+            if (path == null)
             {
-                ImageContent = File.ReadAllBytes(openFileDlg.FileName);
-                ImageSource = ConvertFromByteArrayToImageSource(ImageContent);
+                MessageBox.Show("Грешка !");
+                return;
             }
+
+            ImageContent = File.ReadAllBytes(path);
+            ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(ImageContent);
         }
 
         private void UpdateItem(object obj)
@@ -184,17 +182,6 @@ namespace Restaurant.ViewModels
         private void Return(object obj)
         {
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
-        }
-
-        private static ImageSource ConvertFromByteArrayToImageSource(byte[] imageContent)
-        {
-            BitmapImage biImg = new BitmapImage();
-            MemoryStream ms = new MemoryStream(imageContent);
-            biImg.BeginInit();
-            biImg.StreamSource = ms;
-            biImg.EndInit();
-
-            return biImg;
         }
 
         #endregion

@@ -18,7 +18,7 @@ namespace Restaurant.ViewModels
         private DelegateCommand<object> deleteUserCommand;
         private readonly IUserService userService;
         private UpdateUserViewModel updateUserViewModel;
-        private string imageSource;
+        private string imageSource = "../Images/user_icon.png";
         private string roles;
 
         #endregion
@@ -58,16 +58,7 @@ namespace Restaurant.ViewModels
 
         public User User { get; set; }
 
-        public string ImageSource
-        {
-            get
-            {
-                if (imageSource == null)
-                    imageSource = "../Images/user_icon.png";
-
-                return imageSource;
-            }
-        }
+        public string ImageSource => imageSource;
 
         public string Roles
         {

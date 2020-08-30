@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Windows;
 using Prism.Commands;
-using Restaurant.Common.InstanceHolder;
-using Restaurant.Database.Models;
 using Restaurant.Services;
-using Restaurant.Services.Implementations;
+using Restaurant.Database.Models;
 using Restaurant.Services.Models.Role;
+using Restaurant.Common.InstanceHolder;
+using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
 {
@@ -71,13 +72,20 @@ namespace Restaurant.ViewModels
 
         private void CreateRole(object obj)
         {
-            Role role = roleService.CreateRole(Name);
-
-            CollectionInstance.Instance.Roles.Add(new RoleDto()
+            try
             {
-                Id = role.Id,
-                Name = role.Name
-            });
+                Role role = roleService.CreateRole(Name);
+
+                CollectionInstance.Instance.Roles.Add(new RoleDto()
+                {
+                    Id = role.Id,
+                    Name = role.Name
+                });
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Грешка с базата ! Опитайте отново !");
+            }
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(BaseViewModel);
         }
@@ -89,7 +97,7 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
-            if (String.IsNullOrEmpty(Name))
+            if (string.IsNullOrEmpty(Name))
                 return false;
 
             return true;

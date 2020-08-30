@@ -1,13 +1,7 @@
-﻿using System.Text;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using Prism.Commands;
 using Restaurant.Views;
-using Restaurant.Services;
-using Restaurant.Interfaces;
-using Restaurant.Database.Models;
-using System.Security.Cryptography;
-using Restaurant.Services.Implementations;
 using Restaurant.Common.InstanceHolder;
 using Restaurant.Common.Helpers;
 

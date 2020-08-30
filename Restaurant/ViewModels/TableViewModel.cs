@@ -4,8 +4,8 @@ using System.Windows;
 using Restaurant.Views;
 using Restaurant.Services;
 using Restaurant.Database.Models;
-using Restaurant.Services.Implementations;
 using Restaurant.Common.InstanceHolder;
+using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
 {
@@ -13,15 +13,14 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private DelegateCommand<object> salesCommand;
-        private DelegateCommand<object> updateTableCommand;
+        private DelegateCommand<object> changeMenuViewCommand;
         private DelegateCommand<object> deleteTableCommand;
         private readonly ITableService tableService;
         private SalesViewModel salesViewModel;
         private UpdateTableViewModel updateTableViewModel;
         private const string GreenButtonPath = "../Images/green_button.png";
         private const string RedButtonPath = "../Images/red_button.png";
-        private string imageSource;
+        private string imageSource = "../Images/table_icon.png";
         private string isTakenSource;
 
         #endregion
@@ -37,25 +36,14 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public DelegateCommand<object> SalesCommand
+        public DelegateCommand<object> ChangeMenuViewCommand
         {
             get
             {
-                if (salesCommand == null)
-                    salesCommand = new DelegateCommand<object>(SalesViewOpen);
+                if (changeMenuViewCommand == null)
+                    changeMenuViewCommand = new DelegateCommand<object>(ChangeMenuView);
 
-                return salesCommand;
-            }
-        }
-
-        public DelegateCommand<object> UpdateTableCommand
-        {
-            get
-            {
-                if (updateTableCommand == null)
-                    updateTableCommand = new DelegateCommand<object>(UpdateTable);
-
-                return updateTableCommand;
+                return changeMenuViewCommand;
             }
         }
 
@@ -72,16 +60,7 @@ namespace Restaurant.ViewModels
 
         public Table Table { get; set; }
 
-        public string ImageSource
-        {
-            get
-            {
-                if (imageSource == null)
-                    imageSource = "../Images/table_icon.png";
-
-                return imageSource;
-            }
-        }
+        public string ImageSource => imageSource;
 
         public string IsTakenSource
         {
@@ -141,14 +120,10 @@ namespace Restaurant.ViewModels
 
         #region Methods
 
-        private void SalesViewOpen(object obj)
+        private void ChangeMenuView(object obj)
         {
-            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(SalesViewModel);
-        }
-
-        private void UpdateTable(object obj)
-        {
-            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(UpdateTableViewModel);
+            if (obj is BaseViewModel baseViewModel)
+                MenuViewModel.Instance.ChangeMenuViewCommand.Execute(baseViewModel);
         }
 
         private void DeleteTable(object obj)

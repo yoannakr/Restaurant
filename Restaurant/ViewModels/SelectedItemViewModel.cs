@@ -70,7 +70,6 @@ namespace Restaurant.ViewModels
             set
             {
                 total = value;
-
                 FinishPaymentCommand.RaiseCanExecuteChanged();
                 OnPropertyChanged("Total");
             }
@@ -85,6 +84,7 @@ namespace Restaurant.ViewModels
                 {
                     value = 0;
                 }
+
                 payed = value;
                 FinishPaymentCommand.RaiseCanExecuteChanged();
                 OnPropertyChanged("Payed");
@@ -138,7 +138,6 @@ namespace Restaurant.ViewModels
 
                 MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AllTablesViewModel);
             }
-
         }
 
         private bool CanFinishPayment(object arg)

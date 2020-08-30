@@ -1,10 +1,10 @@
-﻿using Prism.Commands;
-using Restaurant.Database.Models;
-using Restaurant.Services;
-using Restaurant.Services.Implementations;
-using System;
+﻿using System;
 using System.Linq;
+using Prism.Commands;
 using System.Windows;
+using Restaurant.Services;
+using Restaurant.Database.Models;
+using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
 {

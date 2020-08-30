@@ -190,7 +190,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Helpers\BrowseFolderHelper.cs" />
     <Compile Include="Common\Helpers\HashingPasswordHelper.cs" />
+    <Compile Include="Common\Helpers\ImageHelper.cs" />
     <Compile Include="Common\InstanceHolder\CollectionInstance.cs" />
     <Compile Include="Common\Behaviors\PasswordHelper.cs" />
     <Compile Include="Services\IItemService.cs" />

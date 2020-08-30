@@ -1,9 +1,7 @@
-﻿using System.IO;
-using System.Linq;
-using System.Windows.Media;
+﻿using System.Linq;
+using Restaurant.Common.Helpers;
 using System.Collections.Generic;
 using Restaurant.Database.Models;
-using System.Windows.Media.Imaging;
 using Restaurant.Database.Services;
 using Restaurant.Services.Models.Item;
 using Restaurant.Common.InstanceHolder;
@@ -38,7 +36,7 @@ namespace Restaurant.Services.Implementations
                 Name = i.Name,
                 Price = i.Price,
                 ImageContent = i.Image.Content,
-                ImageSource = ConvertFromByteArrayToImageSource(i.Image.Content)
+                ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(i.Image.Content)
             }).ToList();
         }
 
@@ -52,7 +50,7 @@ namespace Restaurant.Services.Implementations
                 Name = item.Name,
                 Price = item.Price,
                 ImageContent = item.Image.Content,
-                ImageSource = ConvertFromByteArrayToImageSource(item.Image.Content)
+                ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(item.Image.Content)
             });
 
             return item;
@@ -66,17 +64,6 @@ namespace Restaurant.Services.Implementations
         public void DeleteItem(Item item)
         {
             itemDb.DeleteItem(item);
-        }
-
-        private static ImageSource ConvertFromByteArrayToImageSource(byte[] imageContent)
-        {
-            BitmapImage biImg = new BitmapImage();
-            MemoryStream ms = new MemoryStream(imageContent);
-            biImg.BeginInit();
-            biImg.StreamSource = ms;
-            biImg.EndInit();
-
-            return biImg;
         }
 
         #endregion

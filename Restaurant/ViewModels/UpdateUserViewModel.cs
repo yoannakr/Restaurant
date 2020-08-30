@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 using Prism.Commands;
 using System.Windows;
 using Restaurant.Views;
 using Restaurant.Services;
-using Restaurant.Interfaces;
+using Restaurant.Common.Helpers;
 using Restaurant.Database.Models;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Role;
 using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Implementations;
-using Restaurant.Common.Helpers;
 
 namespace Restaurant.ViewModels
 {
@@ -294,7 +291,12 @@ namespace Restaurant.ViewModels
             RoleDto role = obj as RoleDto;
 
             if (role.IsChecked)
-                UserRoles.Add(role);
+            {
+                RoleDto insertRole = UserRoles.FirstOrDefault(r => r.Id == role.Id);
+
+                if (insertRole == null)
+                    UserRoles.Add(role);
+            }
             else
             {
                 RoleDto removeRole = UserRoles.FirstOrDefault(r => r.Id == role.Id);

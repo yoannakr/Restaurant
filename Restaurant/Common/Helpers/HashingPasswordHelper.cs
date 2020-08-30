@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace Restaurant.Common.Helpers
 {
-    public sealed class HashingPasswordHelper
+    public static class HashingPasswordHelper
     {
         public static string ComputePasswordHashing(string rowPassword)
         {

@@ -1,5 +1,4 @@
-﻿using System;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Restaurant.Views;
 
 namespace Restaurant.ViewModels
@@ -53,21 +52,14 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                if (loginViewModel == null)
-                {
-                    loginViewModel = new LoginViewModel();
-                    LoginView loginView = new LoginView();
+                loginViewModel = new LoginViewModel();
+                LoginView loginView = new LoginView();
 
-                    loginViewModel.View = loginView;
+                loginViewModel.View = loginView;
 
-                    loginView.DataContext = loginViewModel;
-                }
+                loginView.DataContext = loginViewModel;
 
                 return loginViewModel;
-            }
-            set
-            {
-                loginViewModel = value;
             }
         }
 

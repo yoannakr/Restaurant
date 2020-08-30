@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using Restaurant.Database.Data;
 using Restaurant.Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Restaurant.Database.Services.Implementations
 {

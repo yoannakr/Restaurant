@@ -82,6 +82,7 @@ namespace Restaurant.ViewModels
                 {
                     value = 1;
                 }
+
                 count = value;
                 ChangeTotal();
                 OnPropertyChanged("Count");

@@ -194,13 +194,19 @@ namespace Restaurant.ViewModels
                                     Name = r.Name
                                 }).ToList();
 
-
-            User createdUser = userService.CreateUser(Name, Username, Password, roles);
-
-            CollectionInstance.Instance.Users.Add(new UserViewModel()
+            try
             {
-                User = createdUser
-            });
+                User createdUser = userService.CreateUser(Name, Username, Password, roles);
+
+                CollectionInstance.Instance.Users.Add(new UserViewModel()
+                {
+                    User = createdUser
+                });
+            }
+            catch (System.Exception)
+            {
+                MessageBox.Show("Грешка с базата ! Опитайте отново !");
+            }
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }
@@ -209,7 +215,6 @@ namespace Restaurant.ViewModels
         {
             return IsValid();
         }
-
 
         private void CreateRole(object obj)
         {

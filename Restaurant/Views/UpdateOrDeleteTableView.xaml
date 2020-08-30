@@ -79,7 +79,8 @@
                                     Orientation="Horizontal">
                                     <Button
                                         Content="Промени"
-                                        Command="{Binding UpdateTableCommand}"
+                                        Command="{Binding ChangeMenuViewCommand}"
+                                        CommandParameter="{Binding UpdateTableViewModel}"
                                         Height="20" Width="100"
                                         Cursor="Hand"
                                         Background="Wheat"/>

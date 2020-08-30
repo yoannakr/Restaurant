@@ -1,12 +1,12 @@
 ﻿using System;
 using Prism.Commands;
 using System.Windows;
+using Restaurant.Views;
 using Restaurant.Services;
 using Restaurant.Database.Models;
 using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Item;
 using Restaurant.Common.InstanceHolder;
-using Restaurant.Views;
 using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
