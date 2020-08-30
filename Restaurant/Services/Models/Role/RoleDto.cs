@@ -1,6 +1,4 @@
-﻿using Restaurant.Database.Models;
-
-namespace Restaurant.Services.Models.RoleModels
+﻿namespace Restaurant.Services.Models.Role
 {
     public class RoleDto
     {

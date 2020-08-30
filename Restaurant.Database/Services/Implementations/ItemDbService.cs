@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Restaurant.Database.Data;
 using Restaurant.Database.Models;
 
@@ -49,6 +51,42 @@ namespace Restaurant.Database.Services.Implementations
             context.SaveChanges();
 
             return item;
+        }
+
+        public Item UpdateItem(Item item)
+        {
+            Item entityItem = context.Items.Include(i => i.Image).FirstOrDefault(i => i.Id == item.Id);
+
+            if (entityItem == null)
+                throw new Exception();
+
+            entityItem.Name = item.Name;
+            entityItem.Price = item.Price;
+
+            Image previousImage = entityItem.Image;
+            entityItem.Image = item.Image;
+
+            context.SaveChanges();
+
+            context.Images.Remove(previousImage);
+
+            context.SaveChanges();
+
+            return entityItem;
+        }
+
+        public void DeleteItem(Item item)
+        {
+            Item entityItem = context.Items.Include(i => i.Image).FirstOrDefault(i => i.Id == item.Id);
+
+            if (entityItem == null)
+                throw new Exception();
+
+            context.Items.Remove(entityItem);
+
+            context.Images.Remove(entityItem.Image);
+
+            context.SaveChanges();
         }
 
         #endregion

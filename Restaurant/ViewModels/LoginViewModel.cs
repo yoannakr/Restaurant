@@ -9,10 +9,11 @@ using Restaurant.Database.Models;
 using System.Security.Cryptography;
 using Restaurant.Services.Implementations;
 using Restaurant.Common.InstanceHolder;
+using Restaurant.Common.Helpers;
 
 namespace Restaurant.ViewModels
 {
-    public class LoginViewModel : BaseViewModel, IHashPassword
+    public class LoginViewModel : BaseViewModel
     {
         #region Declarations
 
@@ -60,7 +61,7 @@ namespace Restaurant.ViewModels
             get => password;
             set
             {
-                password = ComputePasswordHashing(value);
+                password = HashingPasswordHelper.ComputePasswordHashing(value);
             }
         }
 
@@ -84,21 +85,6 @@ namespace Restaurant.ViewModels
             }
 
             MainWindowViewModel.Instance.ChangeMainViewCommand.Execute(MenuViewModel);
-        }
-
-        public string ComputePasswordHashing(string rowPassword)
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rowPassword));
-
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString());
-                }
-                return builder.ToString();
-            }
         }
 
         #endregion

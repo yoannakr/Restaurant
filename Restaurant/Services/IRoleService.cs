@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Restaurant.Database.Models;
-using Restaurant.Services.Models.RoleModels;
+using Restaurant.Services.Models.Role;
 
 namespace Restaurant.Services
 {

@@ -10,13 +10,14 @@ using Restaurant.Database.Models;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Collections.ObjectModel;
+using Restaurant.Services.Models.Role;
 using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Implementations;
-using Restaurant.Services.Models.RoleModels;
+using Restaurant.Common.Helpers;
 
 namespace Restaurant.ViewModels
 {
-    public class UpdateUserViewModel : BaseViewModel, IHashPassword
+    public class UpdateUserViewModel : BaseViewModel
     {
         #region Declarations
 
@@ -130,7 +131,7 @@ namespace Restaurant.ViewModels
             get => password;
             set
             {
-                password = ComputePasswordHashing(value);
+                password = HashingPasswordHelper.ComputePasswordHashing(value);
                 UpdateUserCommand.RaiseCanExecuteChanged();
             }
         }
@@ -140,7 +141,7 @@ namespace Restaurant.ViewModels
             get => confirmPassword;
             set
             {
-                confirmPassword = ComputePasswordHashing(value);
+                confirmPassword = HashingPasswordHelper.ComputePasswordHashing(value);
                 UpdateUserCommand.RaiseCanExecuteChanged();
             }
         }
@@ -306,21 +307,6 @@ namespace Restaurant.ViewModels
         private void Return(object obj)
         {
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
-        }
-
-        public string ComputePasswordHashing(string rowPassword)
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rowPassword));
-
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString());
-                }
-                return builder.ToString();
-            }
         }
 
         #endregion

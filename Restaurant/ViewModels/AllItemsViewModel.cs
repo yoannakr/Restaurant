@@ -1,10 +1,8 @@
 ﻿using System.Linq;
 using Prism.Commands;
-using Restaurant.Services;
 using Restaurant.Database.Models;
 using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Item;
-using Restaurant.Services.Implementations;
 using Restaurant.Common.InstanceHolder;
 
 namespace Restaurant.ViewModels
@@ -13,7 +11,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private DelegateCommand<object> addItemToSelected;
+        private DelegateCommand<object> addItemToSelectedCommand;
         private ObservableCollection<ItemDto> items;
 
         #endregion
@@ -30,14 +28,14 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public DelegateCommand<object> AddItemToSelected
+        public DelegateCommand<object> AddItemToSelectedCommand
         {
             get
             {
-                if (addItemToSelected == null)
-                    addItemToSelected = new DelegateCommand<object>(AddItem);
+                if (addItemToSelectedCommand == null)
+                    addItemToSelectedCommand = new DelegateCommand<object>(AddItemToSelected);
 
-                return addItemToSelected;
+                return addItemToSelectedCommand;
             }
         }
 
@@ -60,9 +58,9 @@ namespace Restaurant.ViewModels
 
         #region Methods
 
-        private void AddItem(object obj)
+        private void AddItemToSelected(object obj)
         {
-            if (!SalesViewModel.TableViewModel.IsTaken)
+            if (!SalesViewModel.TableViewModel.Table.IsTaken)
                 SalesViewModel.TakeTableCommand.Execute();
 
             ItemDto itemDto = obj as ItemDto;

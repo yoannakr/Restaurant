@@ -7,6 +7,10 @@ namespace Restaurant.Database.Services
     {
         Item CreateItem(string name, decimal price, byte[] imageContent);
 
+        Item UpdateItem(Item item);
+
+        void DeleteItem(Item item);
+
         IQueryable<Item> GetAllItems();
     }
 }

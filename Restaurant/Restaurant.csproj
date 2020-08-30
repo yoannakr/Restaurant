@@ -190,9 +190,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Helpers\HashingPasswordHelper.cs" />
     <Compile Include="Common\InstanceHolder\CollectionInstance.cs" />
     <Compile Include="Common\Behaviors\PasswordHelper.cs" />
-    <Compile Include="Interfaces\IHashPassword.cs" />
     <Compile Include="Services\IItemService.cs" />
     <Compile Include="Services\Implementations\ItemService.cs" />
     <Compile Include="Services\Implementations\RoleService.cs" />
@@ -202,7 +202,7 @@
     <Compile Include="Services\ITableService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\Models\Item\ItemDto.cs" />
-    <Compile Include="Services\Models\RoleModels\RoleDto.cs" />
+    <Compile Include="Services\Models\Role\RoleDto.cs" />
     <Compile Include="ViewModels\AdminPanelViewModel.cs" />
     <Compile Include="ViewModels\AllItemsViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -218,7 +218,11 @@
     <Compile Include="ViewModels\SelectedItemViewModel.cs" />
     <Compile Include="ViewModels\AllTablesViewModel.cs" />
     <Compile Include="ViewModels\TableViewModel.cs" />
+    <Compile Include="ViewModels\UpdateItemViewModel.cs" />
+    <Compile Include="ViewModels\UpdateOrDeleteItemViewModel.cs" />
+    <Compile Include="ViewModels\UpdateOrDeleteTableViewModel.cs" />
     <Compile Include="ViewModels\UpdateOrDeleteUserViewModel.cs" />
+    <Compile Include="ViewModels\UpdateTableViewModel.cs" />
     <Compile Include="ViewModels\UpdateUserViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\AdminPanelView.xaml.cs">
@@ -254,8 +258,20 @@
     <Compile Include="Views\AllTablesView.xaml.cs">
       <DependentUpon>AllTablesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UpdateItemView.xaml.cs">
+      <DependentUpon>UpdateItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpdateOrDeleteItemView.xaml.cs">
+      <DependentUpon>UpdateOrDeleteItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpdateOrDeleteTableView.xaml.cs">
+      <DependentUpon>UpdateOrDeleteTableView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UpdateOrDeleteUserView.xaml.cs">
       <DependentUpon>UpdateOrDeleteUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpdateTableView.xaml.cs">
+      <DependentUpon>UpdateTableView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UpdateUserView.xaml.cs">
       <DependentUpon>UpdateUserView.xaml</DependentUpon>
@@ -317,7 +333,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UpdateItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UpdateOrDeleteItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UpdateOrDeleteTableView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UpdateOrDeleteUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UpdateTableView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

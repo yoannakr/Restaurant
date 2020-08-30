@@ -1,15 +1,17 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Restaurant.Services;
 using Restaurant.ViewModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Restaurant.Services.Models.Role;
 using Restaurant.Services.Models.Item;
 using Restaurant.Services.Implementations;
-using Restaurant.Services.Models.RoleModels;
+using System.Windows;
 
 namespace Restaurant.Common.InstanceHolder
 {
-    public class CollectionInstance
+    public sealed class CollectionInstance
     {
         #region Declarations
 
@@ -55,12 +57,21 @@ namespace Restaurant.Common.InstanceHolder
             get
             {
                 if (users == null)
-                    users = new ObservableCollection<UserViewModel>(userService
+                {
+                    try
+                    {
+                        users = new ObservableCollection<UserViewModel>(userService
                                                                     .GetAllUsers()
                                                                     .Select(u => new UserViewModel()
                                                                     {
                                                                         User = u
                                                                     }).ToList());
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                    }
+                }
 
                 return users;
             }
@@ -71,7 +82,16 @@ namespace Restaurant.Common.InstanceHolder
             get
             {
                 if (roles == null)
-                    roles = new ObservableCollection<RoleDto>(roleService.GetAllRoles().ToList());
+                {
+                    try
+                    {
+                        roles = new ObservableCollection<RoleDto>(roleService.GetAllRoles().ToList());
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                    }
+                }
 
                 return roles;
             }
@@ -83,15 +103,21 @@ namespace Restaurant.Common.InstanceHolder
             {
                 if (tables == null)
                 {
-                    List<TableViewModel> tableList = tableService
+                    try
+                    {
+                        List<TableViewModel> tableList = tableService
                                                     .GetAllTables()
                                                     .Select(t => new TableViewModel()
                                                     {
-                                                        Table = t,
-                                                        IsTaken = t.IsTaken
+                                                        Table = t
                                                     }).ToList();
 
-                    tables = new ObservableCollection<TableViewModel>(tableList);
+                        tables = new ObservableCollection<TableViewModel>(tableList);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                    }
                 }
 
                 return tables;
@@ -103,7 +129,16 @@ namespace Restaurant.Common.InstanceHolder
             get
             {
                 if (items == null)
-                    items = new ObservableCollection<ItemDto>(itemService.GetAllItems().ToList());
+                {
+                    try
+                    {
+                        items = new ObservableCollection<ItemDto>(itemService.GetAllItems().ToList());
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                    }
+                }
 
                 return items;
             }

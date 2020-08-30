@@ -1,18 +1,18 @@
-﻿using System.Linq;
-using System.Windows;
-using Prism.Commands;
-using Restaurant.Services;
+﻿using Prism.Commands;
 using Restaurant.Database.Models;
+using Restaurant.Services;
 using Restaurant.Services.Implementations;
-using Restaurant.Common.InstanceHolder;
+using System;
+using System.Linq;
+using System.Windows;
 
 namespace Restaurant.ViewModels
 {
-    public class CreateTableViewModel : BaseViewModel
+    public class UpdateTableViewModel : BaseViewModel
     {
         #region Declarations
 
-        private DelegateCommand<object> addTableCommand;
+        private DelegateCommand<object> updateTableCommand;
         private DelegateCommand<object> returnCommand;
         private readonly ITableService tableService;
         private int seats;
@@ -21,8 +21,11 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public CreateTableViewModel()
+        public UpdateTableViewModel(Table table)
         {
+            Table = table;
+            Number = table.Number;
+            Seats = table.Seats;
             tableService = new TableService();
         }
 
@@ -30,14 +33,14 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public DelegateCommand<object> AddTableCommand
+        public DelegateCommand<object> UpdateTableCommand
         {
             get
             {
-                if (addTableCommand == null)
-                    addTableCommand = new DelegateCommand<object>(CreateTable, CanCreateTable);
+                if (updateTableCommand == null)
+                    updateTableCommand = new DelegateCommand<object>(UpdateTable, CanUpdateTable);
 
-                return addTableCommand;
+                return updateTableCommand;
             }
         }
 
@@ -52,6 +55,8 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public Table Table { get; set; }
+
         public int Number { get; set; }
 
         public int Seats
@@ -60,7 +65,7 @@ namespace Restaurant.ViewModels
             set
             {
                 seats = value;
-                AddTableCommand.RaiseCanExecuteChanged();
+                UpdateTableCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -68,29 +73,43 @@ namespace Restaurant.ViewModels
 
         #region Methods
 
-        private void CreateTable(object obj)
+        private void UpdateTable(object obj)
         {
             Table table = tableService.GetAllTables()
                                       .Where(t => t.Number == Number)
                                       .FirstOrDefault();
 
-            if (table != null)
+            if (table != null && Table.Id != table.Id)
             {
                 MessageBox.Show("Маса с този номер вече съществува.");
                 return;
             }
 
-            Table createdTable = tableService.CreateTable(Number, Seats);
-
-            CollectionInstance.Instance.Tables.Add(new TableViewModel()
+            try
             {
-                Table = createdTable
-            });
+                Table updatedTable = new Table()
+                {
+                    Id = Table.Id,
+                    Number = Number,
+                    Seats = Seats,
+                    IsTaken = Table.IsTaken
+                };
+
+                tableService.UpdateTable(updatedTable);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                return;
+            }
+
+            Table.Number = Number;
+            Table.Seats = Seats;
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }
 
-        private bool CanCreateTable(object arg)
+        private bool CanUpdateTable(object arg)
         {
             return IsValid();
         }

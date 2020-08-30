@@ -29,11 +29,23 @@
         <DataTemplate DataType="{x:Type vm:CreateTableViewModel}">
             <v:CreateTableView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateOrDeleteTableViewModel}">
+            <v:UpdateOrDeleteTableView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateTableViewModel}">
+            <v:UpdateTableView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:CreateRoleViewModel}">
             <v:CreateRoleView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:CreateItemViewModel}">
             <v:CreateItemView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateOrDeleteItemViewModel}">
+            <v:UpdateOrDeleteItemView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateItemViewModel}">
+            <v:UpdateItemView/>
         </DataTemplate>
         <BooleanToVisibilityConverter x:Key="AdminBtnVisibilityConverter" />
     </UserControl.Resources>

@@ -7,6 +7,10 @@ namespace Restaurant.Services
     {
         Table CreateTable(int number, int seats);
 
+        void UpdateTable(Table table);
+
+        void DeleteTable(Table table);
+
         IEnumerable<Table> GetAllTables();
     }
 }

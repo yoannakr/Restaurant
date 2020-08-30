@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using Restaurant.Database.Models;
 using Restaurant.Database.Services;
-using Restaurant.Common.InstanceHolder;
-using Restaurant.Services.Models.RoleModels;
+using Restaurant.Services.Models.Role;
 using Restaurant.Database.Services.Implementations;
 
 namespace Restaurant.Services.Implementations
@@ -31,12 +30,6 @@ namespace Restaurant.Services.Implementations
         public Role CreateRole(string name)
         {
             Role role = roleDb.CreateRole(name);
-
-            CollectionInstance.Instance.Roles.Add(new RoleDto()
-            {
-                Id = role.Id,
-                Name = role.Name
-            });
 
             return role;
         }

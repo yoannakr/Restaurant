@@ -8,6 +8,10 @@ namespace Restaurant.Services
     {
         Item CreateItem(string name, decimal price, byte[] imageContent);
 
+        Item UpdateItem(Item item);
+
+        void DeleteItem(Item item);
+
         IEnumerable<ItemDto> GetAllItems();
     }
 }

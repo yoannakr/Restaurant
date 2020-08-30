@@ -7,6 +7,10 @@ namespace Restaurant.Database.Services
     {
         Table CreateTable(int number, int seats);
 
+        void UpdateTable(Table table);
+
+        void DeleteTable(Table table);
+
         IQueryable<Table> GetAllTables();
     }
 }

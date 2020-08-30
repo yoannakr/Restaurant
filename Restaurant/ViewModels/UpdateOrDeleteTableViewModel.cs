@@ -3,7 +3,7 @@ using Restaurant.Common.InstanceHolder;
 
 namespace Restaurant.ViewModels
 {
-    public class AllTablesViewModel : BaseViewModel
+    public class UpdateOrDeleteTableViewModel : BaseViewModel
     {
         #region Declarations
 
@@ -25,7 +25,5 @@ namespace Restaurant.ViewModels
         }
 
         #endregion
-
-
     }
 }

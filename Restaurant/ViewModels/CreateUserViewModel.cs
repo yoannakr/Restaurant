@@ -6,9 +6,9 @@ using Restaurant.Services;
 using System.Collections.Generic;
 using Restaurant.Database.Models;
 using System.Collections.ObjectModel;
+using Restaurant.Services.Models.Role;
 using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Implementations;
-using Restaurant.Services.Models.RoleModels;
 
 namespace Restaurant.ViewModels
 {
@@ -195,8 +195,12 @@ namespace Restaurant.ViewModels
                                 }).ToList();
 
 
-            userService.CreateUser(Name, Username, Password, roles);
+            User createdUser = userService.CreateUser(Name, Username, Password, roles);
 
+            CollectionInstance.Instance.Users.Add(new UserViewModel()
+            {
+                User = createdUser
+            });
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }

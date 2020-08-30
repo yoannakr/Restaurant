@@ -11,7 +11,9 @@ namespace Restaurant.ViewModels
         private CreateUserViewModel createUserViewModel;
         private UpdateOrDeleteUserViewModel updateOrDeleteUserViewModel;
         private CreateTableViewModel createTableViewModel;
+        private UpdateOrDeleteTableViewModel updateOrDeleteTableViewModel;
         private CreateItemViewModel createItemViewModel;
+        private UpdateOrDeleteItemViewModel updateOrDeleteItemViewModel;
 
         #endregion
 
@@ -73,6 +75,21 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public UpdateOrDeleteTableViewModel UpdateOrDeleteTableViewModel
+        {
+            get
+            {
+                updateOrDeleteTableViewModel = new UpdateOrDeleteTableViewModel();
+                UpdateOrDeleteTableView updateOrDeleteTableView = new UpdateOrDeleteTableView();
+
+                updateOrDeleteTableViewModel.View = updateOrDeleteTableView;
+
+                updateOrDeleteTableView.DataContext = updateOrDeleteTableViewModel;
+
+                return updateOrDeleteTableViewModel;
+            }
+        }
+
         public CreateItemViewModel CreateItemViewModel
         {
             get
@@ -85,6 +102,21 @@ namespace Restaurant.ViewModels
                 createItemView.DataContext = createItemViewModel;
 
                 return createItemViewModel;
+            }
+        }
+
+        public UpdateOrDeleteItemViewModel UpdateOrDeleteItemViewModel
+        {
+            get
+            {
+                updateOrDeleteItemViewModel = new UpdateOrDeleteItemViewModel();
+                UpdateOrDeleteItemView updateOrDeleteItemView = new UpdateOrDeleteItemView();
+
+                updateOrDeleteItemViewModel.View = updateOrDeleteItemView;
+
+                updateOrDeleteItemView.DataContext = updateOrDeleteItemViewModel;
+
+                return updateOrDeleteItemViewModel;
             }
         }
 

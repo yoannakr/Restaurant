@@ -3,6 +3,7 @@ using Restaurant.Database.Data;
 using Restaurant.Database.Models;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Restaurant.Database.Services.Implementations
 {
@@ -56,17 +57,17 @@ namespace Restaurant.Database.Services.Implementations
 
         public void UpdateUser(User user, List<UserRole> userRoles)
         {
-            User entity = context.Users.Include(u => u.Roles).FirstOrDefault(u => u.Id == user.Id);
+            User entityUser = context.Users.Include(u => u.Roles).FirstOrDefault(u => u.Id == user.Id);
 
-            if (entity == null)
-                return;
+            if (entityUser == null)
+                throw new Exception();
 
-            entity.Name = user.Name;
-            entity.Username = user.Username;
-            entity.Password = user.Password;
+            entityUser.Name = user.Name;
+            entityUser.Username = user.Username;
+            entityUser.Password = user.Password;
 
             List<UserRole> rolesForRemoval = new List<UserRole>();
-            foreach (UserRole role in entity.Roles)
+            foreach (UserRole role in entityUser.Roles)
             {
                 if (userRoles.FirstOrDefault(ur => ur.RoleId == role.RoleId && ur.UserId == role.UserId) == null)
                 {
@@ -76,14 +77,14 @@ namespace Restaurant.Database.Services.Implementations
 
             foreach (UserRole role in rolesForRemoval)
             {
-                entity.Roles.Remove(role);
+                entityUser.Roles.Remove(role);
             }
 
             foreach (UserRole userRole in userRoles)
             {
-                if (entity.Roles.FirstOrDefault(r => r.RoleId == userRole.RoleId && r.UserId == userRole.UserId) == null)
+                if (entityUser.Roles.FirstOrDefault(r => r.RoleId == userRole.RoleId && r.UserId == userRole.UserId) == null)
                 {
-                    entity.Roles.Add(userRole);
+                    entityUser.Roles.Add(userRole);
                 }
             }
 

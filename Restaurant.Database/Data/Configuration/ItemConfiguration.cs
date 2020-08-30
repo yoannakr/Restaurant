@@ -11,7 +11,8 @@ namespace Restaurant.Database.Data.Configurtion
             builder
                .HasOne(itm => itm.Image)
                .WithOne(img => img.Item)
-               .HasForeignKey<Item>(itm => itm.ImageId);
+               .HasForeignKey<Item>(itm => itm.ImageId)
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

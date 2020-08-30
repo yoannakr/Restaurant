@@ -134,8 +134,9 @@ namespace Restaurant.ViewModels
                 Items.Clear();
                 Total = 0;
                 Payed = 0;
-                TableViewModel.IsTaken = false;
-                MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
+                TableViewModel.Table.IsTaken = false;
+
+                MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AllTablesViewModel);
             }
 
         }

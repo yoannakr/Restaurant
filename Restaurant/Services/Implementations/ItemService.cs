@@ -6,8 +6,8 @@ using Restaurant.Database.Models;
 using System.Windows.Media.Imaging;
 using Restaurant.Database.Services;
 using Restaurant.Services.Models.Item;
-using Restaurant.Database.Services.Implementations;
 using Restaurant.Common.InstanceHolder;
+using Restaurant.Database.Services.Implementations;
 
 namespace Restaurant.Services.Implementations
 {
@@ -37,6 +37,7 @@ namespace Restaurant.Services.Implementations
                 Id = i.Id,
                 Name = i.Name,
                 Price = i.Price,
+                ImageContent = i.Image.Content,
                 ImageSource = ConvertFromByteArrayToImageSource(i.Image.Content)
             }).ToList();
         }
@@ -50,10 +51,21 @@ namespace Restaurant.Services.Implementations
                 Id = item.Id,
                 Name = item.Name,
                 Price = item.Price,
+                ImageContent = item.Image.Content,
                 ImageSource = ConvertFromByteArrayToImageSource(item.Image.Content)
             });
 
             return item;
+        }
+
+        public Item UpdateItem(Item item)
+        {
+            return itemDb.UpdateItem(item);
+        }
+
+        public void DeleteItem(Item item)
+        {
+            itemDb.DeleteItem(item);
         }
 
         private static ImageSource ConvertFromByteArrayToImageSource(byte[] imageContent)

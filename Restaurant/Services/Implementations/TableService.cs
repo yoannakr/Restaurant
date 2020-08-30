@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using Restaurant.Common.InstanceHolder;
 using Restaurant.Database.Models;
 using Restaurant.Database.Services;
 using Restaurant.Database.Services.Implementations;
-using Restaurant.ViewModels;
 
 namespace Restaurant.Services.Implementations
 {
@@ -30,13 +28,17 @@ namespace Restaurant.Services.Implementations
         {
             Table table = tableDb.CreateTable(number, seats);
 
-            CollectionInstance.Instance.Tables.Add(new TableViewModel()
-            {
-                Table = table,
-                IsTaken = table.IsTaken
-            });
-
             return table;
+        }
+
+        public void UpdateTable(Table table)
+        {
+            tableDb.UpdateTable(table);
+        }
+
+        public void DeleteTable(Table table)
+        {
+            tableDb.DeleteTable(table);
         }
 
         public IEnumerable<Table> GetAllTables()

@@ -1,7 +1,10 @@
 ﻿using System;
 using Prism.Commands;
+using Restaurant.Common.InstanceHolder;
+using Restaurant.Database.Models;
 using Restaurant.Services;
 using Restaurant.Services.Implementations;
+using Restaurant.Services.Models.Role;
 
 namespace Restaurant.ViewModels
 {
@@ -68,7 +71,13 @@ namespace Restaurant.ViewModels
 
         private void CreateRole(object obj)
         {
-            roleService.CreateRole(Name);
+            Role role = roleService.CreateRole(Name);
+
+            CollectionInstance.Instance.Roles.Add(new RoleDto()
+            {
+                Id = role.Id,
+                Name = role.Name
+            });
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(BaseViewModel);
         }
