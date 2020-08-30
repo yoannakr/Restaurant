@@ -1,12 +1,12 @@
-﻿using Prism.Commands;
-using Restaurant.Common.InstanceHolder;
-using Restaurant.Database.Models;
-using Restaurant.Services;
-using Restaurant.Services.Implementations;
-using Restaurant.Views;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Prism.Commands;
 using System.Windows;
+using Restaurant.Views;
+using Restaurant.Services;
+using Restaurant.Database.Models;
+using System.Collections.Generic;
+using Restaurant.Common.InstanceHolder;
+using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
 {
@@ -114,6 +114,10 @@ namespace Restaurant.ViewModels
 
         private void DeleteUser(object obj)
         {
+            if (MessageBox.Show("Сигурни ли сте, че искате да изтриете този потребител ?",
+                    "Потвърждение", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                return;
+
             try
             {
                 userService.DeleteUser(User);

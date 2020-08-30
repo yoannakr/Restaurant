@@ -129,7 +129,7 @@ namespace Restaurant.ViewModels
             stringBuilder.AppendLine("Искате ли да приключите сметката?");
 
             if (MessageBox.Show(stringBuilder.ToString(),
-                    "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    "Потвърждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Items.Clear();
                 Total = 0;

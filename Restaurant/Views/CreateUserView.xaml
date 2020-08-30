@@ -116,7 +116,7 @@
                             <DataTemplate>
                                 <ToggleButton
                                     Margin="2"
-                                    Content="{Binding Role.Name}"
+                                    Content="{Binding Name}"
                                     IsChecked="{Binding IsChecked}"
                                     Command="{Binding ElementName=FromViewModel, Path=DataContext.AddRoleInCollectionCommand}"
                                     CommandParameter="{Binding}"

@@ -4,7 +4,9 @@ namespace Restaurant.Services.Models.RoleModels
 {
     public class RoleDto
     {
-        public Role Role { get; set; }
+        public int Id { get; set; }
+
+        public string Name { get; set; }
 
         public bool IsChecked { get; set; }
     }

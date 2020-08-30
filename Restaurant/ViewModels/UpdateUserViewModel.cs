@@ -155,7 +155,7 @@ namespace Restaurant.ViewModels
 
                     foreach (RoleDto role in roles)
                     {
-                        RoleDto roleDto = UserRoles.Where(r => r.Role.Id == role.Role.Id)
+                        RoleDto roleDto = UserRoles.Where(r => r.Id == role.Id)
                                                    .FirstOrDefault();
                         if (roleDto == null)
                             role.IsChecked = false;
@@ -177,7 +177,8 @@ namespace Restaurant.ViewModels
                     List<RoleDto> checkedRoles = User.Roles.Select(ur => ur.Role)
                                                            .Select(r => new RoleDto()
                                                            {
-                                                               Role = r
+                                                               Id = r.Id,
+                                                               Name = r.Name
                                                            }).ToList();
 
                     userRoles = checkedRoles;
@@ -220,7 +221,11 @@ namespace Restaurant.ViewModels
             }
 
             List<Role> roles = UserRoles
-                                    .Select(r => r.Role)
+                                    .Select(r => new Role()
+                                    {
+                                        Id = r.Id,
+                                        Name = r.Name
+                                    })
                                     .ToList();
 
             List<UserRole> userRoles = roles.Select(r => new UserRole()
@@ -291,7 +296,7 @@ namespace Restaurant.ViewModels
                 UserRoles.Add(role);
             else
             {
-                RoleDto removeRole = UserRoles.FirstOrDefault(r => r.Role.Id == role.Role.Id);
+                RoleDto removeRole = UserRoles.FirstOrDefault(r => r.Id == role.Id);
                 UserRoles.Remove(removeRole);
             }
 

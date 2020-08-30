@@ -188,10 +188,16 @@ namespace Restaurant.ViewModels
             }
 
             List<Role> roles = UserRoles
-                                .Select(r => r.Role)
-                                .ToList();
+                                .Select(r => new Role()
+                                {
+                                    Id = r.Id,
+                                    Name = r.Name
+                                }).ToList();
+
 
             userService.CreateUser(Name, Username, Password, roles);
+
+
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }
 

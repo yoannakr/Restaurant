@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
 using Restaurant.Database.Data;
 using Restaurant.Database.Models;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Restaurant.Database.Services.Implementations
 {
@@ -36,9 +36,10 @@ namespace Restaurant.Database.Services.Implementations
 
             context.Users.Add(user);
 
-            ICollection<UserRole> userRoles = roles.Select(r => new UserRole()
+            List<UserRole> userRoles = roles.Select(r => new UserRole()
             {
                 User = user,
+                UserId = user.Id,
                 RoleId = r.Id,
                 Role = r
             }).ToList();

@@ -34,7 +34,8 @@ namespace Restaurant.Services.Implementations
 
             CollectionInstance.Instance.Roles.Add(new RoleDto()
             {
-                Role = role
+                Id = role.Id,
+                Name = role.Name
             });
 
             return role;
@@ -45,7 +46,8 @@ namespace Restaurant.Services.Implementations
         {
             return roleDb.GetAllRoles().Select(r => new RoleDto()
             {
-                Role = r
+                Id = r.Id,
+                Name = r.Name
             });
         }
 
