@@ -20,9 +20,8 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public SelectedItemViewModel(MenuViewModel menuViewModel,TableViewModel tableViewModel)
+        public SelectedItemViewModel(TableViewModel tableViewModel)
         {
-            MenuViewModel = menuViewModel;
             TableViewModel = tableViewModel;
         }
 
@@ -71,7 +70,6 @@ namespace Restaurant.ViewModels
             set
             {
                 total = value;
-
                 FinishPaymentCommand.RaiseCanExecuteChanged();
                 OnPropertyChanged("Total");
             }
@@ -86,13 +84,12 @@ namespace Restaurant.ViewModels
                 {
                     value = 0;
                 }
+
                 payed = value;
                 FinishPaymentCommand.RaiseCanExecuteChanged();
                 OnPropertyChanged("Payed");
             }
         }
-
-        public MenuViewModel MenuViewModel { get; set; }
 
         public TableViewModel TableViewModel { get; set; }
 
@@ -132,15 +129,15 @@ namespace Restaurant.ViewModels
             stringBuilder.AppendLine("Искате ли да приключите сметката?");
 
             if (MessageBox.Show(stringBuilder.ToString(),
-                    "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    "Потвърждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Items.Clear();
                 Total = 0;
                 Payed = 0;
-                TableViewModel.IsTaken = false;
-                MenuViewModel.BaseViewModel = MenuViewModel.AllTablesViewModel;
-            }
+                TableViewModel.Table.IsTaken = false;
 
+                MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AllTablesViewModel);
+            }
         }
 
         private bool CanFinishPayment(object arg)

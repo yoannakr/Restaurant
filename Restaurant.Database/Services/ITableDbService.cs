@@ -5,7 +5,11 @@ namespace Restaurant.Database.Services
 {
     public interface ITableDbService
     {
-        void CreateTable(long number, int seats);
+        Table CreateTable(int number, int seats);
+
+        void UpdateTable(Table table);
+
+        void DeleteTable(Table table);
 
         IQueryable<Table> GetAllTables();
     }

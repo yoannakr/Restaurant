@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Restaurant.Database.Data;
 using Restaurant.Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Restaurant.Database.Services.Implementations
 {
@@ -28,7 +30,7 @@ namespace Restaurant.Database.Services.Implementations
             return context.Items;
         }
 
-        public void CreateItem(string name, decimal price, byte[] imageContent)
+        public Item CreateItem(string name, decimal price, byte[] imageContent)
         {
             Image image = new Image()
             {
@@ -37,12 +39,52 @@ namespace Restaurant.Database.Services.Implementations
 
             context.Images.Add(image);
 
-            context.Items.Add(new Item()
+            Item item = new Item()
             {
                 Name = name,
                 Price = price,
                 Image = image
-            });
+            };
+
+            context.Items.Add(item);
+
+            context.SaveChanges();
+
+            return item;
+        }
+
+        public Item UpdateItem(Item item)
+        {
+            Item entityItem = context.Items.Include(i => i.Image).FirstOrDefault(i => i.Id == item.Id);
+
+            if (entityItem == null)
+                throw new Exception();
+
+            entityItem.Name = item.Name;
+            entityItem.Price = item.Price;
+
+            Image previousImage = entityItem.Image;
+            entityItem.Image = item.Image;
+
+            context.SaveChanges();
+
+            context.Images.Remove(previousImage);
+
+            context.SaveChanges();
+
+            return entityItem;
+        }
+
+        public void DeleteItem(Item item)
+        {
+            Item entityItem = context.Items.Include(i => i.Image).FirstOrDefault(i => i.Id == item.Id);
+
+            if (entityItem == null)
+                throw new Exception();
+
+            context.Items.Remove(entityItem);
+
+            context.Images.Remove(entityItem.Image);
 
             context.SaveChanges();
         }

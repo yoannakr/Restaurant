@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
 using Restaurant.Database.Data;
 using Restaurant.Database.Models;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Restaurant.Database.Services.Implementations
 {
@@ -25,7 +26,7 @@ namespace Restaurant.Database.Services.Implementations
 
         #region Methods
 
-        public void CreateUser(string name, string username, string password, List<Role> roles)
+        public User CreateUser(string name, string username, string password, List<Role> roles)
         {
             User user = new User()
             {
@@ -34,10 +35,14 @@ namespace Restaurant.Database.Services.Implementations
                 Password = password
             };
 
-            ICollection<UserRole> userRoles = roles.Select(r => new UserRole()
+            context.Users.Add(user);
+
+            List<UserRole> userRoles = roles.Select(r => new UserRole()
             {
                 User = user,
-                RoleId = r.Id
+                UserId = user.Id,
+                RoleId = r.Id,
+                Role = r
             }).ToList();
 
             foreach (UserRole userRole in userRoles)
@@ -45,7 +50,50 @@ namespace Restaurant.Database.Services.Implementations
                 user.Roles.Add(userRole);
             }
 
-            context.Users.Add(user);
+            context.SaveChanges();
+
+            return user;
+        }
+
+        public void UpdateUser(User user, List<UserRole> userRoles)
+        {
+            User entityUser = context.Users.Include(u => u.Roles).FirstOrDefault(u => u.Id == user.Id);
+
+            if (entityUser == null)
+                throw new Exception();
+
+            entityUser.Name = user.Name;
+            entityUser.Username = user.Username;
+            entityUser.Password = user.Password;
+
+            List<UserRole> rolesForRemoval = new List<UserRole>();
+            foreach (UserRole role in entityUser.Roles)
+            {
+                if (userRoles.FirstOrDefault(ur => ur.RoleId == role.RoleId && ur.UserId == role.UserId) == null)
+                {
+                    rolesForRemoval.Add(role);
+                }
+            }
+
+            foreach (UserRole role in rolesForRemoval)
+            {
+                entityUser.Roles.Remove(role);
+            }
+
+            foreach (UserRole userRole in userRoles)
+            {
+                if (entityUser.Roles.FirstOrDefault(r => r.RoleId == userRole.RoleId && r.UserId == userRole.UserId) == null)
+                {
+                    entityUser.Roles.Add(userRole);
+                }
+            }
+
+            context.SaveChanges();
+        }
+
+        public void DeleteUser(User user)
+        {
+            context.Users.Remove(user);
 
             context.SaveChanges();
         }
@@ -54,7 +102,7 @@ namespace Restaurant.Database.Services.Implementations
         {
             return context.Users
                           .Include(user => user.Roles)
-                          .ThenInclude(user => user.Role);
+                          .ThenInclude(ur => ur.Role);
         }
 
         #endregion

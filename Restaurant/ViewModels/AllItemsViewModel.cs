@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using Prism.Commands;
-using Restaurant.Services;
 using Restaurant.Database.Models;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Item;
-using Restaurant.Services.Implementations;
+using Restaurant.Common.InstanceHolder;
 
 namespace Restaurant.ViewModels
 {
@@ -12,9 +11,8 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private DelegateCommand<object> addItemToSelected;
-        private readonly IItemService itemService;
-        private List<ItemDto> items;
+        private DelegateCommand<object> addItemToSelectedCommand;
+        private ObservableCollection<ItemDto> items;
 
         #endregion
 
@@ -22,7 +20,6 @@ namespace Restaurant.ViewModels
 
         public AllItemsViewModel(SalesViewModel salesViewModel)
         {
-            itemService = new ItemService();
             SalesViewModel = salesViewModel;
             SelectedItemViewModel = salesViewModel.SelectedItemViewModel;
         }
@@ -31,28 +28,25 @@ namespace Restaurant.ViewModels
 
         #region Properties
 
-        public DelegateCommand<object> AddItemToSelected
+        public DelegateCommand<object> AddItemToSelectedCommand
         {
             get
             {
-                if (addItemToSelected == null)
-                    addItemToSelected = new DelegateCommand<object>(AddItem);
+                if (addItemToSelectedCommand == null)
+                    addItemToSelectedCommand = new DelegateCommand<object>(AddItemToSelected);
 
-                return addItemToSelected;
+                return addItemToSelectedCommand;
             }
         }
 
-        public List<ItemDto> Items
+        public ObservableCollection<ItemDto> Items
         {
             get
             {
                 if (items == null)
-                    items = new List<ItemDto>();
-
-                items = itemService.GetAllItems().ToList();
+                    items = CollectionInstance.Instance.Items;
 
                 return items;
-
             }
         }
 
@@ -64,9 +58,9 @@ namespace Restaurant.ViewModels
 
         #region Methods
 
-        private void AddItem(object obj)
+        private void AddItemToSelected(object obj)
         {
-            if (!SalesViewModel.TableViewModel.IsTaken)
+            if (!SalesViewModel.TableViewModel.Table.IsTaken)
                 SalesViewModel.TakeTableCommand.Execute();
 
             ItemDto itemDto = obj as ItemDto;
@@ -75,7 +69,7 @@ namespace Restaurant.ViewModels
 
             if (selectedItem != null)
             {
-                if(selectedItem.Item.Id == itemDto.Id)
+                if (selectedItem.Item.Id == itemDto.Id)
                 {
                     selectedItem.Count += 1;
 
@@ -113,7 +107,7 @@ namespace Restaurant.ViewModels
                 selectedItem.ShowListBtnVisibility = true;
             }
             else
-            { 
+            {
                 RowItemViewModel item = new RowItemViewModel(SelectedItemViewModel)
                 {
                     Item = new Item()
@@ -127,9 +121,7 @@ namespace Restaurant.ViewModels
                 };
 
                 SelectedItemViewModel.Items.Add(item);
-
             }
-
         }
 
         #endregion

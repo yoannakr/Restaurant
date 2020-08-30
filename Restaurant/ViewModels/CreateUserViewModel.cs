@@ -5,6 +5,9 @@ using Restaurant.Views;
 using Restaurant.Services;
 using System.Collections.Generic;
 using Restaurant.Database.Models;
+using System.Collections.ObjectModel;
+using Restaurant.Services.Models.Role;
+using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
@@ -15,26 +18,24 @@ namespace Restaurant.ViewModels
 
         private DelegateCommand<object> addUserCommand;
         private DelegateCommand<object> newRoleCommand;
-        private DelegateCommand<object> addRoleCommand;
+        private DelegateCommand<object> addRoleInCollectionCommand;
         private DelegateCommand<object> returnCommand;
         private readonly IUserService userService;
-        private readonly IRoleService roleService;
         private CreateRoleViewModel createRoleViewModel;
         private string name;
         private string username;
         private string password;
         private string confirmPassword;
-        private List<Role> userRoles;
+        private ObservableCollection<RoleDto> roles;
+        private List<RoleDto> userRoles;
 
         #endregion
 
         #region Constructors
 
-        public CreateUserViewModel(MenuViewModel menuViewModel)
+        public CreateUserViewModel()
         {
-            MenuViewModel = menuViewModel;
             userService = new UserService();
-            roleService = new RoleService();
         }
 
         #endregion
@@ -63,14 +64,14 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public DelegateCommand<object> AddRoleCommand
+        public DelegateCommand<object> AddRoleInCollectionCommand
         {
             get
             {
-                if (addRoleCommand == null)
-                    addRoleCommand = new DelegateCommand<object>(AddRole);
+                if (addRoleInCollectionCommand == null)
+                    addRoleInCollectionCommand = new DelegateCommand<object>(AddRoleInCollection);
 
-                return addRoleCommand;
+                return addRoleInCollectionCommand;
             }
         }
 
@@ -125,22 +126,30 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public List<Role> Roles
+        public ObservableCollection<RoleDto> Roles
         {
             get
             {
-                return roleService.GetAllRoles().ToList();
+                if (roles == null)
+                {
+                    roles = CollectionInstance.Instance.Roles;
+
+                    foreach (RoleDto role in roles)
+                    {
+                        role.IsChecked = false;
+                    }
+                }
+
+                return roles;
             }
         }
 
-        public bool IsChecked { get; set; }
-
-        public List<Role> UserRoles
+        public List<RoleDto> UserRoles
         {
             get
             {
                 if (userRoles == null)
-                    userRoles = new List<Role>();
+                    userRoles = new List<RoleDto>();
 
                 return userRoles;
             }
@@ -150,7 +159,7 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                createRoleViewModel = new CreateRoleViewModel(MenuViewModel, this);
+                createRoleViewModel = new CreateRoleViewModel(this);
                 CreateRoleView createRoleView = new CreateRoleView();
 
                 createRoleViewModel.View = createRoleView;
@@ -161,17 +170,16 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public MenuViewModel MenuViewModel { get; set; }
-
         #endregion
 
         #region Methods
 
         private void CreateUser(object obj)
         {
-            User user = userService.GetAllUsers()
-                              .Where(u => u.Username == Username)
-                              .FirstOrDefault();
+            UserViewModel user = CollectionInstance.Instance
+                                        .Users
+                                        .Where(u => u.User.Username == Username)
+                                        .FirstOrDefault();
 
             if (user != null)
             {
@@ -179,8 +187,28 @@ namespace Restaurant.ViewModels
                 return;
             }
 
-            userService.CreateUser(Name, Username, Password, UserRoles);
-            MenuViewModel.BaseViewModel = MenuViewModel.AdminPanelViewModel;
+            List<Role> roles = UserRoles
+                                .Select(r => new Role()
+                                {
+                                    Id = r.Id,
+                                    Name = r.Name
+                                }).ToList();
+
+            try
+            {
+                User createdUser = userService.CreateUser(Name, Username, Password, roles);
+
+                CollectionInstance.Instance.Users.Add(new UserViewModel()
+                {
+                    User = createdUser
+                });
+            }
+            catch (System.Exception)
+            {
+                MessageBox.Show("Грешка с базата ! Опитайте отново !");
+            }
+
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }
 
         private bool CanCreateUser(object arg)
@@ -188,15 +216,20 @@ namespace Restaurant.ViewModels
             return IsValid();
         }
 
-
         private void CreateRole(object obj)
         {
-            MenuViewModel.BaseViewModel = CreateRoleViewModel;
+            Password = null;
+            ConfirmPassword = null;
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(CreateRoleViewModel);
         }
 
         private bool IsValid()
         {
-            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Username) || UserRoles.Count == 0)
+            if (string.IsNullOrEmpty(Name) ||
+                string.IsNullOrEmpty(Username) ||
+                string.IsNullOrEmpty(Password) ||
+                string.IsNullOrEmpty(ConfirmPassword) ||
+                UserRoles.Count == 0)
                 return false;
 
             if (Password != ConfirmPassword)
@@ -205,11 +238,11 @@ namespace Restaurant.ViewModels
             return true;
         }
 
-        private void AddRole(object obj)
+        private void AddRoleInCollection(object obj)
         {
-            Role role = obj as Role;
+            RoleDto role = obj as RoleDto;
 
-            if (IsChecked)
+            if (role.IsChecked)
                 UserRoles.Add(role);
             else
                 UserRoles.Remove(role);
@@ -219,7 +252,7 @@ namespace Restaurant.ViewModels
 
         private void Return(object obj)
         {
-            MenuViewModel.BaseViewModel = MenuViewModel.AdminPanelViewModel;
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }
 
         #endregion

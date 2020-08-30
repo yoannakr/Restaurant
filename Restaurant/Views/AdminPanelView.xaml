@@ -17,6 +17,11 @@
     </UserControl.Resources>
     <Grid
         Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -24,9 +29,10 @@
         </Grid.ColumnDefinitions>
 
         <Button
-            Grid.Column="0"
+            Grid.Row="0" Grid.Column="0"
+            VerticalAlignment="Bottom"
             Content="Нов потребител"
-            Command="{Binding CreateCommand}"
+            Command="{Binding ChangeAdminViewCommand}"
             CommandParameter="{Binding CreateUserViewModel}"
             Height="50" Width="200"
             FontSize="12pt"
@@ -35,11 +41,11 @@
             BorderBrush="Transparent"
             Background="#ede9a8"
             Foreground="#91918d"/>
-
         <Button
-            Grid.Column="1"
+            Grid.Row="0" Grid.Column="1"
+            VerticalAlignment="Bottom"
             Content="Добави маса"
-            Command="{Binding CreateCommand}"
+            Command="{Binding ChangeAdminViewCommand}"
             CommandParameter="{Binding CreateTableViewModel}"
             Height="50" Width="200"
             FontSize="12pt"
@@ -48,11 +54,11 @@
             BorderBrush="Transparent"
             Background="#ede9a8"
             Foreground="#91918d"/>
-
         <Button
-            Grid.Column="2"
+            Grid.Row="0" Grid.Column="2"
+            VerticalAlignment="Bottom"
             Content="Добави стока"
-            Command="{Binding CreateCommand}"
+            Command="{Binding ChangeAdminViewCommand}"
             CommandParameter="{Binding CreateItemViewModel}"
             Height="50" Width="200"
             FontSize="12pt"
@@ -61,5 +67,54 @@
             BorderBrush="Transparent"
             Background="#ede9a8"
             Foreground="#91918d"/>
+
+        <Button
+            Grid.Row="1" Grid.Column="0"
+            Command="{Binding ChangeAdminViewCommand}"
+            CommandParameter="{Binding UpdateOrDeleteUserViewModel}"
+            Height="50" Width="200"
+            FontSize="10pt"
+            FontWeight="Bold"
+            FontStyle="Oblique"
+            BorderBrush="Transparent"
+            Background="#ede9a8"
+            Foreground="#91918d">
+            <TextBlock
+                Text="Промени / Изтрий потребител"
+                TextWrapping="Wrap"
+                TextAlignment="Center"/>
+        </Button>
+        <Button
+            Grid.Row="1" Grid.Column="1"
+            Command="{Binding ChangeAdminViewCommand}"
+            CommandParameter="{Binding UpdateOrDeleteTableViewModel}"
+            Height="50" Width="200"
+            FontSize="10pt"
+            FontWeight="Bold"
+            FontStyle="Oblique"
+            BorderBrush="Transparent"
+            Background="#ede9a8"
+            Foreground="#91918d">
+            <TextBlock
+                Text="Промени / Изтрий маса"
+                TextWrapping="Wrap"
+                TextAlignment="Center"/>
+        </Button>
+        <Button
+            Grid.Row="1" Grid.Column="2"
+            Command="{Binding ChangeAdminViewCommand}"
+            CommandParameter="{Binding UpdateOrDeleteItemViewModel}"
+            Height="50" Width="200"
+            FontSize="10pt"
+            FontWeight="Bold"
+            FontStyle="Oblique"
+            BorderBrush="Transparent"
+            Background="#ede9a8"
+            Foreground="#91918d">
+            <TextBlock
+                Text="Промени / Изтрий стока"
+                TextWrapping="Wrap"
+                TextAlignment="Center"/>
+        </Button>
     </Grid>
 </UserControl>

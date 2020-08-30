@@ -24,9 +24,21 @@ namespace Restaurant.Services.Implementations
 
         #region Methods
 
-        public void CreateTable(long number, int seats)
+        public Table CreateTable(int number, int seats)
         {
-            tableDb.CreateTable(number, seats);
+            Table table = tableDb.CreateTable(number, seats);
+
+            return table;
+        }
+
+        public void UpdateTable(Table table)
+        {
+            tableDb.UpdateTable(table);
+        }
+
+        public void DeleteTable(Table table)
+        {
+            tableDb.DeleteTable(table);
         }
 
         public IEnumerable<Table> GetAllTables()

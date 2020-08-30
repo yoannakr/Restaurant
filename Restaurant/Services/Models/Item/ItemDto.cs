@@ -10,6 +10,8 @@ namespace Restaurant.Services.Models.Item
 
         public decimal Price { get; set; }
 
+        public byte[] ImageContent { get; set; }
+
         public ImageSource ImageSource { get; set; }
     }
 }

@@ -1,10 +1,10 @@
-﻿using System.IO;
-using System.Linq;
-using System.Windows.Media;
+﻿using System.Linq;
+using Restaurant.Common.Helpers;
 using System.Collections.Generic;
-using System.Windows.Media.Imaging;
+using Restaurant.Database.Models;
 using Restaurant.Database.Services;
 using Restaurant.Services.Models.Item;
+using Restaurant.Common.InstanceHolder;
 using Restaurant.Database.Services.Implementations;
 
 namespace Restaurant.Services.Implementations
@@ -35,24 +35,35 @@ namespace Restaurant.Services.Implementations
                 Id = i.Id,
                 Name = i.Name,
                 Price = i.Price,
-                ImageSource = ConvertFromByteArrayToImageSource(i.Image.Content)
+                ImageContent = i.Image.Content,
+                ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(i.Image.Content)
             }).ToList();
         }
 
-        public void CreateItem(string name, decimal price, byte[] imageContent)
+        public Item CreateItem(string name, decimal price, byte[] imageContent)
         {
-            itemDb.CreateItem(name, price, imageContent);
+            Item item = itemDb.CreateItem(name, price, imageContent);
+
+            CollectionInstance.Instance.Items.Add(new ItemDto()
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Price = item.Price,
+                ImageContent = item.Image.Content,
+                ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(item.Image.Content)
+            });
+
+            return item;
         }
 
-        private static ImageSource ConvertFromByteArrayToImageSource(byte[] imageContent)
+        public Item UpdateItem(Item item)
         {
-            BitmapImage biImg = new BitmapImage();
-            MemoryStream ms = new MemoryStream(imageContent);
-            biImg.BeginInit();
-            biImg.StreamSource = ms;
-            biImg.EndInit();
+            return itemDb.UpdateItem(item);
+        }
 
-            return biImg;
+        public void DeleteItem(Item item)
+        {
+            itemDb.DeleteItem(item);
         }
 
         #endregion

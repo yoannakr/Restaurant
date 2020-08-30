@@ -1,4 +1,5 @@
-﻿using Restaurant.Views;
+﻿using Prism.Commands;
+using Restaurant.Views;
 
 namespace Restaurant.ViewModels
 {
@@ -6,6 +7,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
+        private DelegateCommand<object> changeMainViewCommand;
         private BaseViewModel baseViewModel;
         private LoginViewModel loginViewModel;
 
@@ -15,12 +17,26 @@ namespace Restaurant.ViewModels
 
         public MainWindowViewModel()
         {
+            Instance = this;
             BaseViewModel = LoginViewModel;
         }
 
         #endregion
 
         #region Properties
+
+        public DelegateCommand<object> ChangeMainViewCommand
+        {
+            get
+            {
+                if (changeMainViewCommand == null)
+                    changeMainViewCommand = new DelegateCommand<object>(ChangeMainView);
+
+                return changeMainViewCommand;
+            }
+        }
+
+        public static MainWindowViewModel Instance { get; set; }
 
         public BaseViewModel BaseViewModel
         {
@@ -36,22 +52,25 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                if (loginViewModel == null)
-                {
-                    loginViewModel = new LoginViewModel(this);
-                    LoginView loginView = new LoginView();
+                loginViewModel = new LoginViewModel();
+                LoginView loginView = new LoginView();
 
-                    loginViewModel.View = loginView;
+                loginViewModel.View = loginView;
 
-                    loginView.DataContext = loginViewModel;
-                }
+                loginView.DataContext = loginViewModel;
 
                 return loginViewModel;
             }
-            set
-            {
-                loginViewModel = value;
-            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void ChangeMainView(object obj)
+        {
+            if (obj is BaseViewModel baseViewModel)
+                BaseViewModel = baseViewModel;
         }
 
         #endregion

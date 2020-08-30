@@ -20,14 +20,32 @@
         <DataTemplate DataType="{x:Type vm:CreateUserViewModel}">
             <v:CreateUserView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateOrDeleteUserViewModel}">
+            <v:UpdateOrDeleteUserView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateUserViewModel}">
+            <v:UpdateUserView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:CreateTableViewModel}">
             <v:CreateTableView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateOrDeleteTableViewModel}">
+            <v:UpdateOrDeleteTableView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateTableViewModel}">
+            <v:UpdateTableView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:CreateRoleViewModel}">
             <v:CreateRoleView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:CreateItemViewModel}">
             <v:CreateItemView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateOrDeleteItemViewModel}">
+            <v:UpdateOrDeleteItemView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UpdateItemViewModel}">
+            <v:UpdateItemView/>
         </DataTemplate>
         <BooleanToVisibilityConverter x:Key="AdminBtnVisibilityConverter" />
     </UserControl.Resources>
@@ -42,14 +60,14 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Button 
                 Grid.Row="0" Grid.Column="0"
                 Margin="10"
                 Content="Маси"
-                Command="{Binding MenuCommand}"
+                Command="{Binding ChangeMenuViewCommand}"
                 CommandParameter="{Binding AllTablesViewModel}"
                 MinHeight="30" MinWidth="150"
                 Cursor="Hand"
@@ -64,7 +82,7 @@
                 Grid.Row="0" Grid.Column="1"
                 Margin="30,10,10,10"
                 Content="Админ"
-                Command="{Binding MenuCommand}"
+                Command="{Binding ChangeMenuViewCommand}"
                 CommandParameter="{Binding AdminPanelViewModel}"
                 Visibility="{Binding AdminBtnVisibility, Converter={StaticResource AdminBtnVisibilityConverter}}"
                 MinHeight="30" MinWidth="150"

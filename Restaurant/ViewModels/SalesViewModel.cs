@@ -19,9 +19,8 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public SalesViewModel(MenuViewModel menuViewModel,TableViewModel tableViewModel)
+        public SalesViewModel(TableViewModel tableViewModel)
         {
-            MenuViewModel = menuViewModel;
             TableViewModel = tableViewModel;
         }
 
@@ -64,7 +63,7 @@ namespace Restaurant.ViewModels
             {
                 if (selectedItemViewModel == null)
                 {
-                    selectedItemViewModel = new SelectedItemViewModel(MenuViewModel,TableViewModel);
+                    selectedItemViewModel = new SelectedItemViewModel(TableViewModel);
                     SelectedItemView selectedItemView = new SelectedItemView();
 
                     selectedItemViewModel.View = selectedItemView;
@@ -76,15 +75,13 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public MenuViewModel MenuViewModel { get; set; }
-
         public TableViewModel TableViewModel { get; set; }
 
         public string TableText
         {
             get
             {
-                if (TableViewModel.IsTaken)
+                if (TableViewModel.Table.IsTaken)
                     tableText = freeTableText;
                 else
                     tableText = takeTableText;
@@ -104,15 +101,15 @@ namespace Restaurant.ViewModels
 
         private void TakeTable()
         {
-            if (SelectedItemViewModel.Items.Count != 0 && TableViewModel.IsTaken)
+            if (SelectedItemViewModel.Items.Count != 0 && TableViewModel.Table.IsTaken)
             {
                 MessageBox.Show("Не може да освободите масата ! Има избрани продукти.");
                 return;
             }
-            
-            TableViewModel.IsTaken = !TableViewModel.IsTaken;
 
-            if (TableViewModel.IsTaken)
+            TableViewModel.Table.IsTaken = !TableViewModel.Table.IsTaken;
+
+            if (TableViewModel.Table.IsTaken)
                 TableText = freeTableText;
             else
                 TableText = takeTableText;

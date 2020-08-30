@@ -7,42 +7,34 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
-        private DelegateCommand<object> createCommand;
+        private DelegateCommand<object> changeAdminViewCommand;
         private CreateUserViewModel createUserViewModel;
+        private UpdateOrDeleteUserViewModel updateOrDeleteUserViewModel;
         private CreateTableViewModel createTableViewModel;
+        private UpdateOrDeleteTableViewModel updateOrDeleteTableViewModel;
         private CreateItemViewModel createItemViewModel;
-
-        #endregion
-
-        #region Constructors
-
-        public AdminPanelViewModel(MenuViewModel menuViewModel)
-        {
-            MenuViewModel = menuViewModel;
-        }
+        private UpdateOrDeleteItemViewModel updateOrDeleteItemViewModel;
 
         #endregion
 
         #region Properties
 
-        public DelegateCommand<object> CreateCommand
+        public DelegateCommand<object> ChangeAdminViewCommand
         {
             get
             {
-                if (createCommand == null)
-                    createCommand = new DelegateCommand<object>(Create);
+                if (changeAdminViewCommand == null)
+                    changeAdminViewCommand = new DelegateCommand<object>(ChangeAdminView);
 
-                return createCommand;
+                return changeAdminViewCommand;
             }
         }
-
-        public MenuViewModel MenuViewModel { get; set; }
 
         public CreateUserViewModel CreateUserViewModel
         {
             get
             {
-                createUserViewModel = new CreateUserViewModel(MenuViewModel);
+                createUserViewModel = new CreateUserViewModel();
                 CreateUserView createUserView = new CreateUserView();
 
                 createUserViewModel.View = createUserView;
@@ -53,11 +45,26 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public UpdateOrDeleteUserViewModel UpdateOrDeleteUserViewModel
+        {
+            get
+            {
+                updateOrDeleteUserViewModel = new UpdateOrDeleteUserViewModel();
+                UpdateOrDeleteUserView updateOrDeleteUserView = new UpdateOrDeleteUserView();
+
+                updateOrDeleteUserViewModel.View = updateOrDeleteUserView;
+
+                updateOrDeleteUserView.DataContext = updateOrDeleteUserViewModel;
+
+                return updateOrDeleteUserViewModel;
+            }
+        }
+
         public CreateTableViewModel CreateTableViewModel
         {
             get
             {
-                createTableViewModel = new CreateTableViewModel(MenuViewModel);
+                createTableViewModel = new CreateTableViewModel();
                 CreateTableView createTableView = new CreateTableView();
 
                 createTableViewModel.View = createTableView;
@@ -68,11 +75,26 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public UpdateOrDeleteTableViewModel UpdateOrDeleteTableViewModel
+        {
+            get
+            {
+                updateOrDeleteTableViewModel = new UpdateOrDeleteTableViewModel();
+                UpdateOrDeleteTableView updateOrDeleteTableView = new UpdateOrDeleteTableView();
+
+                updateOrDeleteTableViewModel.View = updateOrDeleteTableView;
+
+                updateOrDeleteTableView.DataContext = updateOrDeleteTableViewModel;
+
+                return updateOrDeleteTableViewModel;
+            }
+        }
+
         public CreateItemViewModel CreateItemViewModel
         {
             get
             {
-                createItemViewModel = new CreateItemViewModel(MenuViewModel);
+                createItemViewModel = new CreateItemViewModel();
                 CreateItemView createItemView = new CreateItemView();
 
                 createItemViewModel.View = createItemView;
@@ -83,14 +105,29 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public UpdateOrDeleteItemViewModel UpdateOrDeleteItemViewModel
+        {
+            get
+            {
+                updateOrDeleteItemViewModel = new UpdateOrDeleteItemViewModel();
+                UpdateOrDeleteItemView updateOrDeleteItemView = new UpdateOrDeleteItemView();
+
+                updateOrDeleteItemViewModel.View = updateOrDeleteItemView;
+
+                updateOrDeleteItemView.DataContext = updateOrDeleteItemViewModel;
+
+                return updateOrDeleteItemViewModel;
+            }
+        }
+
         #endregion
 
         #region Methods
 
-        private void Create(object obj)
+        private void ChangeAdminView(object obj)
         {
             if (obj is BaseViewModel baseViewModel)
-                MenuViewModel.BaseViewModel = baseViewModel;
+                MenuViewModel.Instance.ChangeMenuViewCommand.Execute(baseViewModel);
         }
 
         #endregion

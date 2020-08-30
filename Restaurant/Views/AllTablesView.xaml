@@ -7,76 +7,80 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ItemsControl
-            x:Name="FromViewModel"
-            Margin="10"
-            ItemsSource="{Binding Tables}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button
-                        Margin="2"
-                        Command="{Binding SalesCommand}"
-                        Height="155" Width="120"
-                        BorderThickness="0"
-                        Background="Azure">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+        <ScrollViewer 
+            Margin="5"
+            VerticalScrollBarVisibility="Auto">
+            <ItemsControl
+                Margin="10"
+                ItemsSource="{Binding Tables}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Margin="2"
+                            Command="{Binding ChangeMenuViewCommand}"
+                            CommandParameter="{Binding SalesViewModel}"
+                            Height="155" Width="115"
+                            BorderThickness="0"
+                            Background="Azure">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-                            <Image
-                                Grid.Row="0" Grid.ColumnSpan="2"
-                                VerticalAlignment="Top"
-                                Margin="2"
-                                Source="{Binding ImageSource}"
-                                Width="30" Height="50" 
-                                Stretch="Uniform"/>
+                                <Image
+                                    Grid.Row="0" Grid.ColumnSpan="2"
+                                    VerticalAlignment="Top"
+                                    Margin="2"
+                                    Source="{Binding ImageSource}"
+                                    Width="30" Height="50" 
+                                    Stretch="Uniform"/>
 
-                            <TextBlock
-                                Grid.Row="1" Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                Text="Номер :"
-                                Width="60"/>
-                            <TextBlock 
-                                Grid.Row="1" Grid.Column="1"
-                                Text="{Binding Table.Number}"
-                                Width="50"
-                                TextWrapping="Wrap"/>
+                                <TextBlock
+                                    Grid.Row="1" Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    Text="Номер :"
+                                    Width="60"/>
+                                <TextBlock 
+                                    Grid.Row="1" Grid.Column="1"
+                                    Text="{Binding Table.Number}"
+                                    Width="50"
+                                    TextWrapping="Wrap"/>
 
-                            <TextBlock
-                                Grid.Row="2" Grid.Column="0"
-                                HorizontalAlignment="Left"
-                                Text="Места :"
-                                Width="60"/>
-                            <TextBlock 
-                                Grid.Row="2" Grid.Column="1" 
-                                Text="{Binding Table.Seats}"
-                                Width="50"
-                                TextWrapping="Wrap"/>
+                                <TextBlock
+                                    Grid.Row="2" Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    Text="Места :"
+                                    Width="60"/>
+                                <TextBlock 
+                                    Grid.Row="2" Grid.Column="1" 
+                                    Text="{Binding Table.Seats}"
+                                    Width="50"
+                                    TextWrapping="Wrap"/>
 
-                            <Image
-                                Grid.Row="3" Grid.ColumnSpan="2"
-                                HorizontalAlignment="Center"
-                                Margin="20"
-                                Source="{Binding IsTakenSource}"
-                                Width="10"/>
-                        </Grid>
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                                <Image
+                                    Grid.Row="3" Grid.ColumnSpan="2"
+                                    HorizontalAlignment="Center"
+                                    Margin="20"
+                                    Source="{Binding IsTakenSource}"
+                                    Width="10"/>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

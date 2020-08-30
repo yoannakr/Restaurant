@@ -23,7 +23,7 @@
                     <DataTemplate>
                         <Button 
                             Margin="2"
-                            Command="{Binding ElementName=FromViewModel, Path=DataContext.AddItemToSelected}"
+                            Command="{Binding ElementName=FromViewModel, Path=DataContext.AddItemToSelectedCommand}"
                             CommandParameter="{Binding}"
                             Height="155" Width="120"
                             BorderThickness="0"
@@ -33,26 +33,26 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                
+
                                 <Image 
                                     Grid.RowSpan="2" Grid.Column="0"
                                     Margin="2"
                                     Source="{Binding ImageSource}"
                                     Width="48" Height="48" 
                                     Stretch="Uniform"/>
-                                
+
                                 <TextBlock 
                                     Grid.Row="0" Grid.Column="1" 
                                     Text="{Binding Name}"
                                     Width="50"
                                     TextWrapping="Wrap"/>
                                 <!-- this is binding from ItemsSource -->
-                                
+
                                 <TextBlock 
                                     Grid.Row="1" Grid.Column="1" 
                                     Text="{Binding Price}"

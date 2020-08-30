@@ -1,34 +1,19 @@
-﻿using System.Text;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using Prism.Commands;
 using Restaurant.Views;
-using Restaurant.Services;
-using Restaurant.Interfaces;
-using Restaurant.Database.Models;
-using System.Security.Cryptography;
-using Restaurant.Services.Implementations;
+using Restaurant.Common.InstanceHolder;
+using Restaurant.Common.Helpers;
 
 namespace Restaurant.ViewModels
 {
-    public class LoginViewModel : BaseViewModel, IHashPassword
+    public class LoginViewModel : BaseViewModel
     {
         #region Declarations
 
         private DelegateCommand<object> loginCommand;
-        private readonly IUserService userService;
         private MenuViewModel menuViewModel;
         private string password;
-
-        #endregion
-
-        #region Constructors
-
-        public LoginViewModel(MainWindowViewModel mainWindowViewModel)
-        {
-            MainWindowViewModel = mainWindowViewModel;
-            userService = new UserService();
-        }
 
         #endregion
 
@@ -44,7 +29,6 @@ namespace Restaurant.ViewModels
                 return loginCommand;
             }
         }
-        public MainWindowViewModel MainWindowViewModel { get; set; }
 
         public MenuViewModel MenuViewModel
         {
@@ -52,7 +36,7 @@ namespace Restaurant.ViewModels
             {
                 if (menuViewModel == null)
                 {
-                    menuViewModel = new MenuViewModel(MainWindowViewModel, User);
+                    menuViewModel = new MenuViewModel(UserViewModel);
                     MenuView menuView = new MenuView();
 
                     menuViewModel.View = menuView;
@@ -71,11 +55,11 @@ namespace Restaurant.ViewModels
             get => password;
             set
             {
-                password = ComputePasswordHashing(value);
+                password = HashingPasswordHelper.ComputePasswordHashing(value);
             }
         }
 
-        public User User { get; set; }
+        public UserViewModel UserViewModel { get; set; }
 
         #endregion
 
@@ -83,32 +67,18 @@ namespace Restaurant.ViewModels
 
         private void Login(object obj)
         {
-            User = userService.GetAllUsers()
-                               .Where(u => u.Username == Username && u.Password == Password)
-                               .FirstOrDefault();
+            UserViewModel = CollectionInstance.Instance
+                                   .Users
+                                   .Where(u => u.User.Username == Username && u.User.Password == Password)
+                                   .FirstOrDefault();
 
-            if (User == null)
+            if (UserViewModel == null)
             {
                 MessageBox.Show("Грешно потребителско име и/или парола !");
                 return;
             }
 
-            MainWindowViewModel.BaseViewModel = MenuViewModel;
-        }
-
-        public string ComputePasswordHashing(string rowPassword)
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rowPassword));
-
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString());
-                }
-                return builder.ToString();
-            }
+            MainWindowViewModel.Instance.ChangeMainViewCommand.Execute(MenuViewModel);
         }
 
         #endregion

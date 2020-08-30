@@ -66,9 +66,9 @@
                 <Button 
                     Grid.Row="2" Grid.Column="1"
                     HorizontalAlignment="Center"
+                    Content="Добави "
                     Command="{Binding AddTableCommand}"
-                    Height="25" Width="70" 
-                    Content="Добави "/>
+                    Height="25" Width="70"/>
                 <Button 
                     Grid.Row="2" Grid.Column="1"
                     HorizontalAlignment="Right" 

@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Windows;
 using Prism.Commands;
 using Restaurant.Services;
+using Restaurant.Database.Models;
+using Restaurant.Services.Models.Role;
+using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Implementations;
 
 namespace Restaurant.ViewModels
@@ -18,10 +22,9 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public CreateRoleViewModel(MenuViewModel menuViewModel, CreateUserViewModel createUserViewModel)
+        public CreateRoleViewModel(BaseViewModel baseViewModel)
         {
-            MenuViewModel = menuViewModel;
-            CreateUserViewModel = createUserViewModel;
+            BaseViewModel = baseViewModel;
             roleService = new RoleService();
         }
 
@@ -61,9 +64,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public MenuViewModel MenuViewModel { get; set; }
-
-        public CreateUserViewModel CreateUserViewModel { get; set; }
+        public BaseViewModel BaseViewModel { get; set; }
 
         #endregion
 
@@ -71,8 +72,22 @@ namespace Restaurant.ViewModels
 
         private void CreateRole(object obj)
         {
-            roleService.CreateRole(Name);
-            MenuViewModel.BaseViewModel = CreateUserViewModel;
+            try
+            {
+                Role role = roleService.CreateRole(Name);
+
+                CollectionInstance.Instance.Roles.Add(new RoleDto()
+                {
+                    Id = role.Id,
+                    Name = role.Name
+                });
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Грешка с базата ! Опитайте отново !");
+            }
+
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(BaseViewModel);
         }
 
         private bool CanCreateRole(object arg)
@@ -82,7 +97,7 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
-            if (String.IsNullOrEmpty(Name))
+            if (string.IsNullOrEmpty(Name))
                 return false;
 
             return true;
@@ -90,7 +105,7 @@ namespace Restaurant.ViewModels
 
         private void Return(object obj)
         {
-            MenuViewModel.BaseViewModel = CreateUserViewModel;
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(BaseViewModel);
         }
 
         #endregion

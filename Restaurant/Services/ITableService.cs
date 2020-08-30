@@ -5,7 +5,11 @@ namespace Restaurant.Services
 {
     public interface ITableService
     {
-        void CreateTable(long number, int seats);
+        Table CreateTable(int number, int seats);
+
+        void UpdateTable(Table table);
+
+        void DeleteTable(Table table);
 
         IEnumerable<Table> GetAllTables();
     }

@@ -88,8 +88,8 @@ namespace Restaurant.Database.Data.Migrations
                     b.Property<bool>("IsTaken")
                         .HasColumnType("bit");
 
-                    b.Property<long>("Number")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
                     b.Property<int>("Seats")
                         .HasColumnType("int");
