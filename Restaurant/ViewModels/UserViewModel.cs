@@ -105,9 +105,18 @@ namespace Restaurant.ViewModels
 
         private void DeleteUser(object obj)
         {
-            if (MessageBox.Show("Сигурни ли сте, че искате да изтриете този потребител ?",
+            if (User.Id == MenuViewModel.Instance.UserViewModel.User.Id)
+            {
+                if (MessageBox.Show("Сигурни ли сте, че искате да изтриете своя профил ?",
                     "Потвърждение", MessageBoxButton.YesNo) == MessageBoxResult.No)
-                return;
+                    return;
+            }
+            else
+            {
+                if (MessageBox.Show("Сигурни ли сте, че искате да изтриете този потребител ?",
+                  "Потвърждение", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                    return;
+            }
 
             try
             {
@@ -118,6 +127,9 @@ namespace Restaurant.ViewModels
                 MessageBox.Show("Грешка с базата ! Опитайте отново !");
                 return;
             }
+
+            if (User.Id == MenuViewModel.Instance.UserViewModel.User.Id)
+                MenuViewModel.Instance.ExitCommand.Execute();
 
             CollectionInstance.Instance.Users.Remove(this);
         }

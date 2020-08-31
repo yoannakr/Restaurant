@@ -10,7 +10,7 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private DelegateCommand<object> changeMenuViewCommand;
-        private DelegateCommand<object> exitCommand;
+        private DelegateCommand exitCommand;
         private BaseViewModel baseViewModel;
         private AllTablesViewModel alltablesViewModel;
         private AdminPanelViewModel adminPanelViewModel;
@@ -44,12 +44,12 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public DelegateCommand<object> ExitCommand
+        public DelegateCommand ExitCommand
         {
             get
             {
                 if (exitCommand == null)
-                    exitCommand = new DelegateCommand<object>(Exit);
+                    exitCommand = new DelegateCommand(Exit);
 
                 return exitCommand;
             }
@@ -157,7 +157,7 @@ namespace Restaurant.ViewModels
                 BaseViewModel = baseViewModel;
         }
 
-        private void Exit(object obj)
+        private void Exit()
         {
             MainWindowViewModel.Instance.ChangeMainViewCommand.Execute(LoginViewModel);
         }

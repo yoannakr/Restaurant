@@ -102,7 +102,7 @@
                                 <TextBlock 
                                     Grid.Row="0" Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    Text="{Binding Item.Name}"
+                                    Text="{Binding ItemDto.Name}"
                                     TextWrapping="Wrap"
                                     TextAlignment="Center"/>
                                 <TextBox 
@@ -152,7 +152,7 @@
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     VerticalAlignment="Center"
-                                                    Text="{Binding Item.Name}"
+                                                    Text="{Binding ItemDto.Name}"
                                                     TextWrapping="Wrap"
                                                     TextAlignment="Center"/>
 

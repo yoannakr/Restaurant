@@ -1,5 +1,5 @@
 ﻿using Prism.Commands;
-using Restaurant.Database.Models;
+using Restaurant.Services.Models.Item;
 using System.Collections.ObjectModel;
 
 namespace Restaurant.ViewModels
@@ -69,7 +69,7 @@ namespace Restaurant.ViewModels
 
         public RowItemViewModel RowItemViewModelex { get; set; }
 
-        public Item Item { get; set; }
+        public ItemDto ItemDto { get; set; }
 
         public bool IsDown { get; set; }
 
@@ -178,7 +178,7 @@ namespace Restaurant.ViewModels
         public void ChangeTotal()
         {
             SelectedItemViewModel.Total -= Total;
-            Total = count * Item.Price;
+            Total = count * ItemDto.Price;
             SelectedItemViewModel.Total += Total;
         }
 

@@ -115,10 +115,10 @@ namespace Restaurant.ViewModels
 
             foreach (RowItemViewModel item in Items)
             {
-                stringBuilder.AppendLine($"{item.Item.Name}   {item.Count}x{item.Item.Price}      {item.Total}");
+                stringBuilder.AppendLine($"{item.ItemDto.Name}   {item.Count}x{item.ItemDto.Price}      {item.Total}");
                 foreach (RowItemViewModel extra in item.Extras)
                 {
-                    stringBuilder.AppendLine($" {extra.Item.Name}   {extra.Count}x{extra.Item.Price}      {extra.Total}");
+                    stringBuilder.AppendLine($" {extra.ItemDto.Name}   {extra.Count}x{extra.ItemDto.Price}      {extra.Total}");
                 }
             }
 

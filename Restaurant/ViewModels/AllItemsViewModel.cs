@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Prism.Commands;
-using Restaurant.Database.Models;
 using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Item;
 using Restaurant.Common.InstanceHolder;
@@ -69,7 +68,7 @@ namespace Restaurant.ViewModels
 
             if (selectedItem != null)
             {
-                if (selectedItem.Item.Id == itemDto.Id)
+                if (selectedItem.ItemDto.Id == itemDto.Id)
                 {
                     selectedItem.Count += 1;
 
@@ -79,7 +78,7 @@ namespace Restaurant.ViewModels
                 RowItemViewModel sameExtra = SelectedItemViewModel
                                              .SelectedItem
                                              .Extras
-                                             .Where(e => e.Item.Id == itemDto.Id)
+                                             .Where(e => e.ItemDto.Id == itemDto.Id)
                                              .FirstOrDefault();
 
                 if (sameExtra != null)
@@ -91,12 +90,7 @@ namespace Restaurant.ViewModels
 
                 RowItemViewModel extra = new RowItemViewModel(SelectedItemViewModel)
                 {
-                    Item = new Item()
-                    {
-                        Id = itemDto.Id,
-                        Name = itemDto.Name,
-                        Price = itemDto.Price
-                    },
+                    ItemDto = itemDto,
                     Count = 1,
                     Total = itemDto.Price,
                     RowItemViewModelex = SelectedItemViewModel.SelectedItem
@@ -110,12 +104,7 @@ namespace Restaurant.ViewModels
             {
                 RowItemViewModel item = new RowItemViewModel(SelectedItemViewModel)
                 {
-                    Item = new Item()
-                    {
-                        Id = itemDto.Id,
-                        Name = itemDto.Name,
-                        Price = itemDto.Price
-                    },
+                    ItemDto = itemDto,
                     Count = 1,
                     Total = itemDto.Price
                 };
