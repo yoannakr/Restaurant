@@ -52,6 +52,7 @@
                 Content="{Binding TableText}"
                 Command="{Binding TakeTableCommand}"
                 Height="30" Width="90"
+                Cursor="Hand"
                 BorderThickness="0.5"
                 FontSize="8pt"
                 Background="White"/>

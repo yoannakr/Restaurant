@@ -133,6 +133,7 @@
                     Content="Нова роля"
                     Command="{Binding NewRoleCommand}"
                     Height="23" Width="70"
+                    Cursor="Hand"
                     BorderBrush="Transparent"/>
 
                 <Button 
@@ -140,13 +141,15 @@
                     HorizontalAlignment="Center" 
                     Content="Добави "
                     Command="{Binding AddUserCommand}"
-                    Height="25" Width="70"/>
+                    Height="25" Width="70"
+                    Cursor="Hand"/>
                 <Button 
                     Grid.Row="5" Grid.Column="1"
                     HorizontalAlignment="Right" 
                     Content="Назад"
                     Command="{Binding ReturnCommand}"
-                    Height="25" Width="70"/>
+                    Height="25" Width="70"
+                    Cursor="Hand"/>
 
             </Grid>
         </Border>

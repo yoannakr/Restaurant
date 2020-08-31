@@ -68,13 +68,15 @@
                     HorizontalAlignment="Center"
                     Content="Добави "
                     Command="{Binding AddTableCommand}"
-                    Height="25" Width="70"/>
+                    Height="25" Width="70"
+                    Cursor="Hand"/>
                 <Button 
                     Grid.Row="2" Grid.Column="1"
                     HorizontalAlignment="Right" 
                     Content="Назад"
                     Command="{Binding ReturnCommand}"
-                    Height="25" Width="70"/>
+                    Height="25" Width="70"
+                    Cursor="Hand"/>
             </Grid>
         </Border>
     </Grid>

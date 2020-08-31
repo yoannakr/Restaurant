@@ -25,6 +25,7 @@
                             Command="{Binding ChangeMenuViewCommand}"
                             CommandParameter="{Binding SalesViewModel}"
                             Height="155" Width="115"
+                            Cursor="Hand"
                             BorderThickness="0"
                             Background="Azure">
                             <Grid>

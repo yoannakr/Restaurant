@@ -125,6 +125,7 @@
                                     Command="{Binding ElementName=FromViewModel, Path=DataContext.DeleteItemCommand}"
                                     CommandParameter="{Binding}"
                                     Width="20"
+                                    Cursor="Hand"
                                     HorizontalContentAlignment="Center"
                                     BorderBrush="Transparent"
                                     Background="Transparent"/>
@@ -178,6 +179,7 @@
                                                     Command="{Binding DeleteExtraCommand}"
                                                     CommandParameter="{Binding}"
                                                     Width="20"
+                                                    Cursor="Hand"
                                                     BorderBrush="Transparent"
                                                     Background="Transparent"/>
                                             </Grid>
@@ -234,6 +236,7 @@
                 Content="Прикл."
                 Command="{Binding FinishPaymentCommand}"
                 Height="30" Width="70"
+                Cursor="Hand"
                 FontSize="12pt"
                 Background="White"/>
         </Grid>

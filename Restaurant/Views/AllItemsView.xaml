@@ -26,6 +26,7 @@
                             Command="{Binding ElementName=FromViewModel, Path=DataContext.AddItemToSelectedCommand}"
                             CommandParameter="{Binding}"
                             Height="155" Width="120"
+                            Cursor="Hand"
                             BorderThickness="0"
                             Background="#f0edc7">
                             <Grid>

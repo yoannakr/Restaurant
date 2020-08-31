@@ -74,7 +74,8 @@
                     HorizontalAlignment="Left"
                     Content="Browse "
                     Command="{Binding BrowseCommand}"
-                    Height="25" Width="70"/>
+                    Height="25" Width="70"
+                    Cursor="Hand"/>
 
                 <Image
                     Grid.Row="3" Grid.Column="0"
@@ -88,13 +89,15 @@
                     HorizontalAlignment="Center" VerticalAlignment="Bottom"
                     Content="Добави "
                     Command="{Binding CreateItemCommand}"
-                    Height="25" Width="70"/>
+                    Height="25" Width="70"
+                    Cursor="Hand"/>
                 <Button
                     Grid.Row="3" Grid.Column="1"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     Content="Назад"
                     Command="{Binding ReturnCommand}"
-                    Height="25" Width="70"/>
+                    Height="25" Width="70"
+                    Cursor="Hand"/>
             </Grid>
         </Border>
     </Grid>
