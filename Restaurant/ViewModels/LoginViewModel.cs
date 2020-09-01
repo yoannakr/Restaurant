@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using System.Windows;
 using Prism.Commands;
-using Restaurant.Views;
-using Restaurant.Common.InstanceHolder;
 using Restaurant.Common.Helpers;
+using Restaurant.Common.InstanceHolder;
 
 namespace Restaurant.ViewModels
 {
@@ -36,12 +35,9 @@ namespace Restaurant.ViewModels
             {
                 if (menuViewModel == null)
                 {
-                    menuViewModel = new MenuViewModel(UserViewModel);
-                    MenuView menuView = new MenuView();
-
-                    menuViewModel.View = menuView;
-
-                    menuView.DataContext = menuViewModel;
+                    menuViewModel = MenuViewModel.Instance;
+                    MenuViewModel.UserViewModel = UserViewModel;
+                    MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.AllTablesViewModel);
                 }
 
                 return menuViewModel;

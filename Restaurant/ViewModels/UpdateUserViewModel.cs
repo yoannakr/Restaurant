@@ -130,6 +130,8 @@ namespace Restaurant.ViewModels
             {
                 if(value != null)
                     password = HashingPasswordHelper.ComputePasswordHashing(value);
+                else
+                    password = value;
 
                 UpdateUserCommand.RaiseCanExecuteChanged();
             }
@@ -140,8 +142,10 @@ namespace Restaurant.ViewModels
             get => confirmPassword;
             set
             {
-                if(value != null)
+                if (value != null)
                     confirmPassword = HashingPasswordHelper.ComputePasswordHashing(value);
+                else
+                    confirmPassword = value;
 
                 UpdateUserCommand.RaiseCanExecuteChanged();
             }

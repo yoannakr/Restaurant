@@ -93,7 +93,12 @@ namespace Restaurant.Database.Services.Implementations
 
         public void DeleteUser(User user)
         {
-            context.Users.Remove(user);
+            User entityUser = context.Users.FirstOrDefault(u => u.Id == user.Id);
+
+            if (entityUser == null)
+                throw new Exception();
+
+            context.Users.Remove(entityUser);
 
             context.SaveChanges();
         }

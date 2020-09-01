@@ -16,17 +16,16 @@ namespace Restaurant.ViewModels
         private AdminPanelViewModel adminPanelViewModel;
         private LoginViewModel loginViewModel;
         private UserViewModel userViewModel;
+        private static MenuViewModel instance = null;
         private bool adminBtnVisibility;
 
         #endregion
 
         #region Constructors
 
-        public MenuViewModel(UserViewModel userViewModel)
+        private MenuViewModel()
         {
-            Instance = this;
             BaseViewModel = AllTablesViewModel;
-            UserViewModel = userViewModel;
         }
 
         #endregion
@@ -55,7 +54,16 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public static MenuViewModel Instance { get; private set; }
+        public static MenuViewModel Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new MenuViewModel();
+
+                return instance;
+            }
+        }
 
         public BaseViewModel BaseViewModel
         {

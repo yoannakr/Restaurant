@@ -55,7 +55,12 @@ namespace Restaurant.Database.Services.Implementations
 
         public void DeleteTable(Table table)
         {
-            context.Tables.Remove(table);
+            Table entityTable = context.Tables.FirstOrDefault(t => t.Id == table.Id);
+
+            if (entityTable == null)
+                throw new Exception();
+
+            context.Tables.Remove(entityTable);
 
             context.SaveChanges();
         }

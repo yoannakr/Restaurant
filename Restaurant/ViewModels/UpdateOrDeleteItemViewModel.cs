@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using Prism.Commands;
 using System.Windows;
 using Restaurant.Views;
 using Restaurant.Services;
 using Restaurant.Database.Models;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Item;
 using Restaurant.Common.InstanceHolder;
@@ -90,6 +92,14 @@ namespace Restaurant.ViewModels
 
         private void UpdateItem(object obj)
         {
+            List<TableViewModel> takenTables = CollectionInstance.Instance.Tables.Where(t => t.Table.IsTaken).ToList();
+
+            if (takenTables.Count != 0)
+            {
+                MessageBox.Show("Освободете масите първо !");
+                return;
+            }
+
             ItemDto item = obj as ItemDto;
 
             if (item == null)
@@ -105,6 +115,14 @@ namespace Restaurant.ViewModels
 
         private void DeleteItem(object obj)
         {
+            List<TableViewModel> takenTables = CollectionInstance.Instance.Tables.Where(t => t.Table.IsTaken).ToList();
+
+            if (takenTables.Count != 0)
+            {
+                MessageBox.Show("Освободете масите първо !");
+                return;
+            }
+
             ItemDto item = obj as ItemDto;
 
             if (item == null)

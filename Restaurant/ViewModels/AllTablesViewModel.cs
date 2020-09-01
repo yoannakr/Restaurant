@@ -25,7 +25,5 @@ namespace Restaurant.ViewModels
         }
 
         #endregion
-
-
     }
 }
