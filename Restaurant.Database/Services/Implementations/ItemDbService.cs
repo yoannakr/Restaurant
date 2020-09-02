@@ -3,6 +3,7 @@ using System.Linq;
 using Restaurant.Database.Data;
 using Restaurant.Database.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Restaurant.Database.Services.Implementations
 {
@@ -30,7 +31,7 @@ namespace Restaurant.Database.Services.Implementations
             return context.Items;
         }
 
-        public Item CreateItem(string name, decimal price, byte[] imageContent)
+        public Item CreateItem(string name, decimal price, byte[] imageContent, List<Category> categories)
         {
             Image image = new Image()
             {
@@ -48,6 +49,19 @@ namespace Restaurant.Database.Services.Implementations
 
             context.Items.Add(item);
 
+            List<ItemCategory> itemCategories = categories.Select(c => new ItemCategory()
+            {
+                Item = item,
+                ItemId = item.Id,
+                Category = c,
+                CategoryId = c.Id
+            }).ToList();
+
+            foreach (ItemCategory itemCategory in itemCategories)
+            {
+                item.Categories.Add(itemCategory);
+            }
+
             context.SaveChanges();
 
             return item;
@@ -55,6 +69,7 @@ namespace Restaurant.Database.Services.Implementations
 
         public Item UpdateItem(Item item)
         {
+            //TODO: add categories to update
             Item entityItem = context.Items.Include(i => i.Image).FirstOrDefault(i => i.Id == item.Id);
 
             if (entityItem == null)

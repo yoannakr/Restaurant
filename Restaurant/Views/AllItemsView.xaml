@@ -7,11 +7,56 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="400">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
         <ScrollViewer 
+            Grid.Row="0"
+            Margin="5"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Disabled">
+            <WrapPanel>
+                <Button
+                    Margin="2"
+                    Content="Всички"
+                    Command="{Binding ElementName=FromViewModel, Path=DataContext.ChangeCategoryCommand}"
+                    CommandParameter="All"
+                    MinHeight="30" MinWidth="100"
+                    Cursor="Hand"
+                    BorderThickness="0"
+                    Background="#f0edc7"/>
+                <ItemsControl 
+                x:Name="FromViewModel"
+                ItemsSource="{Binding Categories}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button 
+                            Margin="2"
+                            Content="{Binding Name}"
+                            Command="{Binding ElementName=FromViewModel, Path=DataContext.ChangeCategoryCommand}"
+                            CommandParameter="{Binding}"
+                            MinHeight="30" MinWidth="100"
+                            Cursor="Hand"
+                            BorderThickness="0"
+                            Background="#f0edc7"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </WrapPanel>
+        </ScrollViewer>
+
+        <ScrollViewer 
+            Grid.Row="1"
             Margin="5"
             VerticalScrollBarVisibility="Auto">
             <ItemsControl 
-                x:Name="FromViewModel"
                 ItemsSource="{Binding Items}">
                 <!-- x:Name is like variable, this is binding from DataContext -->
                 <ItemsControl.ItemsPanel>

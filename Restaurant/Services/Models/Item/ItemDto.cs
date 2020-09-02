@@ -1,4 +1,6 @@
-﻿using System.Windows.Media;
+﻿using Restaurant.Services.Models.Category;
+using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace Restaurant.Services.Models.Item
 {
@@ -13,5 +15,7 @@ namespace Restaurant.Services.Models.Item
         public byte[] ImageContent { get; set; }
 
         public ImageSource ImageSource { get; set; }
+
+        public ICollection<CategoryDto> Categories { get; set; }
     }
 }

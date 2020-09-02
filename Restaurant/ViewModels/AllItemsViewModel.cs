@@ -3,6 +3,9 @@ using Prism.Commands;
 using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Item;
 using Restaurant.Common.InstanceHolder;
+using Restaurant.Services.Models.Category;
+using System;
+using System.Windows;
 
 namespace Restaurant.ViewModels
 {
@@ -11,7 +14,9 @@ namespace Restaurant.ViewModels
         #region Declarations
 
         private DelegateCommand<object> addItemToSelectedCommand;
+        private DelegateCommand<object> changeCategoryCommand;
         private ObservableCollection<ItemDto> items;
+        private ObservableCollection<CategoryDto> categories;
 
         #endregion
 
@@ -38,6 +43,17 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public DelegateCommand<object> ChangeCategoryCommand
+        {
+            get
+            {
+                if (changeCategoryCommand == null)
+                    changeCategoryCommand = new DelegateCommand<object>(ChangeCategory);
+
+                return changeCategoryCommand;
+            }
+        }
+
         public ObservableCollection<ItemDto> Items
         {
             get
@@ -46,6 +62,23 @@ namespace Restaurant.ViewModels
                     items = CollectionInstance.Instance.Items;
 
                 return items;
+            }
+            set
+            {
+                items = value;
+
+                OnPropertyChanged("Items");
+            }
+        }
+
+        public ObservableCollection<CategoryDto> Categories
+        {
+            get
+            {
+                if (categories == null)
+                    categories = CollectionInstance.Instance.Categories;
+
+                return categories;
             }
         }
 
@@ -63,6 +96,12 @@ namespace Restaurant.ViewModels
                 SalesViewModel.TakeTableCommand.Execute();
 
             ItemDto itemDto = obj as ItemDto;
+
+            if (itemDto == null)
+            {
+                MessageBox.Show("Грешка !");
+                return;
+            }
 
             RowItemViewModel selectedItem = SelectedItemViewModel.SelectedItem;
 
@@ -111,6 +150,26 @@ namespace Restaurant.ViewModels
 
                 SelectedItemViewModel.Items.Add(item);
             }
+        }
+
+        private void ChangeCategory(object obj)
+        {
+            if (obj is string All)
+            {
+                Items = CollectionInstance.Instance.Items;
+                return;
+            }
+
+            CategoryDto categoryDto = obj as CategoryDto;
+
+            if (categoryDto == null)
+            {
+                MessageBox.Show("Грешка !");
+                return;
+            }
+
+            Items = new ObservableCollection<ItemDto>(CollectionInstance.Instance.Items
+                                                     .Where(i => i.Categories.Any(c => c.Id == categoryDto.Id)).ToList());
         }
 
         #endregion

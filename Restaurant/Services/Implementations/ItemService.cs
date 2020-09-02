@@ -6,6 +6,7 @@ using Restaurant.Database.Services;
 using Restaurant.Services.Models.Item;
 using Restaurant.Common.InstanceHolder;
 using Restaurant.Database.Services.Implementations;
+using Restaurant.Services.Models.Category;
 
 namespace Restaurant.Services.Implementations
 {
@@ -36,13 +37,18 @@ namespace Restaurant.Services.Implementations
                 Name = i.Name,
                 Price = i.Price,
                 ImageContent = i.Image.Content,
-                ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(i.Image.Content)
+                ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(i.Image.Content),
+                Categories = i.Categories.Select(itc => new CategoryDto()
+                {
+                    Id = itc.CategoryId,
+                    Name = itc.Category.Name
+                }).ToList()
             }).ToList();
         }
 
-        public Item CreateItem(string name, decimal price, byte[] imageContent)
+        public Item CreateItem(string name, decimal price, byte[] imageContent, List<Category> categories)
         {
-            Item item = itemDb.CreateItem(name, price, imageContent);
+            Item item = itemDb.CreateItem(name, price, imageContent, categories);
 
             CollectionInstance.Instance.Items.Add(new ItemDto()
             {
@@ -50,7 +56,12 @@ namespace Restaurant.Services.Implementations
                 Name = item.Name,
                 Price = item.Price,
                 ImageContent = item.Image.Content,
-                ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(item.Image.Content)
+                ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(item.Image.Content),
+                Categories = item.Categories.Select(itc => new CategoryDto()
+                {
+                    Id = itc.CategoryId,
+                    Name = itc.Category.Name
+                }).ToList()
             });
 
             return item;

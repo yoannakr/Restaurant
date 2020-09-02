@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Role;
 using Restaurant.Services.Models.Item;
 using Restaurant.Services.Implementations;
+using Restaurant.Services.Models.Category;
 
 namespace Restaurant.Common.InstanceHolder
 {
@@ -19,11 +20,13 @@ namespace Restaurant.Common.InstanceHolder
         private readonly IRoleService roleService;
         private readonly ITableService tableService;
         private readonly IItemService itemService;
+        private readonly ICategoryService categoryService;
         private static CollectionInstance instance = null;
         private ObservableCollection<UserViewModel> users;
         private ObservableCollection<RoleDto> roles;
         private ObservableCollection<TableViewModel> tables;
         private ObservableCollection<ItemDto> items;
+        private ObservableCollection<CategoryDto> categories;
 
         #endregion
 
@@ -35,6 +38,7 @@ namespace Restaurant.Common.InstanceHolder
             roleService = new RoleService();
             tableService = new TableService();
             itemService = new ItemService();
+            categoryService = new CategoryService();
         }
 
         #endregion
@@ -141,6 +145,26 @@ namespace Restaurant.Common.InstanceHolder
                 }
 
                 return items;
+            }
+        }
+
+        public ObservableCollection<CategoryDto> Categories
+        {
+            get
+            {
+                if (categories == null)
+                {
+                    try
+                    {
+                        categories = new ObservableCollection<CategoryDto>(categoryService.GetAllCategories().ToList());
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                    }
+                }
+
+                return categories;
             }
         }
 
