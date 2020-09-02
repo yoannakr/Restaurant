@@ -15,6 +15,8 @@ namespace Restaurant.Database.Data
 
         public DbSet<Table> Tables { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             if (!builder.IsConfigured)

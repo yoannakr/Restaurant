@@ -18,5 +18,10 @@
 
             public const int UsernameMaxLength = 20;
         }
+
+        public static class Category
+        {
+            public const int NameMaxLength = 30;
+        }
     }
 }

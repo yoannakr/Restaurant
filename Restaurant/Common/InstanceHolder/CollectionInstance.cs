@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
 using Restaurant.Services;
 using Restaurant.ViewModels;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Role;
 using Restaurant.Services.Models.Item;
 using Restaurant.Services.Implementations;
-using System.Windows;
 
 namespace Restaurant.Common.InstanceHolder
 {

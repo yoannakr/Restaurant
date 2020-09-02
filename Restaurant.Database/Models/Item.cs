@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using static Restaurant.Database.Models.DataValidation.Item;
 
 namespace Restaurant.Database.Models
@@ -16,5 +17,7 @@ namespace Restaurant.Database.Models
         public int ImageId { get; set; }
 
         public Image Image { get; set; }
+
+        public ICollection<ItemCategory> Categories { get; set; } = new HashSet<ItemCategory>();
     }
 }
