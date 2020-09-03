@@ -3,6 +3,7 @@ using System.Text;
 using Prism.Commands;
 using System.Windows;
 using System.Collections.ObjectModel;
+using System;
 
 namespace Restaurant.ViewModels
 {
@@ -85,7 +86,7 @@ namespace Restaurant.ViewModels
                     value = 0;
                 }
 
-                payed = value;
+                payed = Math.Round(value, 2);
                 FinishPaymentCommand.RaiseCanExecuteChanged();
                 OnPropertyChanged("Payed");
             }

@@ -225,7 +225,7 @@
                 VerticalAlignment="Center"
                 Margin="20,0,0,0"
                 Text="{Binding Payed}"
-                MaxWidth="80" MaxHeight="30"
+                Width="90" MaxHeight="30"
                 MaxLength="10"
                 FontSize="12pt"/>
 
