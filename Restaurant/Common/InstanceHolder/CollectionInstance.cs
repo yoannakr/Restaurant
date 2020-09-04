@@ -9,6 +9,7 @@ using Restaurant.Services.Models.Role;
 using Restaurant.Services.Models.Item;
 using Restaurant.Services.Implementations;
 using Restaurant.Services.Models.Category;
+using Restaurant.Services.Models.Payment;
 
 namespace Restaurant.Common.InstanceHolder
 {
@@ -21,12 +22,14 @@ namespace Restaurant.Common.InstanceHolder
         private readonly ITableService tableService;
         private readonly IItemService itemService;
         private readonly ICategoryService categoryService;
+        private readonly IPaymentService paymentService;
         private static CollectionInstance instance = null;
         private ObservableCollection<UserViewModel> users;
         private ObservableCollection<RoleDto> roles;
         private ObservableCollection<TableViewModel> tables;
         private ObservableCollection<ItemDto> items;
         private ObservableCollection<CategoryDto> categories;
+        private ObservableCollection<PaymentDto> payments;
 
         #endregion
 
@@ -39,6 +42,7 @@ namespace Restaurant.Common.InstanceHolder
             tableService = new TableService();
             itemService = new ItemService();
             categoryService = new CategoryService();
+            paymentService = new PaymentService();
         }
 
         #endregion
@@ -89,7 +93,7 @@ namespace Restaurant.Common.InstanceHolder
                 {
                     try
                     {
-                        roles = new ObservableCollection<RoleDto>(roleService.GetAllRoles().ToList());
+                        roles = new ObservableCollection<RoleDto>(roleService.GetAllRoles());
                     }
                     catch (Exception)
                     {
@@ -136,7 +140,7 @@ namespace Restaurant.Common.InstanceHolder
                 {
                     try
                     {
-                        items = new ObservableCollection<ItemDto>(itemService.GetAllItems().ToList());
+                        items = new ObservableCollection<ItemDto>(itemService.GetAllItems());
                     }
                     catch (Exception)
                     {
@@ -156,7 +160,7 @@ namespace Restaurant.Common.InstanceHolder
                 {
                     try
                     {
-                        categories = new ObservableCollection<CategoryDto>(categoryService.GetAllCategories().ToList());
+                        categories = new ObservableCollection<CategoryDto>(categoryService.GetAllCategories());
                     }
                     catch (Exception)
                     {
@@ -165,6 +169,26 @@ namespace Restaurant.Common.InstanceHolder
                 }
 
                 return categories;
+            }
+        }
+
+        public ObservableCollection<PaymentDto> Payments
+        {
+            get
+            {
+                if (payments == null)
+                {
+                    try
+                    {
+                        payments = new ObservableCollection<PaymentDto>(paymentService.GetAllPayments());
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                    }
+                }
+
+                return payments;
             }
         }
 

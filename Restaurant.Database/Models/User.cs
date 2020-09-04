@@ -20,5 +20,7 @@ namespace Restaurant.Database.Models
         public string Password { get; set; }
 
         public ICollection<UserRole> Roles { get; set; } = new HashSet<UserRole>();
+
+        public ICollection<Payment> Payments { get; set; } = new HashSet<Payment>();
     }
 }

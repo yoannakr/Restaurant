@@ -4,6 +4,10 @@ using Prism.Commands;
 using System.Windows;
 using System.Collections.ObjectModel;
 using System;
+using Restaurant.Services;
+using Restaurant.Services.Implementations;
+using Restaurant.Services.Models.Payment;
+using Restaurant.Common.InstanceHolder;
 
 namespace Restaurant.ViewModels
 {
@@ -14,6 +18,7 @@ namespace Restaurant.ViewModels
         private DelegateCommand<object> deleteItemCommand;
         private DelegateCommand<object> finishPaymentCommand;
         private ObservableCollection<RowItemViewModel> items;
+        private readonly IPaymentService paymentService;
         private decimal total;
         private decimal payed;
 
@@ -23,6 +28,7 @@ namespace Restaurant.ViewModels
 
         public SelectedItemViewModel(TableViewModel tableViewModel)
         {
+            paymentService = new PaymentService();
             TableViewModel = tableViewModel;
         }
 
@@ -132,6 +138,18 @@ namespace Restaurant.ViewModels
             if (MessageBox.Show(stringBuilder.ToString(),
                     "Потвърждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
+                try
+                {
+                    PaymentDto paymentDto = paymentService.CreatePayment(Total, DateTime.Now, MenuViewModel.Instance.UserViewModel.User);
+
+                    CollectionInstance.Instance.Payments.Add(paymentDto);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                    return;
+                }
+
                 Items.Clear();
                 Total = 0;
                 Payed = 0;

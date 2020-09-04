@@ -7,14 +7,6 @@
              xmlns:v="clr-namespace:Restaurant.Views"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="800">
-    <UserControl.Resources>
-        <DataTemplate DataType="{x:Type vm:CreateUserViewModel}">
-            <v:CreateUserView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:CreateItemViewModel}">
-            <v:CreateItemView/>
-        </DataTemplate>
-    </UserControl.Resources>
     <Grid
         Background="AliceBlue">
         <Grid.RowDefinitions>
@@ -23,6 +15,7 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -122,5 +115,20 @@
                 TextWrapping="Wrap"
                 TextAlignment="Center"/>
         </Button>
+
+        <Button
+            Grid.Row="0" Grid.Column="3"
+            VerticalAlignment="Bottom"
+            Content="Справки"
+            Command="{Binding ChangeAdminViewCommand}"
+            CommandParameter="{Binding ReportViewModel}"
+            Height="50" Width="200"
+            Cursor="Hand"
+            FontSize="12pt"
+            FontWeight="Bold"
+            FontStyle="Oblique"
+            BorderBrush="Transparent"
+            Background="#ede9a8"
+            Foreground="#91918d"/>
     </Grid>
 </UserControl>

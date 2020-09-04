@@ -17,6 +17,8 @@ namespace Restaurant.Database.Data
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<Payment> Payments { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             if (!builder.IsConfigured)

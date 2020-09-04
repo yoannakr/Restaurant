@@ -14,6 +14,7 @@ namespace Restaurant.ViewModels
         private UpdateOrDeleteTableViewModel updateOrDeleteTableViewModel;
         private CreateItemViewModel createItemViewModel;
         private UpdateOrDeleteItemViewModel updateOrDeleteItemViewModel;
+        private ReportViewModel reportViewModel;
 
         #endregion
 
@@ -117,6 +118,20 @@ namespace Restaurant.ViewModels
                 updateOrDeleteItemView.DataContext = updateOrDeleteItemViewModel;
 
                 return updateOrDeleteItemViewModel;
+            }
+        }
+
+        public ReportViewModel ReportViewModel
+        {
+            get
+            {
+                reportViewModel = new ReportViewModel();
+                ReportView reportView = new ReportView();
+
+                reportViewModel.View = reportView;
+                reportView.DataContext = reportViewModel;
+
+                return reportViewModel;
             }
         }
 

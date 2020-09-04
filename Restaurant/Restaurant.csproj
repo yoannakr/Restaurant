@@ -206,14 +206,17 @@
     <Compile Include="Services\IItemService.cs" />
     <Compile Include="Services\Implementations\CategoryService.cs" />
     <Compile Include="Services\Implementations\ItemService.cs" />
+    <Compile Include="Services\Implementations\PaymentService.cs" />
     <Compile Include="Services\Implementations\RoleService.cs" />
     <Compile Include="Services\Implementations\TableService.cs" />
     <Compile Include="Services\Implementations\UserService.cs" />
+    <Compile Include="Services\IPaymentService.cs" />
     <Compile Include="Services\IRoleService.cs" />
     <Compile Include="Services\ITableService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\Models\Category\CategoryDto.cs" />
     <Compile Include="Services\Models\Item\ItemDto.cs" />
+    <Compile Include="Services\Models\Payment\PaymentDto.cs" />
     <Compile Include="Services\Models\Role\RoleDto.cs" />
     <Compile Include="ViewModels\AdminPanelViewModel.cs" />
     <Compile Include="ViewModels\AllItemsViewModel.cs" />
@@ -225,6 +228,7 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\ReportViewModel.cs" />
     <Compile Include="ViewModels\RowItemViewModel.cs" />
     <Compile Include="ViewModels\SalesViewModel.cs" />
     <Compile Include="ViewModels\SelectedItemViewModel.cs" />
@@ -260,6 +264,9 @@
     </Compile>
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportView.xaml.cs">
+      <DependentUpon>ReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SalesView.xaml.cs">
       <DependentUpon>SalesView.xaml</DependentUpon>
@@ -330,6 +337,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
