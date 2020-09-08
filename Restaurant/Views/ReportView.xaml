@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:Restaurant.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="Users" Source="{Binding Path=Users}" />
+    </UserControl.Resources>
     <Grid
         Margin="60,0,0,0">
         <Grid.RowDefinitions>
@@ -49,9 +52,18 @@
                 Foreground="#91918d"/>
             <ComboBox
                 Margin="20,0,0,0"
-                ItemsSource="{Binding Users}"
-                SelectedItem="{Binding SelectedUser}"
+                SelectedItem="{Binding SelectedChoice}"
                 Height="25" Width="200">
+                <ComboBox.ItemsSource>
+                    <CompositeCollection>
+                        <ComboBoxItem>
+                            <TextBlock
+                                Text="Всички"/>
+                        </ComboBoxItem>
+                        <CollectionContainer
+                            Collection="{Binding Source={StaticResource Users}}"/>
+                    </CompositeCollection>
+                </ComboBox.ItemsSource>
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock

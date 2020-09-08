@@ -15,7 +15,7 @@ namespace Restaurant.ViewModels
         private DateTime toDate;
         private ObservableCollection<UserViewModel> users;
         private ObservableCollection<PaymentDto> reports;
-        private UserViewModel selectedUser;
+        private object selectedChoice;
 
         #endregion
 
@@ -85,14 +85,17 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public UserViewModel SelectedUser
+        public object SelectedChoice
         {
-            get => selectedUser;
+            get => selectedChoice;
             set
             {
-                selectedUser = value;
+                selectedChoice = value;
 
-                Reports = GetReport(FromDate, ToDate, SelectedUser.User.Name);
+                if (value is UserViewModel userViewModel)
+                    Reports = GetReport(FromDate, ToDate, userViewModel.User.Name);
+                else
+                    Reports = GetReport(FromDate, ToDate);
             }
         }
 
