@@ -91,7 +91,14 @@ namespace Restaurant.ViewModels
             get
             {
                 if (categories == null)
+                {
                     categories = CollectionInstance.Instance.Categories;
+
+                    foreach (CategoryDto category in categories)
+                    {
+                        category.IsChecked = false;
+                    }
+                }
 
                 return categories;
             }

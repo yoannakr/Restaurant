@@ -8,6 +8,11 @@ using Restaurant.Common.Helpers;
 using Restaurant.Database.Models;
 using Restaurant.Services.Models.Item;
 using Restaurant.Services.Implementations;
+using System.Collections.ObjectModel;
+using Restaurant.Services.Models.Category;
+using Restaurant.Common.InstanceHolder;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Restaurant.ViewModels
 {
@@ -15,6 +20,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
+        private DelegateCommand<object> addCategoryCommand;
         private DelegateCommand<object> browseCommand;
         private DelegateCommand<object> updateItemCommand;
         private DelegateCommand<object> returnCommand;
@@ -23,6 +29,9 @@ namespace Restaurant.ViewModels
         private decimal price;
         private ImageSource imageSource;
         private byte[] imageContent;
+        private ObservableCollection<CategoryDto> categories;
+        private List<CategoryDto> itemCategories;
+
 
         #endregion
 
@@ -41,6 +50,17 @@ namespace Restaurant.ViewModels
         #endregion
 
         #region Properties
+
+        public DelegateCommand<object> AddCategoryCommand
+        {
+            get
+            {
+                if (addCategoryCommand == null)
+                    addCategoryCommand = new DelegateCommand<object>(AddCategory);
+
+                return addCategoryCommand;
+            }
+        }
 
         public DelegateCommand<object> UpdateItemCommand
         {
@@ -117,6 +137,41 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public ObservableCollection<CategoryDto> Categories
+        {
+            get
+            {
+                if (categories == null)
+                {
+                    categories = CollectionInstance.Instance.Categories;
+
+                    foreach (CategoryDto category in categories)
+                    {
+                        CategoryDto categoryDto = ItemCategories.Where(c=>c.Id == category.Id)
+                                                   .FirstOrDefault();
+                        if (categoryDto == null)
+                            category.IsChecked = false;
+                        else
+                            category.IsChecked = true;
+                    }
+
+                }
+
+                return categories;
+            }
+        }
+
+        public List<CategoryDto> ItemCategories
+        {
+            get
+            {
+                if (itemCategories == null)
+                    itemCategories = Item.Categories.ToList();
+
+                return itemCategories;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -135,8 +190,43 @@ namespace Restaurant.ViewModels
             ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(ImageContent);
         }
 
+        private void AddCategory(object obj)
+        {
+            CategoryDto category = obj as CategoryDto;
+
+            if (category.IsChecked)
+            {
+                CategoryDto insertCategory = ItemCategories.FirstOrDefault(c => c.Id == category.Id);
+
+                if (insertCategory == null)
+                    ItemCategories.Add(category);
+            }
+            else
+            {
+                CategoryDto removeCategory = ItemCategories.FirstOrDefault(c => c.Id == category.Id);
+                ItemCategories.Remove(removeCategory);
+            }
+
+            UpdateItemCommand.RaiseCanExecuteChanged();
+        }
+
         private void UpdateItem(object obj)
         {
+            List<Category> categories = ItemCategories
+                                    .Select(c => new Category()
+                                    {
+                                        Id = c.Id,
+                                        Name = c.Name
+                                    })
+                                    .ToList();
+
+            List<ItemCategory> itemCategories = categories.Select(c => new ItemCategory()
+            {
+                ItemId = Item.Id,
+                CategoryId = c.Id,
+                Category = c
+            }).ToList();
+
             try
             {
                 Item updatedItem = new Item()
@@ -150,7 +240,7 @@ namespace Restaurant.ViewModels
                     }
                 };
 
-                itemService.UpdateItem(updatedItem);
+                itemService.UpdateItem(updatedItem,itemCategories);
             }
             catch (Exception)
             {
@@ -162,6 +252,7 @@ namespace Restaurant.ViewModels
             Item.Price = Price;
             Item.ImageSource = ImageSource;
             Item.ImageContent = ImageContent;
+            Item.Categories = ItemCategories;
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }
@@ -173,7 +264,7 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
-            if (string.IsNullOrEmpty(Name) || Price <= 0 || ImageContent == null)
+            if (string.IsNullOrEmpty(Name) || Price <= 0 || ImageContent == null || ItemCategories.Count == 0)
                 return false;
 
             return true;
@@ -181,7 +272,7 @@ namespace Restaurant.ViewModels
 
         private void Return(object obj)
         {
-            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel.UpdateOrDeleteItemViewModel);
         }
 
         #endregion

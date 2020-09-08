@@ -1,1 +1,84 @@
 https://www.wpf-tutorial.com/datagrid-control/details-row/ - row details,interesting
+
+<DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding ListOfString}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+					
+					
+ <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+					
+<DataGrid
+            Grid.Row="1"
+            ItemsSource="{Binding Reports}"
+            Width="600" MinHeight="250"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            CanUserAddRows="False"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            AutoGenerateColumns="False"
+            VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Име"
+                    Binding="{Binding Name}"
+                    Width="200">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Тотал"
+                    Binding="{Binding Total}"
+                    Width="200">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Header="Дата"
+                    Binding="{Binding Date}"
+                    Width="200">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+		
+		
+		
+		
+<GridView.ColumnHeaderContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Ascending" C />
+                            <MenuItem Header="Descending" />
+                        </ContextMenu>
+                    </GridView.ColumnHeaderContextMenu>

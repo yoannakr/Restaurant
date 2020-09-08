@@ -67,10 +67,9 @@ namespace Restaurant.Database.Services.Implementations
             return item;
         }
 
-        public Item UpdateItem(Item item)
+        public Item UpdateItem(Item item, List<ItemCategory> itemCategories)
         {
-            //TODO: add categories to update
-            Item entityItem = context.Items.Include(i => i.Image).FirstOrDefault(i => i.Id == item.Id);
+            Item entityItem = context.Items.Include(i => i.Image).Include(i=>i.Categories).FirstOrDefault(i => i.Id == item.Id);
 
             if (entityItem == null)
                 throw new Exception();
@@ -80,6 +79,28 @@ namespace Restaurant.Database.Services.Implementations
 
             Image previousImage = entityItem.Image;
             entityItem.Image = item.Image;
+
+            List<ItemCategory> categoriesForRemoval = new List<ItemCategory>();
+            foreach (ItemCategory category in entityItem.Categories)
+            {
+                if (itemCategories.FirstOrDefault(itc => itc.CategoryId == category.CategoryId && itc.ItemId == category.ItemId) == null)
+                {
+                    categoriesForRemoval.Add(category);
+                }
+            }
+
+            foreach (ItemCategory category in categoriesForRemoval)
+            {
+                entityItem.Categories.Remove(category);
+            }
+
+            foreach (ItemCategory itemCategory in itemCategories)
+            {
+                if (entityItem.Categories.FirstOrDefault(c => c.CategoryId == itemCategory.CategoryId && c.ItemId == itemCategory.ItemId) == null)
+                {
+                    entityItem.Categories.Add(itemCategory);
+                }
+            }
 
             context.SaveChanges();
 

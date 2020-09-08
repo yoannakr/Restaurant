@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <WrapPanel
@@ -61,26 +61,35 @@
             </ComboBox>
         </WrapPanel>
 
-        <DataGrid
-            Grid.Row="1"
-            ItemsSource="{Binding Reports}"
-            Width="600" MinHeight="250"
-            CanUserDeleteRows="False"
-            IsReadOnly="True"
-            CanUserAddRows="False"
-            CanUserReorderColumns="False"
-            CanUserResizeColumns="False"
-            VerticalScrollBarVisibility="Auto">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock
-                                />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListView
+            Grid.Row="1" Grid.Column="0"
+            Margin="0,0,20,0"
+            ItemsSource="{Binding Reports}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn 
+                        Header="Име"
+                        Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Text="{Binding Name}"
+                                    TextAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn 
+                        Header="Тотал" 
+                        DisplayMemberBinding="{Binding Total}"
+                        Width="100"/>
+                    <GridViewColumn 
+                        Header="Дата" 
+                        DisplayMemberBinding="{Binding Date}"
+                        Width="150"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        
     </Grid>
 </UserControl>

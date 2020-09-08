@@ -124,7 +124,7 @@ namespace Restaurant.ViewModels
 
         private void Return(object obj)
         {
-            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel.UpdateOrDeleteTableViewModel);
         }
 
         #endregion

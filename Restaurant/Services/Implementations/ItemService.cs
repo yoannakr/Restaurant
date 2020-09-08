@@ -67,9 +67,9 @@ namespace Restaurant.Services.Implementations
             return item;
         }
 
-        public Item UpdateItem(Item item)
+        public Item UpdateItem(Item item, List<ItemCategory> itemCategories)
         {
-            return itemDb.UpdateItem(item);
+            return itemDb.UpdateItem(item,itemCategories);
         }
 
         public void DeleteItem(Item item)

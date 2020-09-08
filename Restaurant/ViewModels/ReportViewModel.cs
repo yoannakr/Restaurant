@@ -1,8 +1,9 @@
 ﻿using Restaurant.Common.InstanceHolder;
-using Restaurant.Services.Models;
 using Restaurant.Services.Models.Payment;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Restaurant.ViewModels
 {
@@ -14,6 +15,7 @@ namespace Restaurant.ViewModels
         private DateTime toDate;
         private ObservableCollection<UserViewModel> users;
         private ObservableCollection<PaymentDto> reports;
+        private UserViewModel selectedUser;
 
         #endregion
 
@@ -30,7 +32,10 @@ namespace Restaurant.ViewModels
             }
             set
             {
-                fromDate = value;
+                if(value <= ToDate) 
+                    fromDate = value;
+
+                Reports = GetReport(FromDate, ToDate);
             }
         }
 
@@ -45,7 +50,10 @@ namespace Restaurant.ViewModels
             }
             set
             {
-                toDate = value;
+                if(value >= fromDate)
+                    toDate = value;
+
+                Reports = GetReport(FromDate, ToDate);
             }
         }
 
@@ -65,10 +73,52 @@ namespace Restaurant.ViewModels
             get
             {
                 if (reports == null)
-                    reports = CollectionInstance.Instance.Payments;
+                    reports = GetReport(FromDate,ToDate);
 
                 return reports;
             }
+            private set
+            {
+                reports = value;
+
+                OnPropertyChanged("Reports");
+            }
+        }
+
+        public UserViewModel SelectedUser
+        {
+            get => selectedUser;
+            set
+            {
+                selectedUser = value;
+
+                Reports = GetReport(FromDate, ToDate, SelectedUser.User.Name);
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public ObservableCollection<PaymentDto> GetReport(DateTime fromDate, DateTime toDate, string userName)
+        {
+            List<PaymentDto> reports = CollectionInstance.Instance
+                                                         .Payments
+                                                         .Where(r => r.Date.Date >= fromDate.Date && r.Date.Date <= toDate.Date)
+                                                         .Where(r => r.Name == userName)
+                                                         .ToList();
+
+            return new ObservableCollection<PaymentDto>(reports);
+        }
+
+        public ObservableCollection<PaymentDto> GetReport(DateTime fromDate, DateTime toDate)
+        {
+            List<PaymentDto> reports = CollectionInstance.Instance
+                                                         .Payments
+                                                         .Where(r => r.Date.Date >= fromDate.Date && r.Date.Date <= toDate.Date)
+                                                         .ToList();
+
+            return new ObservableCollection<PaymentDto>(reports);
         }
 
         #endregion

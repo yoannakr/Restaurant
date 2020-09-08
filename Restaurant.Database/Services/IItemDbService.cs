@@ -8,7 +8,7 @@ namespace Restaurant.Database.Services
     {
         Item CreateItem(string name, decimal price, byte[] imageContent, List<Category> categories);
 
-        Item UpdateItem(Item item);
+        Item UpdateItem(Item item, List<ItemCategory> itemCategories);
 
         void DeleteItem(Item item);
 
