@@ -1,4 +1,5 @@
-﻿using Restaurant.Common.InstanceHolder;
+﻿using Prism.Commands;
+using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Models.Payment;
 using Restaurant.Services.Models.User;
 using System;
@@ -12,6 +13,7 @@ namespace Restaurant.ViewModels
     {
         #region Declarations
 
+        private DelegateCommand<object> returnCommand;
         private DateTime fromDate;
         private DateTime toDate;
         private ObservableCollection<UserDto> users;
@@ -21,6 +23,17 @@ namespace Restaurant.ViewModels
         #endregion
 
         #region Properties
+
+        public DelegateCommand<object> ReturnCommand
+        {
+            get
+            {
+                if (returnCommand == null)
+                    returnCommand = new DelegateCommand<object>(Return);
+
+                return returnCommand;
+            }
+        }
 
         public DateTime FromDate
         {
@@ -103,6 +116,11 @@ namespace Restaurant.ViewModels
         #endregion
 
         #region Methods
+
+        private void Return(object obj)
+        {
+            MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
+        }
 
         public ObservableCollection<PaymentDto> GetReport(DateTime fromDate, DateTime toDate, string userName)
         {

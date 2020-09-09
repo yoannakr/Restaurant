@@ -71,6 +71,13 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+            <Button
+                HorizontalAlignment="Right" 
+                Margin="20,0,0,0"
+                Content="Назад"
+                Command="{Binding ReturnCommand}"
+                Height="25" Width="70"
+                Cursor="Hand"/>
         </WrapPanel>
 
         <ListView
