@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Restaurant.Database.Models;
 using Restaurant.Database.Services;
 using Restaurant.Database.Services.Implementations;
+using Restaurant.Services.Models.Table;
 
 namespace Restaurant.Services.Implementations
 {
@@ -24,11 +26,18 @@ namespace Restaurant.Services.Implementations
 
         #region Methods
 
-        public Table CreateTable(int number, int seats)
+        public TableDto CreateTable(int number, int seats)
         {
             Table table = tableDb.CreateTable(number, seats);
 
-            return table;
+            TableDto tableDto = new TableDto()
+            {
+                Id = table.Id,
+                Number = table.Number,
+                Seats = table.Seats
+            };
+
+            return tableDto;
         }
 
         public void UpdateTable(Table table)
@@ -41,9 +50,14 @@ namespace Restaurant.Services.Implementations
             tableDb.DeleteTable(table);
         }
 
-        public IEnumerable<Table> GetAllTables()
+        public IEnumerable<TableDto> GetAllTables()
         {
-            return tableDb.GetAllTables();
+            return tableDb.GetAllTables().Select(t=>new TableDto()
+            {
+                Id = t.Id,
+                Number = t.Number,
+                Seats = t.Seats
+            });
         }
 
         #endregion

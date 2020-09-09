@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Role;
 using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Implementations;
+using Restaurant.Services.Models.User;
 
 namespace Restaurant.ViewModels
 {
@@ -176,12 +177,12 @@ namespace Restaurant.ViewModels
 
         private void CreateUser(object obj)
         {
-            UserViewModel user = CollectionInstance.Instance
+            UserDto userDto = CollectionInstance.Instance
                                         .Users
-                                        .Where(u => u.User.Username == Username)
+                                        .Where(u => u.Username == Username)
                                         .FirstOrDefault();
 
-            if (user != null)
+            if (userDto != null)
             {
                 MessageBox.Show("Потребителското име вече е заето.");
                 return;
@@ -196,16 +197,14 @@ namespace Restaurant.ViewModels
 
             try
             {
-                User createdUser = userService.CreateUser(Name, Username, Password, roles);
+                UserDto createdUser = userService.CreateUser(Name, Username, Password, roles);
 
-                CollectionInstance.Instance.Users.Add(new UserViewModel()
-                {
-                    User = createdUser
-                });
+                CollectionInstance.Instance.Users.Add(createdUser);
             }
             catch (System.Exception)
             {
                 MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                return;
             }
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);

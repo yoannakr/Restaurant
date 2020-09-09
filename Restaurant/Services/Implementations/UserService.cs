@@ -3,6 +3,8 @@ using Restaurant.Database.Models;
 using System.Collections.Generic;
 using Restaurant.Database.Services;
 using Restaurant.Database.Services.Implementations;
+using Restaurant.Services.Models.User;
+using System.Linq;
 
 namespace Restaurant.Services.Implementations
 {
@@ -25,13 +27,23 @@ namespace Restaurant.Services.Implementations
 
         #region Methods
 
-        public User CreateUser(string name, string username, string password, List<Role> roles)
+        public UserDto CreateUser(string name, string username, string password, List<Role> roles)
         {
             string securityPassword = HashingPasswordHelper.ComputePasswordHashing(password);
 
             User user = userDb.CreateUser(name, username, securityPassword, roles);
 
-            return user;
+            UserDto userDto = new UserDto()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Username = user.Username,
+                Password = user.Password,
+                Roles = user.Roles,
+                Payments = user.Payments
+            };
+
+            return userDto;
         }
 
         public void UpdateUser(User user, List<UserRole> userRoles)
@@ -44,9 +56,17 @@ namespace Restaurant.Services.Implementations
             userDb.DeleteUser(user);
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable<UserDto> GetAllUsers()
         {
-            return userDb.GetAllUsers();
+            return userDb.GetAllUsers().Select(u=>new UserDto()
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Username = u.Username,
+                Password = u.Password,
+                Roles = u.Roles,
+                Payments = u.Payments
+            });
         }
 
         #endregion

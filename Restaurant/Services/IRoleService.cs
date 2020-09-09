@@ -6,7 +6,7 @@ namespace Restaurant.Services
 {
     public interface IRoleService
     {
-        Role CreateRole(string name);
+        RoleDto CreateRole(string name);
 
         IEnumerable<RoleDto> GetAllRoles();
     }

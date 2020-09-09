@@ -45,7 +45,7 @@
             <TextBlock
                 VerticalAlignment="Center"
                 Margin="10,0,0,0"
-                Text="{Binding TableViewModel.Table.Number}"
+                Text="{Binding TableViewModel.TableDto.Number}"
                 FontSize="12pt"/>
             <Button
                 Margin="10,0,0,0"

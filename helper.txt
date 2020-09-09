@@ -78,7 +78,7 @@ https://www.wpf-tutorial.com/datagrid-control/details-row/ - row details,interes
 		
 <GridView.ColumnHeaderContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Ascending" C />
+                            <MenuItem Header="Ascending" Command />
                             <MenuItem Header="Descending" />
                         </ContextMenu>
                     </GridView.ColumnHeaderContextMenu>

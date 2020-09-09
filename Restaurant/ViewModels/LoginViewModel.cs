@@ -3,6 +3,7 @@ using System.Windows;
 using Prism.Commands;
 using Restaurant.Common.Helpers;
 using Restaurant.Common.InstanceHolder;
+using Restaurant.Services.Models.User;
 
 namespace Restaurant.ViewModels
 {
@@ -36,7 +37,7 @@ namespace Restaurant.ViewModels
                 if (menuViewModel == null)
                 {
                     menuViewModel = MenuViewModel.Instance;
-                    MenuViewModel.UserViewModel = UserViewModel;
+                    MenuViewModel.UserDto = UserDto;
                     MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.AllTablesViewModel);
                 }
 
@@ -55,7 +56,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public UserViewModel UserViewModel { get; set; }
+        public UserDto UserDto { get; set; }
 
         #endregion
 
@@ -63,12 +64,12 @@ namespace Restaurant.ViewModels
 
         private void Login(object obj)
         {
-            UserViewModel = CollectionInstance.Instance
+            UserDto = CollectionInstance.Instance
                                    .Users
-                                   .Where(u => u.User.Username == Username && u.User.Password == Password)
+                                   .Where(u => u.Username == Username && u.Password == Password)
                                    .FirstOrDefault();
 
-            if (UserViewModel == null)
+            if (UserDto == null)
             {
                 MessageBox.Show("Грешно потребителско име и/или парола !");
                 return;

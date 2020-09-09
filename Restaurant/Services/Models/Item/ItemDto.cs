@@ -6,6 +6,8 @@ namespace Restaurant.Services.Models.Item
 {
     public class ItemDto
     {
+        #region Properties
+
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -17,5 +19,7 @@ namespace Restaurant.Services.Models.Item
         public ImageSource ImageSource { get; set; }
 
         public ICollection<CategoryDto> Categories { get; set; }
+
+        #endregion
     }
 }

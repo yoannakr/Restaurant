@@ -92,7 +92,7 @@ namespace Restaurant.ViewModels
 
         private void UpdateItem(object obj)
         {
-            List<TableViewModel> takenTables = CollectionInstance.Instance.Tables.Where(t => t.Table.IsTaken).ToList();
+            List<TableViewModel> takenTables = CollectionInstance.Instance.Tables.Where(t => t.TableDto.IsTaken).ToList();
 
             if (takenTables.Count != 0)
             {
@@ -100,9 +100,7 @@ namespace Restaurant.ViewModels
                 return;
             }
 
-            ItemDto item = obj as ItemDto;
-
-            if (item == null)
+            if (!(obj is ItemDto item))
             {
                 MessageBox.Show("Грешка в системата !");
                 return;
@@ -115,7 +113,7 @@ namespace Restaurant.ViewModels
 
         private void DeleteItem(object obj)
         {
-            List<TableViewModel> takenTables = CollectionInstance.Instance.Tables.Where(t => t.Table.IsTaken).ToList();
+            List<TableViewModel> takenTables = CollectionInstance.Instance.Tables.Where(t => t.TableDto.IsTaken).ToList();
 
             if (takenTables.Count != 0)
             {

@@ -11,6 +11,7 @@
             Margin="5"
             VerticalScrollBarVisibility="Auto">
             <ItemsControl
+                x:Name="FromViewModel"
                 Margin="10"
                 ItemsSource="{Binding Users}">
                 <ItemsControl.ItemsPanel>
@@ -56,7 +57,7 @@
                                 <TextBlock 
                                     Grid.Row="1" Grid.Column="1"
                                     Margin="5,0,0,0"
-                                    Text="{Binding User.Name}"
+                                    Text="{Binding Name}"
                                     MinWidth="50"
                                     TextWrapping="Wrap"/>
 
@@ -69,7 +70,7 @@
                                 <TextBlock 
                                     Grid.Row="2" Grid.Column="1" 
                                     Margin="5,5,0,0"
-                                    Text="{Binding User.Username}"
+                                    Text="{Binding Username}"
                                     MinWidth="50"
                                     TextWrapping="Wrap"/>
 
@@ -81,7 +82,7 @@
                                     MinWidth="60"/>
                                 <TextBlock 
                                     Grid.Row="3" Grid.Column="1" 
-                                    Text="{Binding Roles}"
+                                    Text="{Binding StringRoles}"
                                     Margin="5,5,5,0"
                                     MinWidth="50" MaxWidth="100"
                                     TextWrapping="Wrap"/>
@@ -92,14 +93,16 @@
                                     Orientation="Horizontal">
                                     <Button
                                         Content="Промени"
-                                        Command="{Binding UpdateUserCommand}"
+                                        Command="{Binding ElementName=FromViewModel, Path=DataContext.UpdateUserCommand}"
+                                        CommandParameter="{Binding}"
                                         Height="20" Width="100"
                                         Cursor="Hand"
                                         Background="Wheat"/>
                                     <Button
                                         Margin="10,0,0,0"
                                         Content="Изтрий"
-                                        Command="{Binding DeleteUserCommand}"
+                                        Command="{Binding ElementName=FromViewModel, Path=DataContext.DeleteUserCommand}"
+                                        CommandParameter="{Binding}"
                                         Height="20" Width="100"
                                         Cursor="Hand"
                                         Background="#fc766d"/>

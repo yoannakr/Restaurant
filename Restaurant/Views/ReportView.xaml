@@ -67,7 +67,7 @@
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock
-                            Text="{Binding User.Name}"/>
+                            Text="{Binding Name}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
@@ -79,12 +79,22 @@
             ItemsSource="{Binding Reports}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment"
-                Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
-                <GridView>
+                <GridView
+                    AllowsColumnReorder="False">
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="TextElement.Foreground" Value="Black"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
                     <GridViewColumn 
                         Header="Име"
                         Width="100">

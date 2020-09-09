@@ -6,6 +6,7 @@ using Restaurant.Services;
 using Restaurant.Database.Models;
 using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Implementations;
+using Restaurant.Services.Models.Table;
 
 namespace Restaurant.ViewModels
 {
@@ -71,11 +72,11 @@ namespace Restaurant.ViewModels
 
         private void CreateTable(object obj)
         {
-            Table table = tableService.GetAllTables()
+            TableDto tableDto = tableService.GetAllTables()
                                       .Where(t => t.Number == Number)
                                       .FirstOrDefault();
 
-            if (table != null)
+            if (tableDto != null)
             {
                 MessageBox.Show("Маса с този номер вече съществува.");
                 return;
@@ -83,16 +84,18 @@ namespace Restaurant.ViewModels
 
             try
             {
-                Table createdTable = tableService.CreateTable(Number, Seats);
+                TableDto createdTable = tableService.CreateTable(Number, Seats);
+
 
                 CollectionInstance.Instance.Tables.Add(new TableViewModel()
                 {
-                    Table = createdTable
+                    TableDto = createdTable
                 });
             }
             catch (Exception)
             {
                 MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                return;
             }
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);

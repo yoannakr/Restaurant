@@ -55,7 +55,7 @@
                                 <TextBlock 
                                     Grid.Row="1" Grid.Column="1"
                                     Margin="5,0,0,0"
-                                    Text="{Binding Table.Number}"
+                                    Text="{Binding TableDto.Number}"
                                     Width="50"
                                     TextWrapping="Wrap"/>
 
@@ -68,7 +68,7 @@
                                 <TextBlock 
                                     Grid.Row="2" Grid.Column="1" 
                                     Margin="5,5,0,0"
-                                    Text="{Binding Table.Seats}"
+                                    Text="{Binding TableDto.Seats}"
                                     Width="50"
                                     TextWrapping="Wrap"/>
 

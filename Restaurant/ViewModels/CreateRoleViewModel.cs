@@ -74,17 +74,14 @@ namespace Restaurant.ViewModels
         {
             try
             {
-                Role role = roleService.CreateRole(Name);
+                RoleDto role = roleService.CreateRole(Name);
 
-                CollectionInstance.Instance.Roles.Add(new RoleDto()
-                {
-                    Id = role.Id,
-                    Name = role.Name
-                });
+                CollectionInstance.Instance.Roles.Add(role);
             }
             catch (Exception)
             {
                 MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                return;
             }
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(BaseViewModel);

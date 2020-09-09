@@ -46,10 +46,11 @@ namespace Restaurant.Services.Implementations
             }).ToList();
         }
 
-        public Item CreateItem(string name, decimal price, byte[] imageContent, List<Category> categories)
+        public ItemDto CreateItem(string name, decimal price, byte[] imageContent, List<Category> categories)
         {
             Item item = itemDb.CreateItem(name, price, imageContent, categories);
 
+            //TODO:Delete
             CollectionInstance.Instance.Items.Add(new ItemDto()
             {
                 Id = item.Id,
@@ -64,12 +65,24 @@ namespace Restaurant.Services.Implementations
                 }).ToList()
             });
 
-            return item;
+            return new ItemDto()
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Price = item.Price,
+                ImageContent = item.Image.Content,
+                ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(item.Image.Content),
+                Categories = item.Categories.Select(itc => new CategoryDto()
+                {
+                    Id = itc.CategoryId,
+                    Name = itc.Category.Name
+                }).ToList()
+            };
         }
 
-        public Item UpdateItem(Item item, List<ItemCategory> itemCategories)
+        public void UpdateItem(Item item, List<ItemCategory> itemCategories)
         {
-            return itemDb.UpdateItem(item,itemCategories);
+            itemDb.UpdateItem(item,itemCategories);
         }
 
         public void DeleteItem(Item item)

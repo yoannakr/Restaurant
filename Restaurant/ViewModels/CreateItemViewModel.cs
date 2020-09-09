@@ -201,6 +201,7 @@ namespace Restaurant.ViewModels
             catch (Exception)
             {
                 MessageBox.Show("Грешка с базата ! Опитайте отново !");
+                return;
             }
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);

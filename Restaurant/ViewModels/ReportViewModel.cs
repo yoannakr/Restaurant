@@ -1,5 +1,6 @@
 ﻿using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Models.Payment;
+using Restaurant.Services.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +14,7 @@ namespace Restaurant.ViewModels
 
         private DateTime fromDate;
         private DateTime toDate;
-        private ObservableCollection<UserViewModel> users;
+        private ObservableCollection<UserDto> users;
         private ObservableCollection<PaymentDto> reports;
         private object selectedChoice;
 
@@ -57,7 +58,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public ObservableCollection<UserViewModel> Users
+        public ObservableCollection<UserDto> Users
         {
             get
             {
@@ -92,8 +93,8 @@ namespace Restaurant.ViewModels
             {
                 selectedChoice = value;
 
-                if (value is UserViewModel userViewModel)
-                    Reports = GetReport(FromDate, ToDate, userViewModel.User.Name);
+                if (value is UserDto userDto)
+                    Reports = GetReport(FromDate, ToDate, userDto.Name);
                 else
                     Reports = GetReport(FromDate, ToDate);
             }

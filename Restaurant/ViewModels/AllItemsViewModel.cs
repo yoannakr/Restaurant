@@ -92,7 +92,7 @@ namespace Restaurant.ViewModels
 
         private void AddItemToSelected(object obj)
         {
-            if (!SalesViewModel.TableViewModel.Table.IsTaken)
+            if (!SalesViewModel.TableViewModel.TableDto.IsTaken)
                 SalesViewModel.TakeTableCommand.Execute();
 
             ItemDto itemDto = obj as ItemDto;

@@ -6,9 +6,9 @@ namespace Restaurant.Services
 {
     public interface IItemService
     {
-        Item CreateItem(string name, decimal price, byte[] imageContent, List<Category> categories);
+        ItemDto CreateItem(string name, decimal price, byte[] imageContent, List<Category> categories);
 
-        Item UpdateItem(Item item, List<ItemCategory> itemCategories);
+        void UpdateItem(Item item, List<ItemCategory> itemCategories);
 
         void DeleteItem(Item item);
 

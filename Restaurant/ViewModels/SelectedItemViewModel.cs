@@ -140,7 +140,7 @@ namespace Restaurant.ViewModels
             {
                 try
                 {
-                    PaymentDto paymentDto = paymentService.CreatePayment(Total, DateTime.Now, MenuViewModel.Instance.UserViewModel.User);
+                    PaymentDto paymentDto = paymentService.CreatePayment(Total, DateTime.Now, MenuViewModel.Instance.UserDto);
 
                     CollectionInstance.Instance.Payments.Add(paymentDto);
                 }
@@ -153,7 +153,7 @@ namespace Restaurant.ViewModels
                 Items.Clear();
                 Total = 0;
                 Payed = 0;
-                TableViewModel.Table.IsTaken = false;
+                TableViewModel.TableDto.IsTaken = false;
 
                 MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AllTablesViewModel);
             }

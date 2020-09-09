@@ -2,6 +2,7 @@
 using Restaurant.Database.Services;
 using Restaurant.Database.Services.Implementations;
 using Restaurant.Services.Models.Payment;
+using Restaurant.Services.Models.User;
 using System;
 using System.Linq;
 
@@ -26,14 +27,14 @@ namespace Restaurant.Services.Implementations
 
         #region Methods
 
-        public PaymentDto CreatePayment(decimal total, DateTime date, User user)
+        public PaymentDto CreatePayment(decimal total, DateTime date, UserDto userDto)
         {
-            Payment payment = paymentDb.CreatePayment(total, date, user.Id);
+            Payment payment = paymentDb.CreatePayment(total, date, userDto.Id);
 
             return new PaymentDto()
             {
                 Id = payment.Id,
-                Name = user.Name,
+                Name = userDto.Name,
                 Total = payment.Total,
                 Date = payment.Date
             };

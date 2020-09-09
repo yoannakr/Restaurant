@@ -81,7 +81,7 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                if (TableViewModel.Table.IsTaken)
+                if (TableViewModel.TableDto.IsTaken)
                     tableText = freeTableText;
                 else
                     tableText = takeTableText;
@@ -101,15 +101,15 @@ namespace Restaurant.ViewModels
 
         private void TakeTable()
         {
-            if (SelectedItemViewModel.Items.Count != 0 && TableViewModel.Table.IsTaken)
+            if (SelectedItemViewModel.Items.Count != 0 && TableViewModel.TableDto.IsTaken)
             {
                 MessageBox.Show("Не може да освободите масата ! Има избрани продукти.");
                 return;
             }
 
-            TableViewModel.Table.IsTaken = !TableViewModel.Table.IsTaken;
+            TableViewModel.TableDto.IsTaken = !TableViewModel.TableDto.IsTaken;
 
-            if (TableViewModel.Table.IsTaken)
+            if (TableViewModel.TableDto.IsTaken)
                 TableText = freeTableText;
             else
                 TableText = takeTableText;

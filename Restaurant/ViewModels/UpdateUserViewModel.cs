@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Role;
 using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Implementations;
+using Restaurant.Services.Models.User;
 
 namespace Restaurant.ViewModels
 {
@@ -35,10 +36,10 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public UpdateUserViewModel(User user)
+        public UpdateUserViewModel(UserDto userDto)
         {
             userService = new UserService();
-            User = user;
+            UserDto = userDto;
         }
 
         #endregion
@@ -89,14 +90,14 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public User User { get; set; }
+        public UserDto UserDto { get; set; }
 
         public string Name
         {
             get
             {
                 if (name == null)
-                    name = User.Name;
+                    name = UserDto.Name;
 
                 return name;
             }
@@ -112,7 +113,7 @@ namespace Restaurant.ViewModels
             get
             {
                 if (username == null)
-                    username = User.Username;
+                    username = UserDto.Username;
 
                 return username;
             }
@@ -180,7 +181,7 @@ namespace Restaurant.ViewModels
             {
                 if (userRoles == null)
                 {
-                    List<RoleDto> checkedRoles = User.Roles.Select(ur => ur.Role)
+                    List<RoleDto> checkedRoles = UserDto.Roles.Select(ur => ur.Role)
                                                            .Select(r => new RoleDto()
                                                            {
                                                                Id = r.Id,
@@ -215,12 +216,12 @@ namespace Restaurant.ViewModels
 
         private void UpdateUser(object obj)
         {
-            UserViewModel user = CollectionInstance.Instance
+            UserDto userDto = CollectionInstance.Instance
                                         .Users
-                                        .Where(u => u.User.Username == Username)
+                                        .Where(u => u.Username == Username)
                                         .FirstOrDefault();
 
-            if (user != null && User.Id != user.User.Id)
+            if (userDto != null && UserDto.Id != userDto.Id)
             {
                 MessageBox.Show("Потребителското име вече е заето.");
                 return;
@@ -236,7 +237,7 @@ namespace Restaurant.ViewModels
 
             List<UserRole> userRoles = roles.Select(r => new UserRole()
             {
-                UserId = User.Id,
+                UserId = UserDto.Id,
                 RoleId = r.Id,
                 Role = r
             }).ToList();
@@ -245,7 +246,7 @@ namespace Restaurant.ViewModels
             {
                 User updatedUser = new User()
                 {
-                    Id = User.Id,
+                    Id = UserDto.Id,
                     Name = Name,
                     Username = Username,
                     Password = Password
@@ -259,10 +260,10 @@ namespace Restaurant.ViewModels
                 return;
             }
 
-            User.Name = Name;
-            User.Username = Username;
-            User.Password = Password;
-            User.Roles = userRoles;
+            UserDto.Name = Name;
+            UserDto.Username = Username;
+            UserDto.Password = Password;
+            UserDto.Roles = userRoles;
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }

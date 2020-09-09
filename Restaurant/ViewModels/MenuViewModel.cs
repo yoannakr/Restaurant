@@ -2,6 +2,7 @@
 using Prism.Commands;
 using Restaurant.Views;
 using Restaurant.Database.Models;
+using Restaurant.Services.Models.User;
 
 namespace Restaurant.ViewModels
 {
@@ -15,7 +16,7 @@ namespace Restaurant.ViewModels
         private AllTablesViewModel alltablesViewModel;
         private AdminPanelViewModel adminPanelViewModel;
         private LoginViewModel loginViewModel;
-        private UserViewModel userViewModel;
+        private UserDto userDto;
         private static MenuViewModel instance = null;
         private bool adminBtnVisibility;
 
@@ -126,17 +127,16 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public UserViewModel UserViewModel
+        public UserDto UserDto
         {
-            get => userViewModel;
+            get => userDto;
             set
             {
-                userViewModel = value;
+                userDto = value;
 
-                UserRole role = userViewModel.User
-                                             .Roles
-                                             .Where(u => u.Role.Name == "Админ")
-                                             .FirstOrDefault();
+                UserRole role = userDto.Roles
+                                       .Where(u => u.Role.Name == "Админ")
+                                       .FirstOrDefault();
 
                 if (role != null)
                     AdminBtnVisibility = true;

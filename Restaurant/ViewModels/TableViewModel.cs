@@ -6,6 +6,7 @@ using Restaurant.Services;
 using Restaurant.Database.Models;
 using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Implementations;
+using Restaurant.Services.Models.Table;
 
 namespace Restaurant.ViewModels
 {
@@ -58,7 +59,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public Table Table { get; set; }
+        public TableDto TableDto { get; set; }
 
         public string ImageSource => imageSource;
 
@@ -66,7 +67,7 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                if (!Table.IsTaken)
+                if (!TableDto.IsTaken)
                     isTakenSource = GreenButtonPath;
                 else
                     isTakenSource = RedButtonPath;
@@ -104,7 +105,7 @@ namespace Restaurant.ViewModels
             {
                 if (updateTableViewModel == null)
                 {
-                    updateTableViewModel = new UpdateTableViewModel(Table);
+                    updateTableViewModel = new UpdateTableViewModel(TableDto);
                     UpdateTableView updateTableView = new UpdateTableView();
 
                     updateTableViewModel.View = updateTableView;
@@ -128,7 +129,7 @@ namespace Restaurant.ViewModels
 
         private void DeleteTable(object obj)
         {
-            if (Table.IsTaken)
+            if (TableDto.IsTaken)
             {
                 MessageBox.Show("Не може да изтриете масата ! Първо я освободете.");
                 return;
@@ -140,7 +141,12 @@ namespace Restaurant.ViewModels
 
             try
             {
-                tableService.DeleteTable(Table);
+                Table deletedTable = new Table()
+                {
+                    Id = TableDto.Id
+                };
+
+                tableService.DeleteTable(deletedTable);
             }
             catch (Exception)
             {

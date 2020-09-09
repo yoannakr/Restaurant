@@ -5,6 +5,7 @@ using System.Windows;
 using Restaurant.Services;
 using Restaurant.Database.Models;
 using Restaurant.Services.Implementations;
+using Restaurant.Services.Models.Table;
 
 namespace Restaurant.ViewModels
 {
@@ -21,11 +22,11 @@ namespace Restaurant.ViewModels
 
         #region Constructors
 
-        public UpdateTableViewModel(Table table)
+        public UpdateTableViewModel(TableDto tableDto)
         {
-            Table = table;
-            Number = table.Number;
-            Seats = table.Seats;
+            TableDto = tableDto;
+            Number = tableDto.Number;
+            Seats = tableDto.Seats;
             tableService = new TableService();
         }
 
@@ -55,7 +56,7 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public Table Table { get; set; }
+        public TableDto TableDto { get; set; }
 
         public int Number { get; set; }
 
@@ -75,11 +76,11 @@ namespace Restaurant.ViewModels
 
         private void UpdateTable(object obj)
         {
-            Table table = tableService.GetAllTables()
+            TableDto tableDto = tableService.GetAllTables()
                                       .Where(t => t.Number == Number)
                                       .FirstOrDefault();
 
-            if (table != null && Table.Id != table.Id)
+            if (tableDto != null && TableDto.Id != tableDto.Id)
             {
                 MessageBox.Show("Маса с този номер вече съществува.");
                 return;
@@ -89,10 +90,10 @@ namespace Restaurant.ViewModels
             {
                 Table updatedTable = new Table()
                 {
-                    Id = Table.Id,
+                    Id = TableDto.Id,
                     Number = Number,
                     Seats = Seats,
-                    IsTaken = Table.IsTaken
+                    IsTaken = TableDto.IsTaken
                 };
 
                 tableService.UpdateTable(updatedTable);
@@ -103,8 +104,8 @@ namespace Restaurant.ViewModels
                 return;
             }
 
-            Table.Number = Number;
-            Table.Seats = Seats;
+            TableDto.Number = Number;
+            TableDto.Seats = Seats;
 
             MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AdminPanelViewModel);
         }

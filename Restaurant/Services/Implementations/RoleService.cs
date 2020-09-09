@@ -27,11 +27,17 @@ namespace Restaurant.Services.Implementations
         #region Methods
 
 
-        public Role CreateRole(string name)
+        public RoleDto CreateRole(string name)
         {
             Role role = roleDb.CreateRole(name);
 
-            return role;
+            RoleDto roleDto = new RoleDto()
+            {
+                Id = role.Id,
+                Name = role.Name
+            };
+
+            return roleDto;
         }
 
 

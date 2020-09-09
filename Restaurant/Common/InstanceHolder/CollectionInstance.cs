@@ -10,6 +10,7 @@ using Restaurant.Services.Models.Item;
 using Restaurant.Services.Implementations;
 using Restaurant.Services.Models.Category;
 using Restaurant.Services.Models.Payment;
+using Restaurant.Services.Models.User;
 
 namespace Restaurant.Common.InstanceHolder
 {
@@ -24,7 +25,7 @@ namespace Restaurant.Common.InstanceHolder
         private readonly ICategoryService categoryService;
         private readonly IPaymentService paymentService;
         private static CollectionInstance instance = null;
-        private ObservableCollection<UserViewModel> users;
+        private ObservableCollection<UserDto> users;
         private ObservableCollection<RoleDto> roles;
         private ObservableCollection<TableViewModel> tables;
         private ObservableCollection<ItemDto> items;
@@ -60,7 +61,7 @@ namespace Restaurant.Common.InstanceHolder
             }
         }
 
-        public ObservableCollection<UserViewModel> Users
+        public ObservableCollection<UserDto> Users
         {
             get
             {
@@ -68,12 +69,7 @@ namespace Restaurant.Common.InstanceHolder
                 {
                     try
                     {
-                        users = new ObservableCollection<UserViewModel>(userService
-                                                                    .GetAllUsers()
-                                                                    .Select(u => new UserViewModel()
-                                                                    {
-                                                                        User = u
-                                                                    }).ToList());
+                        users = new ObservableCollection<UserDto>(userService.GetAllUsers());
                     }
                     catch (Exception)
                     {
@@ -117,7 +113,7 @@ namespace Restaurant.Common.InstanceHolder
                                                     .GetAllTables()
                                                     .Select(t => new TableViewModel()
                                                     {
-                                                        Table = t
+                                                        TableDto = t
                                                     }).ToList();
 
                         tables = new ObservableCollection<TableViewModel>(tableList);
