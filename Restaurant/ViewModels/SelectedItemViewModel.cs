@@ -21,6 +21,7 @@ namespace Restaurant.ViewModels
         private readonly IPaymentService paymentService;
         private decimal total;
         private decimal payed;
+        private decimal discount;
 
         #endregion
 
@@ -76,7 +77,7 @@ namespace Restaurant.ViewModels
             get => total;
             set
             {
-                total = value;
+                total = Math.Round(value, 2);
                 FinishPaymentCommand.RaiseCanExecuteChanged();
                 OnPropertyChanged("Total");
             }
@@ -95,6 +96,22 @@ namespace Restaurant.ViewModels
                 payed = Math.Round(value, 2);
                 FinishPaymentCommand.RaiseCanExecuteChanged();
                 OnPropertyChanged("Payed");
+            }
+        }
+
+        public decimal Discount
+        {
+            get => discount;
+            set
+            {
+                if (value < 0)
+                {
+                    value = 0;
+                }
+
+                discount = Math.Round(value, 2);
+                ApplyDiscount(discount);
+                OnPropertyChanged("Discount");
             }
         }
 
@@ -122,10 +139,10 @@ namespace Restaurant.ViewModels
 
             foreach (RowItemViewModel item in Items)
             {
-                stringBuilder.AppendLine($"{item.ItemDto.Name}   {item.Count}x{item.ItemDto.Price}      {item.Total}");
+                stringBuilder.AppendLine($"{item.ItemDto.Name}   {item.Count}x{item.Price}      {item.Total}");
                 foreach (RowItemViewModel extra in item.Extras)
                 {
-                    stringBuilder.AppendLine($" {extra.ItemDto.Name}   {extra.Count}x{extra.ItemDto.Price}      {extra.Total}");
+                    stringBuilder.AppendLine($" {extra.ItemDto.Name}   {extra.Count}x{extra.Price}      {extra.Total}");
                 }
             }
 
@@ -153,6 +170,7 @@ namespace Restaurant.ViewModels
                 Items.Clear();
                 Total = 0;
                 Payed = 0;
+                Discount = 0;
                 TableViewModel.TableDto.IsTaken = false;
 
                 MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AllTablesViewModel);
@@ -172,6 +190,34 @@ namespace Restaurant.ViewModels
             return true;
         }
 
+        public void ApplyDiscount(decimal discount)
+        {
+            foreach (RowItemViewModel item in Items)
+            {
+                decimal currentDiscount = item.ItemDto.Discount + discount;
+
+                if (currentDiscount > 100)
+                    currentDiscount = 100;
+
+                if (currentDiscount != item.ItemDto.Discount)
+                    item.Price = item.ItemDto.BasePrice * (100 - currentDiscount) / 100;
+                else
+                    item.Price = item.ItemDto.Price;
+
+                foreach (RowItemViewModel extra in item.Extras)
+                {
+                    currentDiscount = extra.ItemDto.Discount + discount;
+
+                    if (currentDiscount > 100)
+                        currentDiscount = 100;
+
+                    if (currentDiscount != extra.ItemDto.Discount)
+                        extra.Price = extra.ItemDto.BasePrice * (100 - currentDiscount) / 100;
+                    else
+                        extra.Price = extra.ItemDto.Price;
+                }
+            }
+        }
         #endregion
     }
 }

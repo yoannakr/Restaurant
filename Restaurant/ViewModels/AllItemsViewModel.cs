@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using Restaurant.Services.Models.Item;
 using Restaurant.Common.InstanceHolder;
 using Restaurant.Services.Models.Category;
-using System;
 using System.Windows;
 
 namespace Restaurant.ViewModels
@@ -130,6 +129,7 @@ namespace Restaurant.ViewModels
                 RowItemViewModel extra = new RowItemViewModel(SelectedItemViewModel)
                 {
                     ItemDto = itemDto,
+                    Price = itemDto.Price,
                     Count = 1,
                     Total = itemDto.Price,
                     RowItemViewModelex = SelectedItemViewModel.SelectedItem
@@ -144,8 +144,9 @@ namespace Restaurant.ViewModels
                 RowItemViewModel item = new RowItemViewModel(SelectedItemViewModel)
                 {
                     ItemDto = itemDto,
+                    Price = itemDto.Price * ((100 - SelectedItemViewModel.Discount) / 100),
                     Count = 1,
-                    Total = itemDto.Price
+                    Total = itemDto.Price * ((100 - SelectedItemViewModel.Discount) / 100)
                 };
 
                 SelectedItemViewModel.Items.Add(item);

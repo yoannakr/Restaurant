@@ -130,10 +130,10 @@ namespace Restaurant.ViewModels
 
         public decimal BasePrice
         {
-            get => basePrice;
+            get => Math.Round(basePrice, 2);
             set
             {
-                basePrice = value;
+                basePrice = Math.Round(value, 2);
 
                 Price = basePrice * ((100 - Discount) / 100);
                 CreateItemCommand.RaiseCanExecuteChanged();
@@ -142,20 +142,20 @@ namespace Restaurant.ViewModels
 
         public decimal Price
         {
-            get => price;
+            get => Math.Round(price, 2);
             set
             {
-                price = basePrice * ((100-Discount)/100);
+                price = Math.Round(basePrice * ((100 - Discount) / 100), 2);
                 OnPropertyChanged("Price");
             }
         }
 
         public decimal Discount
         {
-            get => discount;
+            get => Math.Round(discount, 2);
             set
             {
-                discount = value;
+                discount = Math.Round(value, 2);
                 Price = basePrice * ((100 - Discount) / 100);
                 CreateItemCommand.RaiseCanExecuteChanged();
             }

@@ -1,4 +1,5 @@
 ﻿using Restaurant.Services.Models.Category;
+using System;
 using System.Collections.Generic;
 using System.Windows.Media;
 
@@ -29,11 +30,11 @@ namespace Restaurant.Services.Models.Item
                 if (price == 0)
                     price = BasePrice * ((100 - Discount) / 100);
 
-                return price;
+                return Math.Round(price, 2);
             }
             set
             {
-                price = value;
+                price = Math.Round(value, 2);
             }
         }
 

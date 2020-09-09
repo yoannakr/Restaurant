@@ -24,7 +24,7 @@
             Grid.Row="1" Grid.Column="1"
             VerticalAlignment="Center"
             CornerRadius="25" 
-            MinWidth="450" MinHeight="300"
+            MinWidth="450" MinHeight="350"
             Background="White">
             <Grid
                 Margin="30">
