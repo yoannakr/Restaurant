@@ -35,7 +35,8 @@ namespace Restaurant.Services.Implementations
             {
                 Id = i.Id,
                 Name = i.Name,
-                Price = i.Price,
+                BasePrice = i.Price,
+                Discount = i.Discount,
                 ImageContent = i.Image.Content,
                 ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(i.Image.Content),
                 Categories = i.Categories.Select(itc => new CategoryDto()
@@ -46,30 +47,16 @@ namespace Restaurant.Services.Implementations
             }).ToList();
         }
 
-        public ItemDto CreateItem(string name, decimal price, byte[] imageContent, List<Category> categories)
+        public ItemDto CreateItem(string name, decimal price,decimal discount, byte[] imageContent, List<Category> categories)
         {
-            Item item = itemDb.CreateItem(name, price, imageContent, categories);
-
-            //TODO:Delete
-            CollectionInstance.Instance.Items.Add(new ItemDto()
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Price = item.Price,
-                ImageContent = item.Image.Content,
-                ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(item.Image.Content),
-                Categories = item.Categories.Select(itc => new CategoryDto()
-                {
-                    Id = itc.CategoryId,
-                    Name = itc.Category.Name
-                }).ToList()
-            });
+            Item item = itemDb.CreateItem(name, price, discount, imageContent, categories);
 
             return new ItemDto()
             {
                 Id = item.Id,
                 Name = item.Name,
-                Price = item.Price,
+                BasePrice = item.Price,
+                Discount = item.Discount,
                 ImageContent = item.Image.Content,
                 ImageSource = ImageHelper.ConvertFromByteArrayToImageSource(item.Image.Content),
                 Categories = item.Categories.Select(itc => new CategoryDto()

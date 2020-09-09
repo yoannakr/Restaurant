@@ -27,6 +27,7 @@ namespace Restaurant.ViewModels
         private readonly IItemService itemService;
         private string name;
         private decimal price;
+        private decimal discount;
         private ImageSource imageSource;
         private byte[] imageContent;
         private ObservableCollection<CategoryDto> categories;
@@ -42,7 +43,8 @@ namespace Restaurant.ViewModels
             itemService = new ItemService();
             Item = item;
             Name = item.Name;
-            Price = item.Price;
+            Price = item.BasePrice;
+            Discount = item.Discount;
             ImageSource = item.ImageSource;
             ImageContent = item.ImageContent;
         }
@@ -113,6 +115,16 @@ namespace Restaurant.ViewModels
             set
             {
                 price = value;
+                UpdateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public decimal Discount
+        {
+            get => discount;
+            set
+            {
+                discount = value;
                 UpdateItemCommand.RaiseCanExecuteChanged();
             }
         }
@@ -234,6 +246,7 @@ namespace Restaurant.ViewModels
                     Id = Item.Id,
                     Name = Name,
                     Price = Price,
+                    Discount = Discount,
                     Image = new Image()
                     {
                         Content = ImageContent
@@ -249,7 +262,9 @@ namespace Restaurant.ViewModels
             }
 
             Item.Name = Name;
-            Item.Price = Price;
+            Item.Discount = Discount;
+            Item.BasePrice = Price;
+            Item.Price = Item.BasePrice * ((100 - Discount) / 100);
             Item.ImageSource = ImageSource;
             Item.ImageContent = ImageContent;
             Item.Categories = ItemCategories;
@@ -264,7 +279,7 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
-            if (string.IsNullOrEmpty(Name) || Price <= 0 || ImageContent == null || ItemCategories.Count == 0)
+            if (string.IsNullOrEmpty(Name) || Price <= 0 || Discount < 0 || ImageContent == null || ItemCategories.Count == 0)
                 return false;
 
             return true;
