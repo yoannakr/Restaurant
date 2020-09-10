@@ -49,7 +49,7 @@
                                     Grid.Row="0" Grid.Column="1" 
                                     HorizontalAlignment="Left" VerticalAlignment="Bottom"
                                     Text="{Binding Name}"
-                                    Width="50"
+                                    Width="80"
                                     TextWrapping="Wrap"/>
 
                                 <TextBlock 
