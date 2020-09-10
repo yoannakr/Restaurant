@@ -24,12 +24,13 @@ namespace Restaurant.Database.Services.Implementations
 
         #region Methods
 
-        public Payment CreatePayment(decimal total, DateTime date, int userId)
+        public Payment CreatePayment(decimal total, DateTime date,string desciption, int userId)
         {
             Payment payment = new Payment()
             {
                 Total = total,
                 Date = date,
+                Description = desciption,
                 UserId = userId
             };
 

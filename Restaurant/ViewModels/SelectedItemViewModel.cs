@@ -22,6 +22,7 @@ namespace Restaurant.ViewModels
         private decimal total;
         private decimal payed;
         private decimal discount;
+        private string description;
 
         #endregion
 
@@ -115,6 +116,18 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public string Description
+        {
+            get => description;
+            set
+            {
+                description = value;
+                FinishPaymentCommand.RaiseCanExecuteChanged();
+                OnPropertyChanged("Description");
+            }
+        }
+
+
         public TableViewModel TableViewModel { get; set; }
 
         #endregion
@@ -157,7 +170,7 @@ namespace Restaurant.ViewModels
             {
                 try
                 {
-                    PaymentDto paymentDto = paymentService.CreatePayment(Total, DateTime.Now, MenuViewModel.Instance.UserDto);
+                    PaymentDto paymentDto = paymentService.CreatePayment(Total, DateTime.Now, Description, MenuViewModel.Instance.UserDto);
 
                     CollectionInstance.Instance.Payments.Add(paymentDto);
                 }
@@ -171,6 +184,7 @@ namespace Restaurant.ViewModels
                 Total = 0;
                 Payed = 0;
                 Discount = 0;
+                Description = null;
                 TableViewModel.TableDto.IsTaken = false;
 
                 MenuViewModel.Instance.ChangeMenuViewCommand.Execute(MenuViewModel.Instance.AllTablesViewModel);
@@ -184,6 +198,9 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
+            if (Payed <= 0 && Total == 0 && Payed <= Total && !string.IsNullOrEmpty(Description))
+                return true;
+
             if (Payed <= 0 || Total == 0 || Payed < Total)
                 return false;
 

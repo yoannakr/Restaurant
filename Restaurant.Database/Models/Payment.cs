@@ -13,7 +13,6 @@ namespace Restaurant.Database.Models
 
         public DateTime Date { get; set; }
 
-        //TODO: Finish this
         [MaxLength(DesriptionMaxLength)]
         public string Description { get; set; }
 

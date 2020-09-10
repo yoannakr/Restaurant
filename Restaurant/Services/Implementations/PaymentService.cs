@@ -27,16 +27,17 @@ namespace Restaurant.Services.Implementations
 
         #region Methods
 
-        public PaymentDto CreatePayment(decimal total, DateTime date, UserDto userDto)
+        public PaymentDto CreatePayment(decimal total, DateTime date, string description, UserDto userDto)
         {
-            Payment payment = paymentDb.CreatePayment(total, date, userDto.Id);
+            Payment payment = paymentDb.CreatePayment(total, date,description, userDto.Id);
 
             return new PaymentDto()
             {
                 Id = payment.Id,
                 Name = userDto.Name,
                 Total = payment.Total,
-                Date = payment.Date
+                Date = payment.Date,
+                Description = payment.Description
             };
         }
 
@@ -47,7 +48,8 @@ namespace Restaurant.Services.Implementations
                 Id = p.Id,
                 Name = p.User.Name,
                 Total = p.Total,
-                Date = p.Date
+                Date = p.Date,
+                Description = p.Description
             });
         }
 

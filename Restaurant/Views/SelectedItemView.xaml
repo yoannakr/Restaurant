@@ -271,8 +271,9 @@
                 FontSize="12pt"/>
             <TextBox
                 HorizontalAlignment="Left"
-                Text="{Binding Note}"
+                Text="{Binding Description}"
                 Width="150" MaxHeight="30"
+                MaxLength="30"
                 FontSize="12pt"/>
         </StackPanel>
     </Grid>

@@ -14,6 +14,8 @@ namespace Restaurant.Services.Models.Payment
 
         public DateTime Date { get; set; }
 
+        public string Description { get; set; }
+
         #endregion
     }
 }
