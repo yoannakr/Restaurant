@@ -23,5 +23,10 @@
         {
             public const int NameMaxLength = 30;
         }
+
+        public static class Payment
+        {
+            public const int DesriptionMaxLength = 30;
+        }
     }
 }

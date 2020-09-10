@@ -14,6 +14,8 @@ namespace Restaurant.Database.Models
 
         public decimal Price { get; set; }
 
+        public decimal Discount { get; set; }
+
         public int ImageId { get; set; }
 
         public Image Image { get; set; }

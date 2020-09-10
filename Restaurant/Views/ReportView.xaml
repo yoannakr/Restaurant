@@ -71,6 +71,13 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+            <Button
+                HorizontalAlignment="Right" 
+                Margin="20,0,0,0"
+                Content="Назад"
+                Command="{Binding ReturnCommand}"
+                Height="25" Width="70"
+                Cursor="Hand"/>
         </WrapPanel>
 
         <ListView
@@ -124,6 +131,17 @@
                             <DataTemplate>
                                 <TextBlock
                                     Text="{Binding Date, StringFormat=dd.MM.yyyy H:mm:ss}"
+                                    TextAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn 
+                        Header="Бележка"
+                        Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Text="{Binding Description}"
                                     TextAlignment="Center"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Restaurant.Services.Models.Item;
+using System;
 using System.Collections.ObjectModel;
 
 namespace Restaurant.ViewModels
@@ -17,6 +18,7 @@ namespace Restaurant.ViewModels
         private bool listVisibility;
         private string iconSource;
         private decimal total;
+        private decimal price;
         private int count;
 
         #endregion
@@ -89,12 +91,24 @@ namespace Restaurant.ViewModels
             }
         }
 
+        public decimal Price
+        {
+            get => price;
+            set
+            {
+                price = Math.Round(value, 2);
+
+                ChangeTotal();
+                OnPropertyChanged("Price");
+            }
+        }
+
         public decimal Total
         {
             get => total;
             set
             {
-                total = value;
+                total = Math.Round(value, 2);
                 OnPropertyChanged("Total");
             }
         }
@@ -178,7 +192,7 @@ namespace Restaurant.ViewModels
         public void ChangeTotal()
         {
             SelectedItemViewModel.Total -= Total;
-            Total = count * ItemDto.Price;
+            Total = Count * Price;
             SelectedItemViewModel.Total += Total;
         }
 

@@ -8,7 +8,7 @@ namespace Restaurant.Services
 {
     public interface IPaymentService
     {
-        PaymentDto CreatePayment(decimal total, DateTime date, UserDto userDto);
+        PaymentDto CreatePayment(decimal total, DateTime date,string description, UserDto userDto);
 
         IQueryable<PaymentDto> GetAllPayments();
     }

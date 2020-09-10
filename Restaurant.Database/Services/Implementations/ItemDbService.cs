@@ -31,7 +31,7 @@ namespace Restaurant.Database.Services.Implementations
             return context.Items;
         }
 
-        public Item CreateItem(string name, decimal price, byte[] imageContent, List<Category> categories)
+        public Item CreateItem(string name, decimal price,decimal discount, byte[] imageContent, List<Category> categories)
         {
             Image image = new Image()
             {
@@ -44,6 +44,7 @@ namespace Restaurant.Database.Services.Implementations
             {
                 Name = name,
                 Price = price,
+                Discount = discount,
                 Image = image
             };
 
@@ -76,6 +77,7 @@ namespace Restaurant.Database.Services.Implementations
 
             entityItem.Name = item.Name;
             entityItem.Price = item.Price;
+            entityItem.Discount = item.Discount;
 
             Image previousImage = entityItem.Image;
             entityItem.Image = item.Image;

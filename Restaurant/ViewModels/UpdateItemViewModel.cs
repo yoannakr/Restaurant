@@ -26,7 +26,9 @@ namespace Restaurant.ViewModels
         private DelegateCommand<object> returnCommand;
         private readonly IItemService itemService;
         private string name;
+        private decimal basePrice;
         private decimal price;
+        private decimal discount;
         private ImageSource imageSource;
         private byte[] imageContent;
         private ObservableCollection<CategoryDto> categories;
@@ -42,7 +44,8 @@ namespace Restaurant.ViewModels
             itemService = new ItemService();
             Item = item;
             Name = item.Name;
-            Price = item.Price;
+            BasePrice = item.BasePrice;
+            Discount = item.Discount;
             ImageSource = item.ImageSource;
             ImageContent = item.ImageContent;
         }
@@ -107,12 +110,35 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public decimal Price
+        public decimal BasePrice
         {
-            get => price;
+            get => Math.Round(basePrice, 2);
             set
             {
-                price = value;
+                basePrice = Math.Round(value, 2);
+
+                Price = basePrice * ((100 - Discount) / 100);
+                UpdateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public decimal Price
+        {
+            get => Math.Round(price, 2);
+            set
+            {
+                price = Math.Round(basePrice * ((100 - Discount) / 100), 2);
+                OnPropertyChanged("Price");
+            }
+        }
+
+        public decimal Discount
+        {
+            get => discount;
+            set
+            {
+                discount = value;
+                Price = basePrice * ((100 - Discount) / 100);
                 UpdateItemCommand.RaiseCanExecuteChanged();
             }
         }
@@ -147,7 +173,7 @@ namespace Restaurant.ViewModels
 
                     foreach (CategoryDto category in categories)
                     {
-                        CategoryDto categoryDto = ItemCategories.Where(c=>c.Id == category.Id)
+                        CategoryDto categoryDto = ItemCategories.Where(c => c.Id == category.Id)
                                                    .FirstOrDefault();
                         if (categoryDto == null)
                             category.IsChecked = false;
@@ -233,14 +259,15 @@ namespace Restaurant.ViewModels
                 {
                     Id = Item.Id,
                     Name = Name,
-                    Price = Price,
+                    Price = BasePrice,
+                    Discount = Discount,
                     Image = new Image()
                     {
                         Content = ImageContent
                     }
                 };
 
-                itemService.UpdateItem(updatedItem,itemCategories);
+                itemService.UpdateItem(updatedItem, itemCategories);
             }
             catch (Exception)
             {
@@ -249,7 +276,9 @@ namespace Restaurant.ViewModels
             }
 
             Item.Name = Name;
-            Item.Price = Price;
+            Item.Discount = Discount;
+            Item.BasePrice = BasePrice;
+            Item.Price = Item.BasePrice * ((100 - Discount) / 100);
             Item.ImageSource = ImageSource;
             Item.ImageContent = ImageContent;
             Item.Categories = ItemCategories;
@@ -264,7 +293,7 @@ namespace Restaurant.ViewModels
 
         private bool IsValid()
         {
-            if (string.IsNullOrEmpty(Name) || Price <= 0 || ImageContent == null || ItemCategories.Count == 0)
+            if (string.IsNullOrEmpty(Name) || BasePrice <= 0 || Discount < 0 || ImageContent == null || ItemCategories.Count == 0)
                 return false;
 
             return true;

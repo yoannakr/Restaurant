@@ -107,7 +107,8 @@ namespace Restaurant.Database.Services.Implementations
         {
             return context.Users
                           .Include(user => user.Roles)
-                          .ThenInclude(ur => ur.Role);
+                          .ThenInclude(ur => ur.Role)
+                          .Include(user=>user.Payments);
         }
 
         #endregion

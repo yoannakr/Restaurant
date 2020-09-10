@@ -6,7 +6,7 @@ namespace Restaurant.Database.Services
 {
     public interface IItemDbService
     {
-        Item CreateItem(string name, decimal price, byte[] imageContent, List<Category> categories);
+        Item CreateItem(string name, decimal price, decimal discount, byte[] imageContent, List<Category> categories);
 
         Item UpdateItem(Item item, List<ItemCategory> itemCategories);
 

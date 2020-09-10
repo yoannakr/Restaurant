@@ -24,11 +24,13 @@
             Grid.Row="1" Grid.Column="1"
             VerticalAlignment="Center"
             CornerRadius="25" 
-            MinWidth="450" MinHeight="300"
+            MinWidth="450" MinHeight="350"
             Background="White">
             <Grid
                 Margin="30">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -56,23 +58,46 @@
                 <TextBlock
                     Grid.Row="1" Grid.Column="0"
                     HorizontalAlignment="Left" 
-                    Text="Цена :"
+                    Text="Основна цена :"
                     Height="23" Width="120"/>
                 <TextBox 
                     Grid.Row="1" Grid.Column="1"
                     HorizontalAlignment="Left" 
-                    Text="{Binding Price}"
+                    Text="{Binding BasePrice}"
                     Height="23" Width="255"
                     MaxLength="20"/>
 
-                <TextBlock 
+                <TextBlock
                     Grid.Row="2" Grid.Column="0"
+                    HorizontalAlignment="Left" 
+                    Text="Отстъпка (%) :"
+                    Height="23" Width="120"/>
+                <TextBox 
+                    Grid.Row="2" Grid.Column="1"
+                    HorizontalAlignment="Left" 
+                    Text="{Binding Discount}"
+                    Height="23" Width="255"
+                    MaxLength="20"/>
+
+                <TextBlock
+                    Grid.Row="3" Grid.Column="0"
+                    HorizontalAlignment="Left" 
+                    Text="Цена с отстъпка :"
+                    Height="23" Width="120"/>
+                <TextBlock 
+                    Grid.Row="3" Grid.Column="1"
+                    HorizontalAlignment="Left" 
+                    Text="{Binding Price}"
+                    Height="23" Width="255"/>
+
+                <TextBlock 
+                    Grid.Row="4" Grid.Column="0"
                     HorizontalAlignment="Left" 
                     Text="Категория :"
                     Height="23" Width="120"/>
                 <ScrollViewer
                     x:Name="FromViewModel"
-                    Grid.Row="2" Grid.Column="1"
+                    Grid.Row="4" Grid.Column="1"
                     HorizontalAlignment="Left"
                     MaxHeight="50" MaxWidth="180"
                     VerticalScrollBarVisibility="Auto">
@@ -102,12 +127,12 @@
                 </ScrollViewer>
 
                 <TextBlock
-                    Grid.Row="3" Grid.Column="0"
+                    Grid.Row="5" Grid.Column="0"
                     HorizontalAlignment="Left"
                     Text="Снимка :"
                     Height="23" Width="120"/>
                 <Button
-                    Grid.Row="3" Grid.Column="1"
+                    Grid.Row="5" Grid.Column="1"
                     HorizontalAlignment="Left"
                     Content="Browse "
                     Command="{Binding BrowseCommand}"
@@ -115,21 +140,21 @@
                     Cursor="Hand"/>
 
                 <Image
-                    Grid.Row="4" Grid.Column="0"
+                    Grid.Row="6" Grid.Column="0"
                     HorizontalAlignment="Center"
                     Margin="0,10,0,0"
                     Source="{Binding ImageSource}"
                     Height="100" Width="200" 
                     Stretch="Uniform"/>
                 <Button
-                    Grid.Row="4" Grid.Column="1"
+                    Grid.Row="6" Grid.Column="1"
                     HorizontalAlignment="Center" VerticalAlignment="Bottom"
                     Content="Промени "
                     Command="{Binding UpdateItemCommand}"
                     Height="25" Width="70"
                     Cursor="Hand"/>
                 <Button
-                    Grid.Row="4" Grid.Column="1"
+                    Grid.Row="6" Grid.Column="1"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     Content="Назад"
                     Command="{Binding ReturnCommand}"
