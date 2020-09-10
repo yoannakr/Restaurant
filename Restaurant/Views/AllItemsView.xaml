@@ -12,7 +12,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <ScrollViewer 
@@ -25,8 +25,7 @@
                     x:Name="FromViewModel">
                     <ItemsControl.ItemsSource>
                         <CompositeCollection>
-                            <ComboBoxItem>
-                                <RadioButton
+                            <RadioButton
                                     Margin="2"
                                     GroupName="category"
                                     IsChecked="True"
@@ -37,7 +36,6 @@
                                     Cursor="Hand"
                                     BorderThickness="0"
                                     Background="#f5c842"/>
-                            </ComboBoxItem>
                             <CollectionContainer
                                 Collection="{Binding Source={StaticResource Categories}}"/>
                         </CompositeCollection>

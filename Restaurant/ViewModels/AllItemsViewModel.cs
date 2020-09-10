@@ -94,9 +94,8 @@ namespace Restaurant.ViewModels
             if (!SalesViewModel.TableViewModel.TableDto.IsTaken)
                 SalesViewModel.TakeTableCommand.Execute();
 
-            ItemDto itemDto = obj as ItemDto;
 
-            if (itemDto == null)
+            if (!(obj is ItemDto itemDto))
             {
                 MessageBox.Show("Грешка !");
                 return;
@@ -129,9 +128,9 @@ namespace Restaurant.ViewModels
                 RowItemViewModel extra = new RowItemViewModel(SelectedItemViewModel)
                 {
                     ItemDto = itemDto,
-                    Price = itemDto.Price,
+                    Price = itemDto.Price * ((100 - SelectedItemViewModel.Discount) / 100),
                     Count = 1,
-                    Total = itemDto.Price,
+                    Total = itemDto.Price * ((100 - SelectedItemViewModel.Discount) / 100),
                     RowItemViewModelex = SelectedItemViewModel.SelectedItem
                 };
 
