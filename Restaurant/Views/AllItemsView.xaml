@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:Restaurant.Views"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="400">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="Categories" Source="{Binding Path=Categories}" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,18 +21,27 @@
             HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Disabled">
             <WrapPanel>
-                <Button
-                    Margin="2"
-                    Content="Всички"
-                    Command="{Binding ElementName=FromViewModel, Path=DataContext.ChangeCategoryCommand}"
-                    CommandParameter="All"
-                    MinHeight="30" MinWidth="100"
-                    Cursor="Hand"
-                    BorderThickness="0"
-                    Background="#f0edc7"/>
                 <ItemsControl 
-                x:Name="FromViewModel"
-                ItemsSource="{Binding Categories}">
+                    x:Name="FromViewModel">
+                    <ItemsControl.ItemsSource>
+                        <CompositeCollection>
+                            <ComboBoxItem>
+                                <RadioButton
+                                    Margin="2"
+                                    GroupName="category"
+                                    IsChecked="True"
+                                    Content="Всички"
+                                    Command="{Binding ElementName=FromViewModel, Path=DataContext.ChangeCategoryCommand}"
+                                    CommandParameter="{Binding All}"
+                                    MinHeight="30" MinWidth="100"
+                                    Cursor="Hand"
+                                    BorderThickness="0"
+                                    Background="#f5c842"/>
+                            </ComboBoxItem>
+                            <CollectionContainer
+                                Collection="{Binding Source={StaticResource Categories}}"/>
+                        </CompositeCollection>
+                    </ItemsControl.ItemsSource>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel/>
@@ -37,15 +49,16 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button 
-                            Margin="2"
-                            Content="{Binding Name}"
-                            Command="{Binding ElementName=FromViewModel, Path=DataContext.ChangeCategoryCommand}"
-                            CommandParameter="{Binding}"
-                            MinHeight="30" MinWidth="100"
-                            Cursor="Hand"
-                            BorderThickness="0"
-                            Background="#f0edc7"/>
+                            <RadioButton 
+                                Margin="2"
+                                GroupName="category"
+                                Content="{Binding Name}"
+                                Command="{Binding ElementName=FromViewModel, Path=DataContext.ChangeCategoryCommand}"
+                                CommandParameter="{Binding}"
+                                MinHeight="30" MinWidth="100"
+                                Cursor="Hand"
+                                BorderThickness="0"
+                                Background="#f5c842"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

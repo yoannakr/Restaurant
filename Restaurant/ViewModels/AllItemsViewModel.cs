@@ -155,22 +155,15 @@ namespace Restaurant.ViewModels
 
         private void ChangeCategory(object obj)
         {
-            if (obj is string All)
+            if (obj is CategoryDto categoryDto)
+            {
+                Items = new ObservableCollection<ItemDto>(CollectionInstance.Instance.Items
+                                                     .Where(i => i.Categories.Any(c => c.Id == categoryDto.Id)).ToList());
+            }
+            else
             {
                 Items = CollectionInstance.Instance.Items;
-                return;
             }
-
-            CategoryDto categoryDto = obj as CategoryDto;
-
-            if (categoryDto == null)
-            {
-                MessageBox.Show("Грешка !");
-                return;
-            }
-
-            Items = new ObservableCollection<ItemDto>(CollectionInstance.Instance.Items
-                                                     .Where(i => i.Categories.Any(c => c.Id == categoryDto.Id)).ToList());
         }
 
         #endregion
